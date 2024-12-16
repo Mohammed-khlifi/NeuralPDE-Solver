@@ -1,0 +1,32 @@
+{
+  "os": "Windows-10-10.0.22631-SP0",
+  "python": "CPython 3.11.2",
+  "startedAt": "2024-12-13T15:33:14.798668Z",
+  "program": "c:\\Users\\mohammed\\OneDrive\\Documents\\QFM -S2\\Solving PDE's using ANN\\Solving-PDE-s-using-neural-network\\main.ipynb",
+  "codePath": "main.ipynb",
+  "git": {
+    "remote": "https://github.com/Mohammed-khlifi/Solving-PDE-s-using-neural-network.git",
+    "commit": "b10d5ddb59110928665bdcf5e081533ca25b5f68"
+  },
+  "email": "Mohammedkhlifi1357@gmail.com",
+  "root": "c:\\Users\\mohammed\\OneDrive\\Documents\\QFM -S2\\Solving PDE's using ANN\\Solving-PDE-s-using-neural-network",
+  "host": "LAPTOP-L8358S9H",
+  "username": "mohammed",
+  "executable": "c:\\Users\\mohammed\\AppData\\Local\\Programs\\Python\\Python311\\python.exe",
+  "codePathLocal": "main.ipynb",
+  "cpu_count": 4,
+  "cpu_count_logical": 8,
+  "disk": {
+    "/": {
+      "total": "254838566912",
+      "used": "241652744192"
+    }
+  },
+  "memory": {
+    "total": "8317952000"
+  },
+  "cpu": {
+    "count": 4,
+    "countLogical": 8
+  }
+}

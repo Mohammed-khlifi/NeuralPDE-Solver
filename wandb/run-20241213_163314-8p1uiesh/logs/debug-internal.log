@@ -1,0 +1,23 @@
+{"time":"2024-12-13T16:33:14.8007365+01:00","level":"INFO","msg":"using version","core version":"0.19.0"}
+{"time":"2024-12-13T16:33:14.8007365+01:00","level":"INFO","msg":"created symlink","path":"c:\\Users\\mohammed\\OneDrive\\Documents\\QFM -S2\\Solving PDE's using ANN\\Solving-PDE-s-using-neural-network\\wandb\\run-20241213_163314-8p1uiesh\\logs\\debug-core.log"}
+{"time":"2024-12-13T16:33:14.9414357+01:00","level":"INFO","msg":"created new stream","id":"8p1uiesh"}
+{"time":"2024-12-13T16:33:14.9414357+01:00","level":"INFO","msg":"stream: started","id":"8p1uiesh"}
+{"time":"2024-12-13T16:33:14.9432867+01:00","level":"INFO","msg":"writer: Do: started","stream_id":"8p1uiesh"}
+{"time":"2024-12-13T16:33:14.9437962+01:00","level":"INFO","msg":"sender: started","stream_id":"8p1uiesh"}
+{"time":"2024-12-13T16:33:14.9437962+01:00","level":"INFO","msg":"handler: started","stream_id":"8p1uiesh"}
+{"time":"2024-12-13T16:33:15.5176486+01:00","level":"INFO","msg":"Starting system monitor"}
+{"time":"2024-12-13T16:34:32.1000466+01:00","level":"INFO","msg":"Pausing system monitor"}
+{"time":"2024-12-13T16:37:09.2902895+01:00","level":"INFO","msg":"Resuming system monitor"}
+{"time":"2024-12-13T16:37:13.0528673+01:00","level":"INFO","msg":"Pausing system monitor"}
+{"time":"2024-12-13T16:37:16.9424242+01:00","level":"INFO","msg":"Resuming system monitor"}
+{"time":"2024-12-13T16:37:16.9917666+01:00","level":"INFO","msg":"Pausing system monitor"}
+{"time":"2024-12-13T16:37:22.0853288+01:00","level":"INFO","msg":"Resuming system monitor"}
+{"time":"2024-12-13T16:37:22.2980545+01:00","level":"INFO","msg":"Stopping system monitor"}
+{"time":"2024-12-13T16:37:22.3291734+01:00","level":"INFO","msg":"Stopped system monitor"}
+{"time":"2024-12-13T16:37:23.1165811+01:00","level":"INFO","msg":"fileTransfer: Close: file transfer manager closed"}
+{"time":"2024-12-13T16:37:23.3281755+01:00","level":"INFO","msg":"handler: operation stats","stats":{"operations":[{"desc":"uploading summary, console logs","runtime_seconds":0.1705854}],"total_operations":1}}
+{"time":"2024-12-13T16:37:24.8578884+01:00","level":"INFO","msg":"stream: closing","id":"8p1uiesh"}
+{"time":"2024-12-13T16:37:24.8578884+01:00","level":"INFO","msg":"handler: closed","stream_id":"8p1uiesh"}
+{"time":"2024-12-13T16:37:24.8578884+01:00","level":"INFO","msg":"writer: Close: closed","stream_id":"8p1uiesh"}
+{"time":"2024-12-13T16:37:24.8578884+01:00","level":"INFO","msg":"sender: closed","stream_id":"8p1uiesh"}
+{"time":"2024-12-13T16:37:24.8584253+01:00","level":"INFO","msg":"stream: closed","id":"8p1uiesh"}

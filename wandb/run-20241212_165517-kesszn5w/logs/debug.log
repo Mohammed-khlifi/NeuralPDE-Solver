@@ -1,0 +1,30 @@
+2024-12-12 16:55:18,009 INFO    MainThread:1260 [wandb_setup.py:_flush():68] Current SDK version is 0.19.0
+2024-12-12 16:55:18,009 INFO    MainThread:1260 [wandb_setup.py:_flush():68] Configure stats pid to 1260
+2024-12-12 16:55:18,009 INFO    MainThread:1260 [wandb_setup.py:_flush():68] Loading settings from C:\Users\mohammed\.config\wandb\settings
+2024-12-12 16:55:18,009 INFO    MainThread:1260 [wandb_setup.py:_flush():68] Loading settings from c:\Users\mohammed\OneDrive\Documents\QFM -S2\Solving PDE's using ANN\Solving-PDE-s-using-neural-network\wandb\settings
+2024-12-12 16:55:18,024 INFO    MainThread:1260 [wandb_setup.py:_flush():68] Loading settings from environment variables
+2024-12-12 16:55:18,025 INFO    MainThread:1260 [wandb_init.py:_log_setup():528] Logging user logs to c:\Users\mohammed\OneDrive\Documents\QFM -S2\Solving PDE's using ANN\Solving-PDE-s-using-neural-network\wandb\run-20241212_165517-kesszn5w\logs\debug.log
+2024-12-12 16:55:18,025 INFO    MainThread:1260 [wandb_init.py:_log_setup():529] Logging internal logs to c:\Users\mohammed\OneDrive\Documents\QFM -S2\Solving PDE's using ANN\Solving-PDE-s-using-neural-network\wandb\run-20241212_165517-kesszn5w\logs\debug-internal.log
+2024-12-12 16:55:18,025 INFO    MainThread:1260 [wandb_init.py:init():639] calling init triggers
+2024-12-12 16:55:18,025 INFO    MainThread:1260 [wandb_init.py:init():645] wandb.init called with sweep_config: {}
+config: {}
+2024-12-12 16:55:18,025 INFO    MainThread:1260 [wandb_init.py:init():683] wandb.init() called when a run is still active
+2024-12-12 16:55:18,045 INFO    MainThread:1260 [wandb_watch.py:_watch():71] Watching
+2024-12-12 16:56:45,559 INFO    MainThread:1260 [jupyter.py:save_ipynb():387] not saving jupyter notebook
+2024-12-12 16:56:45,564 INFO    MainThread:1260 [wandb_init.py:_pause_backend():439] pausing backend
+2024-12-12 17:47:37,000 INFO    MainThread:1260 [wandb_init.py:_resume_backend():444] resuming backend
+2024-12-12 17:47:37,236 INFO    MainThread:1260 [jupyter.py:save_ipynb():387] not saving jupyter notebook
+2024-12-12 17:47:37,236 INFO    MainThread:1260 [wandb_init.py:_pause_backend():439] pausing backend
+2024-12-12 17:47:57,913 INFO    MainThread:1260 [wandb_init.py:_resume_backend():444] resuming backend
+2024-12-12 17:48:49,882 INFO    MainThread:1260 [jupyter.py:save_ipynb():387] not saving jupyter notebook
+2024-12-12 17:48:49,882 INFO    MainThread:1260 [wandb_init.py:_pause_backend():439] pausing backend
+2024-12-12 17:48:49,905 INFO    MainThread:1260 [wandb_init.py:_resume_backend():444] resuming backend
+2024-12-12 17:48:50,144 INFO    MainThread:1260 [jupyter.py:save_ipynb():387] not saving jupyter notebook
+2024-12-12 17:48:50,175 INFO    MainThread:1260 [wandb_init.py:_pause_backend():439] pausing backend
+2024-12-12 17:49:18,884 INFO    MainThread:1260 [wandb_init.py:_resume_backend():444] resuming backend
+2024-12-12 17:49:18,902 INFO    MainThread:1260 [jupyter.py:save_ipynb():387] not saving jupyter notebook
+2024-12-12 17:49:18,902 INFO    MainThread:1260 [wandb_init.py:_pause_backend():439] pausing backend
+2024-12-12 17:49:19,580 INFO    MainThread:1260 [wandb_init.py:_resume_backend():444] resuming backend
+2024-12-12 17:50:23,837 INFO    MainThread:1260 [jupyter.py:save_ipynb():387] not saving jupyter notebook
+2024-12-12 17:50:23,885 INFO    MainThread:1260 [wandb_init.py:_pause_backend():439] pausing backend
+2024-12-13 14:47:36,481 WARNING MsgRouterThr:1260 [router.py:message_loop():75] message_loop has been closed

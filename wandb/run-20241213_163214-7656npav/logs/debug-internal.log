@@ -1,0 +1,7 @@
+{"time":"2024-12-13T16:32:14.4376355+01:00","level":"INFO","msg":"using version","core version":"0.19.0"}
+{"time":"2024-12-13T16:32:14.4382175+01:00","level":"INFO","msg":"created symlink","path":"c:\\Users\\mohammed\\OneDrive\\Documents\\QFM -S2\\Solving PDE's using ANN\\Solving-PDE-s-using-neural-network\\wandb\\run-20241213_163214-7656npav\\logs\\debug-core.log"}
+{"time":"2024-12-13T16:32:14.5843292+01:00","level":"INFO","msg":"created new stream","id":"7656npav"}
+{"time":"2024-12-13T16:32:14.5844778+01:00","level":"INFO","msg":"handler: started","stream_id":"7656npav"}
+{"time":"2024-12-13T16:32:14.5844778+01:00","level":"INFO","msg":"writer: Do: started","stream_id":"7656npav"}
+{"time":"2024-12-13T16:32:14.5844778+01:00","level":"INFO","msg":"sender: started","stream_id":"7656npav"}
+{"time":"2024-12-13T16:32:14.5844778+01:00","level":"INFO","msg":"stream: started","id":"7656npav"}

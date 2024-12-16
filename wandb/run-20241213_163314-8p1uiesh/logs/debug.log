@@ -1,0 +1,56 @@
+2024-12-13 16:33:14,719 INFO    MainThread:9668 [wandb_setup.py:_flush():68] Current SDK version is 0.19.0
+2024-12-13 16:33:14,719 INFO    MainThread:9668 [wandb_setup.py:_flush():68] Configure stats pid to 9668
+2024-12-13 16:33:14,719 INFO    MainThread:9668 [wandb_setup.py:_flush():68] Loading settings from C:\Users\mohammed\.config\wandb\settings
+2024-12-13 16:33:14,719 INFO    MainThread:9668 [wandb_setup.py:_flush():68] Loading settings from c:\Users\mohammed\OneDrive\Documents\QFM -S2\Solving PDE's using ANN\Solving-PDE-s-using-neural-network\wandb\settings
+2024-12-13 16:33:14,721 INFO    MainThread:9668 [wandb_setup.py:_flush():68] Loading settings from environment variables
+2024-12-13 16:33:14,721 INFO    MainThread:9668 [wandb_init.py:_log_setup():528] Logging user logs to c:\Users\mohammed\OneDrive\Documents\QFM -S2\Solving PDE's using ANN\Solving-PDE-s-using-neural-network\wandb\run-20241213_163314-8p1uiesh\logs\debug.log
+2024-12-13 16:33:14,723 INFO    MainThread:9668 [wandb_init.py:_log_setup():529] Logging internal logs to c:\Users\mohammed\OneDrive\Documents\QFM -S2\Solving PDE's using ANN\Solving-PDE-s-using-neural-network\wandb\run-20241213_163314-8p1uiesh\logs\debug-internal.log
+2024-12-13 16:33:14,723 INFO    MainThread:9668 [wandb_init.py:_jupyter_setup():474] configuring jupyter hooks <wandb.sdk.wandb_init._WandbInit object at 0x0000018A4FA31450>
+2024-12-13 16:33:14,723 INFO    MainThread:9668 [wandb_init.py:init():639] calling init triggers
+2024-12-13 16:33:14,723 INFO    MainThread:9668 [wandb_init.py:init():645] wandb.init called with sweep_config: {}
+config: {}
+2024-12-13 16:33:14,723 INFO    MainThread:9668 [wandb_init.py:init():688] starting backend
+2024-12-13 16:33:14,724 INFO    MainThread:9668 [wandb_init.py:init():692] sending inform_init request
+2024-12-13 16:33:14,793 INFO    MainThread:9668 [backend.py:_multiprocessing_setup():104] multiprocessing start_methods=spawn, using: spawn
+2024-12-13 16:33:14,798 INFO    MainThread:9668 [wandb_init.py:init():705] backend started and connected
+2024-12-13 16:33:14,800 INFO    MainThread:9668 [wandb_run.py:_label_probe_notebook():1327] probe notebook
+2024-12-13 16:33:15,025 INFO    MainThread:9668 [wandb_run.py:_label_probe_notebook():1337] Unable to probe notebook: 'charmap' codec can't decode byte 0x81 in position 41057: character maps to <undefined>
+2024-12-13 16:33:15,026 INFO    MainThread:9668 [wandb_init.py:init():798] updated telemetry
+2024-12-13 16:33:15,157 INFO    MainThread:9668 [wandb_init.py:init():830] communicating run to backend with 90.0 second timeout
+2024-12-13 16:33:15,501 INFO    MainThread:9668 [wandb_init.py:init():882] starting run threads in backend
+2024-12-13 16:33:16,105 INFO    MainThread:9668 [wandb_run.py:_console_start():2443] atexit reg
+2024-12-13 16:33:16,106 INFO    MainThread:9668 [wandb_run.py:_redirect():2293] redirect: wrap_raw
+2024-12-13 16:33:16,106 INFO    MainThread:9668 [wandb_run.py:_redirect():2358] Wrapping output streams.
+2024-12-13 16:33:16,106 INFO    MainThread:9668 [wandb_run.py:_redirect():2383] Redirects installed.
+2024-12-13 16:33:16,110 INFO    MainThread:9668 [wandb_init.py:init():925] run started, returning control to user process
+2024-12-13 16:33:16,110 INFO    MainThread:9668 [wandb_watch.py:_watch():71] Watching
+2024-12-13 16:34:32,090 INFO    MainThread:9668 [jupyter.py:save_ipynb():387] not saving jupyter notebook
+2024-12-13 16:34:32,097 INFO    MainThread:9668 [wandb_init.py:_pause_backend():439] pausing backend
+2024-12-13 16:37:09,287 INFO    MainThread:9668 [wandb_init.py:_resume_backend():444] resuming backend
+2024-12-13 16:37:13,052 INFO    MainThread:9668 [jupyter.py:save_ipynb():387] not saving jupyter notebook
+2024-12-13 16:37:13,052 INFO    MainThread:9668 [wandb_init.py:_pause_backend():439] pausing backend
+2024-12-13 16:37:16,938 INFO    MainThread:9668 [wandb_init.py:_resume_backend():444] resuming backend
+2024-12-13 16:37:16,966 INFO    MainThread:9668 [jupyter.py:save_ipynb():387] not saving jupyter notebook
+2024-12-13 16:37:16,966 INFO    MainThread:9668 [wandb_init.py:_pause_backend():439] pausing backend
+2024-12-13 16:37:22,084 INFO    MainThread:9668 [wandb_init.py:_resume_backend():444] resuming backend
+2024-12-13 16:37:22,269 INFO    MainThread:9668 [wandb_setup.py:_flush():68] Current SDK version is 0.19.0
+2024-12-13 16:37:22,270 INFO    MainThread:9668 [wandb_setup.py:_flush():68] Configure stats pid to 9668
+2024-12-13 16:37:22,270 INFO    MainThread:9668 [wandb_setup.py:_flush():68] Loading settings from C:\Users\mohammed\.config\wandb\settings
+2024-12-13 16:37:22,270 INFO    MainThread:9668 [wandb_setup.py:_flush():68] Loading settings from c:\Users\mohammed\OneDrive\Documents\QFM -S2\Solving PDE's using ANN\Solving-PDE-s-using-neural-network\wandb\settings
+2024-12-13 16:37:22,270 INFO    MainThread:9668 [wandb_setup.py:_flush():68] Loading settings from environment variables
+2024-12-13 16:37:22,271 INFO    MainThread:9668 [wandb_init.py:_log_setup():528] Logging user logs to c:\Users\mohammed\OneDrive\Documents\QFM -S2\Solving PDE's using ANN\Solving-PDE-s-using-neural-network\wandb\run-20241213_163722-b4bp7vmg\logs\debug.log
+2024-12-13 16:37:22,271 INFO    MainThread:9668 [wandb_init.py:_log_setup():529] Logging internal logs to c:\Users\mohammed\OneDrive\Documents\QFM -S2\Solving PDE's using ANN\Solving-PDE-s-using-neural-network\wandb\run-20241213_163722-b4bp7vmg\logs\debug-internal.log
+2024-12-13 16:37:22,274 INFO    MainThread:9668 [wandb_init.py:init():639] calling init triggers
+2024-12-13 16:37:22,274 INFO    MainThread:9668 [wandb_init.py:init():645] wandb.init called with sweep_config: {}
+config: {}
+2024-12-13 16:37:22,274 INFO    MainThread:9668 [wandb_init.py:init():663] re-initializing run, found existing run on stack: 8p1uiesh
+2024-12-13 16:37:22,279 INFO    MainThread:9668 [wandb_run.py:_finish():2169] finishing run mohammedkhlifi1357-um6p/pinn-project/8p1uiesh
+2024-12-13 16:37:22,287 ERROR   MainThread:9668 [jupyter.py:save_history():451] Run pip install nbformat to save notebook history
+2024-12-13 16:37:22,287 INFO    MainThread:9668 [jupyter.py:save_ipynb():387] not saving jupyter notebook
+2024-12-13 16:37:22,287 INFO    MainThread:9668 [wandb_init.py:_jupyter_teardown():456] cleaning up jupyter logic
+2024-12-13 16:37:22,291 INFO    MainThread:9668 [wandb_run.py:_atexit_cleanup():2408] got exitcode: 0
+2024-12-13 16:37:22,291 INFO    MainThread:9668 [wandb_run.py:_restore():2390] restore
+2024-12-13 16:37:22,291 INFO    MainThread:9668 [wandb_run.py:_restore():2396] restore done
+2024-12-13 16:37:24,799 INFO    MainThread:9668 [wandb_run.py:_footer_history_summary_info():3951] rendering history
+2024-12-13 16:37:24,808 INFO    MainThread:9668 [wandb_run.py:_footer_history_summary_info():3983] rendering summary
+2024-12-13 16:37:24,851 INFO    MainThread:9668 [wandb_run.py:_footer_sync_info():3912] logging synced files

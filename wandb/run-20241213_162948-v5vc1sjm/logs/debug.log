@@ -1,0 +1,180 @@
+2024-12-13 16:29:48,157 INFO    MainThread:14892 [wandb_setup.py:_flush():68] Current SDK version is 0.19.0
+2024-12-13 16:29:48,157 INFO    MainThread:14892 [wandb_setup.py:_flush():68] Configure stats pid to 14892
+2024-12-13 16:29:48,160 INFO    MainThread:14892 [wandb_setup.py:_flush():68] Loading settings from C:\Users\mohammed\.config\wandb\settings
+2024-12-13 16:29:48,160 INFO    MainThread:14892 [wandb_setup.py:_flush():68] Loading settings from c:\Users\mohammed\OneDrive\Documents\QFM -S2\Solving PDE's using ANN\Solving-PDE-s-using-neural-network\wandb\settings
+2024-12-13 16:29:48,160 INFO    MainThread:14892 [wandb_setup.py:_flush():68] Loading settings from environment variables
+2024-12-13 16:29:48,160 INFO    MainThread:14892 [wandb_init.py:_log_setup():528] Logging user logs to c:\Users\mohammed\OneDrive\Documents\QFM -S2\Solving PDE's using ANN\Solving-PDE-s-using-neural-network\wandb\run-20241213_162948-v5vc1sjm\logs\debug.log
+2024-12-13 16:29:48,162 INFO    MainThread:14892 [wandb_init.py:_log_setup():529] Logging internal logs to c:\Users\mohammed\OneDrive\Documents\QFM -S2\Solving PDE's using ANN\Solving-PDE-s-using-neural-network\wandb\run-20241213_162948-v5vc1sjm\logs\debug-internal.log
+2024-12-13 16:29:48,163 INFO    MainThread:14892 [wandb_init.py:init():639] calling init triggers
+2024-12-13 16:29:48,163 INFO    MainThread:14892 [wandb_init.py:init():645] wandb.init called with sweep_config: {}
+config: {}
+2024-12-13 16:29:48,163 INFO    MainThread:14892 [wandb_init.py:init():663] re-initializing run, found existing run on stack: 49jrghib
+2024-12-13 16:29:48,165 INFO    MainThread:14892 [wandb_run.py:_finish():2169] finishing run mohammedkhlifi1357-um6p/pinn-project/49jrghib
+2024-12-13 16:29:48,166 INFO    MainThread:14892 [wandb_run.py:_atexit_cleanup():2408] got exitcode: 0
+2024-12-13 16:29:48,166 INFO    MainThread:14892 [wandb_run.py:_restore():2390] restore
+2024-12-13 16:29:48,168 INFO    MainThread:14892 [wandb_run.py:_restore():2396] restore done
+2024-12-13 16:31:43,077 WARNING MainThread:14892 [wandb_init.py:init():1309] interrupted
+Traceback (most recent call last):
+  File "c:\Users\mohammed\AppData\Local\Programs\Python\Python311\Lib\site-packages\wandb\sdk\wandb_init.py", line 1305, in init
+    return wi.init()
+           ^^^^^^^^^
+  File "c:\Users\mohammed\AppData\Local\Programs\Python\Python311\Lib\site-packages\wandb\sdk\wandb_init.py", line 673, in init
+    latest_run.finish()
+  File "c:\Users\mohammed\AppData\Local\Programs\Python\Python311\Lib\site-packages\wandb\sdk\wandb_run.py", line 443, in wrapper
+    return func(self, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\mohammed\AppData\Local\Programs\Python\Python311\Lib\site-packages\wandb\sdk\wandb_run.py", line 385, in wrapper
+    return func(self, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\mohammed\AppData\Local\Programs\Python\Python311\Lib\site-packages\wandb\sdk\wandb_run.py", line 2163, in finish
+    return self._finish(exit_code)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\mohammed\AppData\Local\Programs\Python\Python311\Lib\site-packages\wandb\sdk\wandb_run.py", line 2193, in _finish
+    self._atexit_cleanup(exit_code=exit_code)
+  File "c:\Users\mohammed\AppData\Local\Programs\Python\Python311\Lib\site-packages\wandb\sdk\wandb_run.py", line 2420, in _atexit_cleanup
+    self._on_finish()
+  File "c:\Users\mohammed\AppData\Local\Programs\Python\Python311\Lib\site-packages\wandb\sdk\wandb_run.py", line 2674, in _on_finish
+    _ = exit_handle.wait(
+        ^^^^^^^^^^^^^^^^^
+  File "c:\Users\mohammed\AppData\Local\Programs\Python\Python311\Lib\site-packages\wandb\sdk\lib\mailbox.py", line 279, in wait
+    found, abandoned = self._slot._get_and_clear(timeout=wait_timeout)
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\mohammed\AppData\Local\Programs\Python\Python311\Lib\site-packages\wandb\sdk\lib\mailbox.py", line 126, in _get_and_clear
+    if self._wait(timeout=timeout):
+       ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\mohammed\AppData\Local\Programs\Python\Python311\Lib\site-packages\wandb\sdk\lib\mailbox.py", line 122, in _wait
+    return self._event.wait(timeout=timeout)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\mohammed\AppData\Local\Programs\Python\Python311\Lib\threading.py", line 622, in wait
+    signaled = self._cond.wait(timeout)
+               ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\mohammed\AppData\Local\Programs\Python\Python311\Lib\threading.py", line 324, in wait
+    gotit = waiter.acquire(True, timeout)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+KeyboardInterrupt
+2024-12-13 16:31:45,448 INFO    MainThread:14892 [wandb_setup.py:_flush():68] Current SDK version is 0.19.0
+2024-12-13 16:31:45,449 INFO    MainThread:14892 [wandb_setup.py:_flush():68] Configure stats pid to 14892
+2024-12-13 16:31:45,449 INFO    MainThread:14892 [wandb_setup.py:_flush():68] Loading settings from C:\Users\mohammed\.config\wandb\settings
+2024-12-13 16:31:45,450 INFO    MainThread:14892 [wandb_setup.py:_flush():68] Loading settings from c:\Users\mohammed\OneDrive\Documents\QFM -S2\Solving PDE's using ANN\Solving-PDE-s-using-neural-network\wandb\settings
+2024-12-13 16:31:45,450 INFO    MainThread:14892 [wandb_setup.py:_flush():68] Loading settings from environment variables
+2024-12-13 16:31:45,451 INFO    MainThread:14892 [wandb_init.py:_log_setup():528] Logging user logs to c:\Users\mohammed\OneDrive\Documents\QFM -S2\Solving PDE's using ANN\Solving-PDE-s-using-neural-network\wandb\run-20241213_163145-d3lkqne1\logs\debug.log
+2024-12-13 16:31:45,452 INFO    MainThread:14892 [wandb_init.py:_log_setup():529] Logging internal logs to c:\Users\mohammed\OneDrive\Documents\QFM -S2\Solving PDE's using ANN\Solving-PDE-s-using-neural-network\wandb\run-20241213_163145-d3lkqne1\logs\debug-internal.log
+2024-12-13 16:31:45,452 INFO    MainThread:14892 [wandb_init.py:init():639] calling init triggers
+2024-12-13 16:31:45,452 INFO    MainThread:14892 [wandb_init.py:init():645] wandb.init called with sweep_config: {}
+config: {}
+2024-12-13 16:31:45,453 INFO    MainThread:14892 [wandb_init.py:init():688] starting backend
+2024-12-13 16:31:45,453 INFO    MainThread:14892 [wandb_init.py:init():692] sending inform_init request
+2024-12-13 16:31:45,464 INFO    MainThread:14892 [backend.py:_multiprocessing_setup():104] multiprocessing start_methods=spawn, using: spawn
+2024-12-13 16:31:45,469 INFO    MainThread:14892 [wandb_init.py:init():705] backend started and connected
+2024-12-13 16:31:45,476 INFO    MainThread:14892 [wandb_run.py:_label_probe_notebook():1327] probe notebook
+2024-12-13 16:31:45,509 INFO    MainThread:14892 [wandb_run.py:_label_probe_notebook():1337] Unable to probe notebook: 'charmap' codec can't decode byte 0x81 in position 41058: character maps to <undefined>
+2024-12-13 16:31:45,511 INFO    MainThread:14892 [wandb_init.py:init():798] updated telemetry
+2024-12-13 16:31:50,059 INFO    MainThread:14892 [wandb_init.py:init():830] communicating run to backend with 90.0 second timeout
+2024-12-13 16:32:09,209 WARNING MainThread:14892 [wandb_init.py:init():1309] interrupted
+Traceback (most recent call last):
+  File "c:\Users\mohammed\AppData\Local\Programs\Python\Python311\Lib\site-packages\wandb\sdk\wandb_init.py", line 1305, in init
+    return wi.init()
+           ^^^^^^^^^
+  File "c:\Users\mohammed\AppData\Local\Programs\Python\Python311\Lib\site-packages\wandb\sdk\wandb_init.py", line 833, in init
+    result = run_init_handle.wait(
+             ^^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\mohammed\AppData\Local\Programs\Python\Python311\Lib\site-packages\wandb\sdk\lib\mailbox.py", line 279, in wait
+    found, abandoned = self._slot._get_and_clear(timeout=wait_timeout)
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\mohammed\AppData\Local\Programs\Python\Python311\Lib\site-packages\wandb\sdk\lib\mailbox.py", line 126, in _get_and_clear
+    if self._wait(timeout=timeout):
+       ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\mohammed\AppData\Local\Programs\Python\Python311\Lib\site-packages\wandb\sdk\lib\mailbox.py", line 122, in _wait
+    return self._event.wait(timeout=timeout)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\mohammed\AppData\Local\Programs\Python\Python311\Lib\threading.py", line 622, in wait
+    signaled = self._cond.wait(timeout)
+               ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\mohammed\AppData\Local\Programs\Python\Python311\Lib\threading.py", line 324, in wait
+    gotit = waiter.acquire(True, timeout)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+KeyboardInterrupt
+2024-12-13 16:32:14,422 INFO    MainThread:14892 [wandb_setup.py:_flush():68] Current SDK version is 0.19.0
+2024-12-13 16:32:14,423 INFO    MainThread:14892 [wandb_setup.py:_flush():68] Configure stats pid to 14892
+2024-12-13 16:32:14,423 INFO    MainThread:14892 [wandb_setup.py:_flush():68] Loading settings from C:\Users\mohammed\.config\wandb\settings
+2024-12-13 16:32:14,423 INFO    MainThread:14892 [wandb_setup.py:_flush():68] Loading settings from c:\Users\mohammed\OneDrive\Documents\QFM -S2\Solving PDE's using ANN\Solving-PDE-s-using-neural-network\wandb\settings
+2024-12-13 16:32:14,424 INFO    MainThread:14892 [wandb_setup.py:_flush():68] Loading settings from environment variables
+2024-12-13 16:32:14,425 INFO    MainThread:14892 [wandb_init.py:_log_setup():528] Logging user logs to c:\Users\mohammed\OneDrive\Documents\QFM -S2\Solving PDE's using ANN\Solving-PDE-s-using-neural-network\wandb\run-20241213_163214-7656npav\logs\debug.log
+2024-12-13 16:32:14,427 INFO    MainThread:14892 [wandb_init.py:_log_setup():529] Logging internal logs to c:\Users\mohammed\OneDrive\Documents\QFM -S2\Solving PDE's using ANN\Solving-PDE-s-using-neural-network\wandb\run-20241213_163214-7656npav\logs\debug-internal.log
+2024-12-13 16:32:14,427 INFO    MainThread:14892 [wandb_init.py:init():639] calling init triggers
+2024-12-13 16:32:14,428 INFO    MainThread:14892 [wandb_init.py:init():645] wandb.init called with sweep_config: {}
+config: {}
+2024-12-13 16:32:14,428 INFO    MainThread:14892 [wandb_init.py:init():688] starting backend
+2024-12-13 16:32:14,428 INFO    MainThread:14892 [wandb_init.py:init():692] sending inform_init request
+2024-12-13 16:32:14,433 INFO    MainThread:14892 [backend.py:_multiprocessing_setup():104] multiprocessing start_methods=spawn, using: spawn
+2024-12-13 16:32:14,459 INFO    MainThread:14892 [wandb_init.py:init():705] backend started and connected
+2024-12-13 16:32:14,465 INFO    MainThread:14892 [wandb_run.py:_label_probe_notebook():1327] probe notebook
+2024-12-13 16:32:14,496 INFO    MainThread:14892 [wandb_run.py:_label_probe_notebook():1337] Unable to probe notebook: 'charmap' codec can't decode byte 0x81 in position 41058: character maps to <undefined>
+2024-12-13 16:32:14,500 INFO    MainThread:14892 [wandb_init.py:init():798] updated telemetry
+2024-12-13 16:32:14,567 INFO    MainThread:14892 [wandb_init.py:init():830] communicating run to backend with 90.0 second timeout
+2024-12-13 16:32:23,624 WARNING MainThread:14892 [wandb_init.py:init():1309] interrupted
+Traceback (most recent call last):
+  File "c:\Users\mohammed\AppData\Local\Programs\Python\Python311\Lib\site-packages\wandb\sdk\wandb_init.py", line 1305, in init
+    return wi.init()
+           ^^^^^^^^^
+  File "c:\Users\mohammed\AppData\Local\Programs\Python\Python311\Lib\site-packages\wandb\sdk\wandb_init.py", line 833, in init
+    result = run_init_handle.wait(
+             ^^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\mohammed\AppData\Local\Programs\Python\Python311\Lib\site-packages\wandb\sdk\lib\mailbox.py", line 279, in wait
+    found, abandoned = self._slot._get_and_clear(timeout=wait_timeout)
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\mohammed\AppData\Local\Programs\Python\Python311\Lib\site-packages\wandb\sdk\lib\mailbox.py", line 126, in _get_and_clear
+    if self._wait(timeout=timeout):
+       ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\mohammed\AppData\Local\Programs\Python\Python311\Lib\site-packages\wandb\sdk\lib\mailbox.py", line 122, in _wait
+    return self._event.wait(timeout=timeout)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\mohammed\AppData\Local\Programs\Python\Python311\Lib\threading.py", line 622, in wait
+    signaled = self._cond.wait(timeout)
+               ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\mohammed\AppData\Local\Programs\Python\Python311\Lib\threading.py", line 324, in wait
+    gotit = waiter.acquire(True, timeout)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+KeyboardInterrupt
+2024-12-13 16:32:33,632 INFO    MainThread:14892 [wandb_setup.py:_flush():68] Current SDK version is 0.19.0
+2024-12-13 16:32:33,634 INFO    MainThread:14892 [wandb_setup.py:_flush():68] Configure stats pid to 14892
+2024-12-13 16:32:33,634 INFO    MainThread:14892 [wandb_setup.py:_flush():68] Loading settings from C:\Users\mohammed\.config\wandb\settings
+2024-12-13 16:32:33,634 INFO    MainThread:14892 [wandb_setup.py:_flush():68] Loading settings from c:\Users\mohammed\OneDrive\Documents\QFM -S2\Solving PDE's using ANN\Solving-PDE-s-using-neural-network\wandb\settings
+2024-12-13 16:32:33,634 INFO    MainThread:14892 [wandb_setup.py:_flush():68] Loading settings from environment variables
+2024-12-13 16:32:33,634 INFO    MainThread:14892 [wandb_init.py:_log_setup():528] Logging user logs to c:\Users\mohammed\OneDrive\Documents\QFM -S2\Solving PDE's using ANN\Solving-PDE-s-using-neural-network\wandb\run-20241213_163233-pezl3046\logs\debug.log
+2024-12-13 16:32:33,635 INFO    MainThread:14892 [wandb_init.py:_log_setup():529] Logging internal logs to c:\Users\mohammed\OneDrive\Documents\QFM -S2\Solving PDE's using ANN\Solving-PDE-s-using-neural-network\wandb\run-20241213_163233-pezl3046\logs\debug-internal.log
+2024-12-13 16:32:33,635 INFO    MainThread:14892 [wandb_init.py:init():639] calling init triggers
+2024-12-13 16:32:33,636 INFO    MainThread:14892 [wandb_init.py:init():645] wandb.init called with sweep_config: {}
+config: {}
+2024-12-13 16:32:33,637 INFO    MainThread:14892 [wandb_init.py:init():688] starting backend
+2024-12-13 16:32:33,637 INFO    MainThread:14892 [wandb_init.py:init():692] sending inform_init request
+2024-12-13 16:32:33,640 INFO    MainThread:14892 [backend.py:_multiprocessing_setup():104] multiprocessing start_methods=spawn, using: spawn
+2024-12-13 16:32:33,646 INFO    MainThread:14892 [wandb_init.py:init():705] backend started and connected
+2024-12-13 16:32:33,650 INFO    MainThread:14892 [wandb_run.py:_label_probe_notebook():1327] probe notebook
+2024-12-13 16:32:33,680 INFO    MainThread:14892 [wandb_run.py:_label_probe_notebook():1337] Unable to probe notebook: 'charmap' codec can't decode byte 0x81 in position 41058: character maps to <undefined>
+2024-12-13 16:32:33,680 INFO    MainThread:14892 [wandb_init.py:init():798] updated telemetry
+2024-12-13 16:32:33,741 INFO    MainThread:14892 [wandb_init.py:init():830] communicating run to backend with 90.0 second timeout
+2024-12-13 16:32:36,762 WARNING MainThread:14892 [wandb_init.py:init():1309] interrupted
+Traceback (most recent call last):
+  File "c:\Users\mohammed\AppData\Local\Programs\Python\Python311\Lib\site-packages\wandb\sdk\wandb_init.py", line 1305, in init
+    return wi.init()
+           ^^^^^^^^^
+  File "c:\Users\mohammed\AppData\Local\Programs\Python\Python311\Lib\site-packages\wandb\sdk\wandb_init.py", line 833, in init
+    result = run_init_handle.wait(
+             ^^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\mohammed\AppData\Local\Programs\Python\Python311\Lib\site-packages\wandb\sdk\lib\mailbox.py", line 279, in wait
+    found, abandoned = self._slot._get_and_clear(timeout=wait_timeout)
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\mohammed\AppData\Local\Programs\Python\Python311\Lib\site-packages\wandb\sdk\lib\mailbox.py", line 126, in _get_and_clear
+    if self._wait(timeout=timeout):
+       ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\mohammed\AppData\Local\Programs\Python\Python311\Lib\site-packages\wandb\sdk\lib\mailbox.py", line 122, in _wait
+    return self._event.wait(timeout=timeout)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\mohammed\AppData\Local\Programs\Python\Python311\Lib\threading.py", line 622, in wait
+    signaled = self._cond.wait(timeout)
+               ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\mohammed\AppData\Local\Programs\Python\Python311\Lib\threading.py", line 324, in wait
+    gotit = waiter.acquire(True, timeout)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+KeyboardInterrupt

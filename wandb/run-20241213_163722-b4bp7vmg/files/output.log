@@ -1,0 +1,12 @@
+Training: 100%|██████████| 3000/3000 [00:58<00:00, 50.90epoch/s, Loss=1.0557374480413273e-05, MSE=3.9775247984152884e-08]
+c:\Users\mohammed\AppData\Local\Programs\Python\Python311\Lib\site-packages\torch\functional.py:534: UserWarning: torch.meshgrid: in an upcoming release, it will be required to pass the indexing argument. (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\builder\windows\pytorch\aten\src\ATen\native\TensorShape.cpp:3596.)
+  return _VF.meshgrid(tensors, **kwargs)  # type: ignore[attr-defined]
+Training: 100%|██████████| 2000/2000 [01:00<00:00, 33.09epoch/s, Loss=0.014363718219101429, MSE=0.0014248322695493698] 
+Training: 100%|██████████| 2000/2000 [01:19<00:00, 25.19epoch/s, Loss=0.018607625737786293, MSE=0.008603023365139961]  
+Training: 100%|██████████| 2000/2000 [01:13<00:00, 27.27epoch/s, Loss=0.01637004129588604, MSE=0.0065588452853262424] 
+Training: 100%|██████████| 2000/2000 [01:28<00:00, 22.53epoch/s, Loss=0.033214274793863297, MSE=0.014622338116168976] 
+Training: 100%|██████████| 2000/2000 [01:09<00:00, 28.77epoch/s, Loss=0.010513940826058388, MSE=0.01789606176316738]  
+Training: 100%|██████████| 2000/2000 [01:52<00:00, 17.76epoch/s, Loss=0.06794804334640503, MSE=0.03147052973508835]  
+Training: 100%|██████████| 2000/2000 [01:13<00:00, 27.26epoch/s, Loss=0.011781783774495125, MSE=0.008962182328104973] 
+Training: 100%|██████████| 2000/2000 [01:44<00:00, 19.07epoch/s, Loss=0.024648798629641533, MSE=0.0069258855655789375]
+Training: 100%|██████████| 5000/5000 [03:25<00:00, 24.29epoch/s, Loss=0.017990052700042725, MSE=0.010163996368646622] 

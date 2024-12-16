@@ -1,0 +1,42 @@
+{"time":"2024-12-13T16:37:24.894727+01:00","level":"INFO","msg":"using version","core version":"0.19.0"}
+{"time":"2024-12-13T16:37:24.894727+01:00","level":"INFO","msg":"created symlink","path":"c:\\Users\\mohammed\\OneDrive\\Documents\\QFM -S2\\Solving PDE's using ANN\\Solving-PDE-s-using-neural-network\\wandb\\run-20241213_163722-b4bp7vmg\\logs\\debug-core.log"}
+{"time":"2024-12-13T16:37:25.0239027+01:00","level":"INFO","msg":"created new stream","id":"b4bp7vmg"}
+{"time":"2024-12-13T16:37:25.0239027+01:00","level":"INFO","msg":"stream: started","id":"b4bp7vmg"}
+{"time":"2024-12-13T16:37:25.0239027+01:00","level":"INFO","msg":"handler: started","stream_id":"b4bp7vmg"}
+{"time":"2024-12-13T16:37:25.0239027+01:00","level":"INFO","msg":"writer: Do: started","stream_id":"b4bp7vmg"}
+{"time":"2024-12-13T16:37:25.0239027+01:00","level":"INFO","msg":"sender: started","stream_id":"b4bp7vmg"}
+{"time":"2024-12-13T16:37:25.506785+01:00","level":"INFO","msg":"Starting system monitor"}
+{"time":"2024-12-13T20:01:08.2064181+01:00","level":"INFO","msg":"api: retrying error","error":"Post \"https://api.wandb.ai/graphql\": dial tcp: lookup api.wandb.ai: no such host"}
+{"time":"2024-12-13T20:01:08.2054005+01:00","level":"INFO","msg":"api: retrying error","error":"Post \"https://api.wandb.ai/files/mohammedkhlifi1357-um6p/pinn-project/b4bp7vmg/file_stream\": dial tcp: lookup api.wandb.ai: no such host"}
+{"time":"2024-12-13T20:01:10.8927093+01:00","level":"INFO","msg":"api: retrying error","error":"Post \"https://api.wandb.ai/files/mohammedkhlifi1357-um6p/pinn-project/b4bp7vmg/file_stream\": dial tcp: lookup api.wandb.ai: no such host"}
+{"time":"2024-12-13T20:01:11.0209161+01:00","level":"INFO","msg":"api: retrying error","error":"Post \"https://api.wandb.ai/graphql\": dial tcp: lookup api.wandb.ai: no such host"}
+{"time":"2024-12-13T20:01:15.5062505+01:00","level":"INFO","msg":"api: retrying error","error":"Post \"https://api.wandb.ai/graphql\": dial tcp: lookup api.wandb.ai: no such host"}
+{"time":"2024-12-13T20:01:15.6718208+01:00","level":"INFO","msg":"api: retrying error","error":"Post \"https://api.wandb.ai/files/mohammedkhlifi1357-um6p/pinn-project/b4bp7vmg/file_stream\": dial tcp: lookup api.wandb.ai: no such host"}
+{"time":"2024-12-13T20:01:23.78018+01:00","level":"INFO","msg":"api: retrying error","error":"Post \"https://api.wandb.ai/graphql\": dial tcp: lookup api.wandb.ai: no such host"}
+{"time":"2024-12-13T20:01:24.2273415+01:00","level":"INFO","msg":"api: retrying error","error":"Post \"https://api.wandb.ai/files/mohammedkhlifi1357-um6p/pinn-project/b4bp7vmg/file_stream\": dial tcp: lookup api.wandb.ai: no such host"}
+{"time":"2024-12-13T20:01:42.2270881+01:00","level":"INFO","msg":"api: retrying error","error":"Post \"https://api.wandb.ai/files/mohammedkhlifi1357-um6p/pinn-project/b4bp7vmg/file_stream\": dial tcp: lookup api.wandb.ai: no such host"}
+{"time":"2024-12-13T20:01:42.894529+01:00","level":"INFO","msg":"api: retrying error","error":"Post \"https://api.wandb.ai/graphql\": dial tcp: lookup api.wandb.ai: no such host"}
+{"time":"2024-12-13T20:02:18.8417157+01:00","level":"INFO","msg":"api: retrying error","error":"Post \"https://api.wandb.ai/files/mohammedkhlifi1357-um6p/pinn-project/b4bp7vmg/file_stream\": dial tcp: lookup api.wandb.ai: no such host"}
+{"time":"2024-12-13T20:02:20.9389863+01:00","level":"INFO","msg":"api: retrying error","error":"Post \"https://api.wandb.ai/graphql\": dial tcp: lookup api.wandb.ai: no such host"}
+{"time":"2024-12-13T20:03:18.8510116+01:00","level":"INFO","msg":"api: retrying error","error":"Post \"https://api.wandb.ai/files/mohammedkhlifi1357-um6p/pinn-project/b4bp7vmg/file_stream\": dial tcp: lookup api.wandb.ai: no such host"}
+{"time":"2024-12-13T20:03:20.940521+01:00","level":"INFO","msg":"api: retrying error","error":"Post \"https://api.wandb.ai/graphql\": dial tcp: lookup api.wandb.ai: no such host"}
+{"time":"2024-12-13T20:04:18.857866+01:00","level":"INFO","msg":"api: retrying error","error":"Post \"https://api.wandb.ai/files/mohammedkhlifi1357-um6p/pinn-project/b4bp7vmg/file_stream\": dial tcp: lookup api.wandb.ai: no such host"}
+{"time":"2024-12-13T20:04:20.9426425+01:00","level":"INFO","msg":"api: retrying error","error":"Post \"https://api.wandb.ai/graphql\": dial tcp: lookup api.wandb.ai: no such host"}
+{"time":"2024-12-13T20:05:18.8649798+01:00","level":"INFO","msg":"api: retrying error","error":"Post \"https://api.wandb.ai/files/mohammedkhlifi1357-um6p/pinn-project/b4bp7vmg/file_stream\": dial tcp: lookup api.wandb.ai: no such host"}
+{"time":"2024-12-13T20:05:20.9504742+01:00","level":"INFO","msg":"api: retrying error","error":"Post \"https://api.wandb.ai/graphql\": dial tcp: lookup api.wandb.ai: no such host"}
+{"time":"2024-12-13T20:06:18.872444+01:00","level":"INFO","msg":"api: retrying error","error":"Post \"https://api.wandb.ai/files/mohammedkhlifi1357-um6p/pinn-project/b4bp7vmg/file_stream\": dial tcp: lookup api.wandb.ai: no such host"}
+{"time":"2024-12-13T20:06:20.9522458+01:00","level":"INFO","msg":"api: retrying error","error":"Post \"https://api.wandb.ai/graphql\": dial tcp: lookup api.wandb.ai: no such host"}
+{"time":"2024-12-13T20:07:18.8789312+01:00","level":"INFO","msg":"api: retrying error","error":"Post \"https://api.wandb.ai/files/mohammedkhlifi1357-um6p/pinn-project/b4bp7vmg/file_stream\": dial tcp: lookup api.wandb.ai: no such host"}
+{"time":"2024-12-13T20:07:20.9555449+01:00","level":"INFO","msg":"api: retrying error","error":"Post \"https://api.wandb.ai/graphql\": dial tcp: lookup api.wandb.ai: no such host"}
+{"time":"2024-12-13T20:08:18.8859986+01:00","level":"INFO","msg":"api: retrying error","error":"Post \"https://api.wandb.ai/files/mohammedkhlifi1357-um6p/pinn-project/b4bp7vmg/file_stream\": dial tcp: lookup api.wandb.ai: no such host"}
+{"time":"2024-12-13T20:08:20.9607765+01:00","level":"INFO","msg":"api: retrying error","error":"Post \"https://api.wandb.ai/graphql\": dial tcp: lookup api.wandb.ai: no such host"}
+{"time":"2024-12-13T20:09:18.8931891+01:00","level":"INFO","msg":"api: retrying error","error":"Post \"https://api.wandb.ai/files/mohammedkhlifi1357-um6p/pinn-project/b4bp7vmg/file_stream\": dial tcp: lookup api.wandb.ai: no such host"}
+{"time":"2024-12-13T20:09:20.9644054+01:00","level":"INFO","msg":"api: retrying error","error":"Post \"https://api.wandb.ai/graphql\": dial tcp: lookup api.wandb.ai: no such host"}
+{"time":"2024-12-13T20:10:18.8999228+01:00","level":"INFO","msg":"api: retrying error","error":"Post \"https://api.wandb.ai/files/mohammedkhlifi1357-um6p/pinn-project/b4bp7vmg/file_stream\": dial tcp: lookup api.wandb.ai: no such host"}
+{"time":"2024-12-13T20:10:20.965945+01:00","level":"INFO","msg":"api: retrying error","error":"Post \"https://api.wandb.ai/graphql\": dial tcp: lookup api.wandb.ai: no such host"}
+{"time":"2024-12-13T20:11:07.6847597+01:00","level":"WARN","msg":"sender: taking a long time","seconds":600.0008804,"work":"WorkRecord(*service_go_proto.Request_StopStatus); Control(local:true mailbox_slot:\"3g4stovw3lqa\" connection_id:\"127.0.0.1:57901\")"}
+{"time":"2024-12-13T20:11:18.9072079+01:00","level":"INFO","msg":"api: retrying error","error":"Post \"https://api.wandb.ai/files/mohammedkhlifi1357-um6p/pinn-project/b4bp7vmg/file_stream\": dial tcp: lookup api.wandb.ai: no such host"}
+{"time":"2024-12-13T20:11:20.9739769+01:00","level":"INFO","msg":"api: retrying error","error":"Post \"https://api.wandb.ai/graphql\": dial tcp: lookup api.wandb.ai: no such host"}
+{"time":"2024-12-13T20:12:18.9129427+01:00","level":"INFO","msg":"api: retrying error","error":"Post \"https://api.wandb.ai/files/mohammedkhlifi1357-um6p/pinn-project/b4bp7vmg/file_stream\": dial tcp: lookup api.wandb.ai: no such host"}
+{"time":"2024-12-13T20:12:20.9762826+01:00","level":"INFO","msg":"api: retrying error","error":"Post \"https://api.wandb.ai/graphql\": dial tcp: lookup api.wandb.ai: no such host"}
+{"time":"2024-12-13T20:13:21.2280678+01:00","level":"INFO","msg":"sender: succeeded after taking longer than expected","seconds":733.5630687,"work":"WorkRecord(*service_go_proto.Request_StopStatus); Control(local:true mailbox_slot:\"3g4stovw3lqa\" connection_id:\"127.0.0.1:57901\")"}

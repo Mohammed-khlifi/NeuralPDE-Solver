@@ -1,0 +1,17 @@
+{"time":"2024-12-13T16:25:03.4304606+01:00","level":"INFO","msg":"using version","core version":"0.19.0"}
+{"time":"2024-12-13T16:25:03.4304606+01:00","level":"INFO","msg":"created symlink","path":"c:\\Users\\mohammed\\OneDrive\\Documents\\QFM -S2\\Solving PDE's using ANN\\Solving-PDE-s-using-neural-network\\wandb\\run-20241213_162501-y8yfchye\\logs\\debug-core.log"}
+{"time":"2024-12-13T16:25:03.5538367+01:00","level":"INFO","msg":"created new stream","id":"y8yfchye"}
+{"time":"2024-12-13T16:25:03.5543553+01:00","level":"INFO","msg":"stream: started","id":"y8yfchye"}
+{"time":"2024-12-13T16:25:03.5543553+01:00","level":"INFO","msg":"sender: started","stream_id":"y8yfchye"}
+{"time":"2024-12-13T16:25:03.5543553+01:00","level":"INFO","msg":"writer: Do: started","stream_id":"y8yfchye"}
+{"time":"2024-12-13T16:25:03.5543553+01:00","level":"INFO","msg":"handler: started","stream_id":"y8yfchye"}
+{"time":"2024-12-13T16:25:04.0700632+01:00","level":"INFO","msg":"Starting system monitor"}
+{"time":"2024-12-13T16:25:10.0857658+01:00","level":"INFO","msg":"Stopping system monitor"}
+{"time":"2024-12-13T16:25:10.0912643+01:00","level":"INFO","msg":"Stopped system monitor"}
+{"time":"2024-12-13T16:25:10.6981098+01:00","level":"INFO","msg":"fileTransfer: Close: file transfer manager closed"}
+{"time":"2024-12-13T16:25:10.9554875+01:00","level":"INFO","msg":"handler: operation stats","stats":{}}
+{"time":"2024-12-13T16:25:12.0082358+01:00","level":"INFO","msg":"stream: closing","id":"y8yfchye"}
+{"time":"2024-12-13T16:25:12.0082358+01:00","level":"INFO","msg":"handler: closed","stream_id":"y8yfchye"}
+{"time":"2024-12-13T16:25:12.0082358+01:00","level":"INFO","msg":"writer: Close: closed","stream_id":"y8yfchye"}
+{"time":"2024-12-13T16:25:12.013433+01:00","level":"INFO","msg":"sender: closed","stream_id":"y8yfchye"}
+{"time":"2024-12-13T16:25:12.014946+01:00","level":"INFO","msg":"stream: closed","id":"y8yfchye"}
