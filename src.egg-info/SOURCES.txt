@@ -1,0 +1,15 @@
+setup.py
+src/__init__.py
+src.egg-info/PKG-INFO
+src.egg-info/SOURCES.txt
+src.egg-info/dependency_links.txt
+src.egg-info/entry_points.txt
+src.egg-info/requires.txt
+src.egg-info/top_level.txt
+src/Models/Architectures.py
+src/Models/__init__.py
+src/Models/models.py
+src/Training/NeuralPINN.py
+src/Training/__init__.py
+src/Training/solver.py
+src/Training/trainer.py

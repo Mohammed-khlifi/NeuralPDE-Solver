@@ -1,0 +1,17 @@
+{"time":"2025-01-25T23:47:11.8166051+01:00","level":"INFO","msg":"using version","core version":"0.19.0"}
+{"time":"2025-01-25T23:47:11.8171361+01:00","level":"INFO","msg":"created symlink","path":"c:\\Users\\mohammed\\OneDrive\\Documents\\QFM -S2\\Solving PDE's using ANN\\Solving-PDE-s-using-neural-network\\wandb\\run-20250125_234711-rdl7mmgv\\logs\\debug-core.log"}
+{"time":"2025-01-25T23:47:15.2325945+01:00","level":"INFO","msg":"created new stream","id":"rdl7mmgv"}
+{"time":"2025-01-25T23:47:15.2325945+01:00","level":"INFO","msg":"stream: started","id":"rdl7mmgv"}
+{"time":"2025-01-25T23:47:15.2332365+01:00","level":"INFO","msg":"handler: started","stream_id":"rdl7mmgv"}
+{"time":"2025-01-25T23:47:15.2332365+01:00","level":"INFO","msg":"writer: Do: started","stream_id":"rdl7mmgv"}
+{"time":"2025-01-25T23:47:15.2332365+01:00","level":"INFO","msg":"sender: started","stream_id":"rdl7mmgv"}
+{"time":"2025-01-25T23:47:15.7774042+01:00","level":"INFO","msg":"Starting system monitor"}
+{"time":"2025-01-25T23:48:26.4251594+01:00","level":"INFO","msg":"Stopping system monitor"}
+{"time":"2025-01-25T23:48:26.4292253+01:00","level":"INFO","msg":"Stopped system monitor"}
+{"time":"2025-01-25T23:48:27.1982313+01:00","level":"INFO","msg":"fileTransfer: Close: file transfer manager closed"}
+{"time":"2025-01-25T23:48:27.4328765+01:00","level":"INFO","msg":"handler: operation stats","stats":{"operations":[{"desc":"uploading history, summary, console logs","runtime_seconds":0.2276877}],"total_operations":1}}
+{"time":"2025-01-25T23:48:28.9982944+01:00","level":"INFO","msg":"stream: closing","id":"rdl7mmgv"}
+{"time":"2025-01-25T23:48:28.9987989+01:00","level":"INFO","msg":"handler: closed","stream_id":"rdl7mmgv"}
+{"time":"2025-01-25T23:48:28.9987989+01:00","level":"INFO","msg":"writer: Close: closed","stream_id":"rdl7mmgv"}
+{"time":"2025-01-25T23:48:29.001361+01:00","level":"INFO","msg":"sender: closed","stream_id":"rdl7mmgv"}
+{"time":"2025-01-25T23:48:29.001361+01:00","level":"INFO","msg":"stream: closed","id":"rdl7mmgv"}

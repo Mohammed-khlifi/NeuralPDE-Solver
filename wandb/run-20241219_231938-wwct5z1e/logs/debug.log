@@ -1,0 +1,41 @@
+2024-12-19 23:19:38,876 INFO    MainThread:24788 [wandb_setup.py:_flush():68] Current SDK version is 0.19.0
+2024-12-19 23:19:38,876 INFO    MainThread:24788 [wandb_setup.py:_flush():68] Configure stats pid to 24788
+2024-12-19 23:19:38,876 INFO    MainThread:24788 [wandb_setup.py:_flush():68] Loading settings from C:\Users\mohammed\.config\wandb\settings
+2024-12-19 23:19:38,876 INFO    MainThread:24788 [wandb_setup.py:_flush():68] Loading settings from c:\Users\mohammed\OneDrive\Documents\QFM -S2\Solving PDE's using ANN\Solving-PDE-s-using-neural-network\wandb\settings
+2024-12-19 23:19:38,876 INFO    MainThread:24788 [wandb_setup.py:_flush():68] Loading settings from environment variables
+2024-12-19 23:19:38,876 INFO    MainThread:24788 [wandb_init.py:_log_setup():528] Logging user logs to c:\Users\mohammed\OneDrive\Documents\QFM -S2\Solving PDE's using ANN\Solving-PDE-s-using-neural-network\wandb\run-20241219_231938-wwct5z1e\logs\debug.log
+2024-12-19 23:19:38,876 INFO    MainThread:24788 [wandb_init.py:_log_setup():529] Logging internal logs to c:\Users\mohammed\OneDrive\Documents\QFM -S2\Solving PDE's using ANN\Solving-PDE-s-using-neural-network\wandb\run-20241219_231938-wwct5z1e\logs\debug-internal.log
+2024-12-19 23:19:38,876 INFO    MainThread:24788 [wandb_init.py:_jupyter_setup():474] configuring jupyter hooks <wandb.sdk.wandb_init._WandbInit object at 0x000002667A192ED0>
+2024-12-19 23:19:38,876 INFO    MainThread:24788 [wandb_init.py:init():639] calling init triggers
+2024-12-19 23:19:38,876 INFO    MainThread:24788 [wandb_init.py:init():645] wandb.init called with sweep_config: {}
+config: {}
+2024-12-19 23:19:38,876 INFO    MainThread:24788 [wandb_init.py:init():688] starting backend
+2024-12-19 23:19:38,876 INFO    MainThread:24788 [wandb_init.py:init():692] sending inform_init request
+2024-12-19 23:19:38,997 INFO    MainThread:24788 [backend.py:_multiprocessing_setup():104] multiprocessing start_methods=spawn, using: spawn
+2024-12-19 23:19:39,002 INFO    MainThread:24788 [wandb_init.py:init():705] backend started and connected
+2024-12-19 23:19:39,019 INFO    MainThread:24788 [wandb_run.py:_label_probe_notebook():1327] probe notebook
+2024-12-19 23:19:39,068 INFO    MainThread:24788 [wandb_run.py:_label_probe_notebook():1337] Unable to probe notebook: 'charmap' codec can't decode byte 0x8f in position 2264461: character maps to <undefined>
+2024-12-19 23:19:39,068 INFO    MainThread:24788 [wandb_init.py:init():798] updated telemetry
+2024-12-19 23:19:39,146 WARNING MainThread:24788 [wandb_init.py:init():1309] interrupted
+Traceback (most recent call last):
+  File "c:\Users\mohammed\AppData\Local\Programs\Python\Python311\Lib\site-packages\wandb\sdk\wandb_init.py", line 1305, in init
+    return wi.init()
+           ^^^^^^^^^
+  File "c:\Users\mohammed\AppData\Local\Programs\Python\Python311\Lib\site-packages\wandb\sdk\wandb_init.py", line 813, in init
+    run._populate_git_info()
+  File "c:\Users\mohammed\AppData\Local\Programs\Python\Python311\Lib\site-packages\wandb\sdk\wandb_run.py", line 877, in _populate_git_info
+    self._remote_url, self._commit = repo.remote_url, repo.last_commit
+                                                      ^^^^^^^^^^^^^^^^
+  File "c:\Users\mohammed\AppData\Local\Programs\Python\Python311\Lib\site-packages\wandb\sdk\lib\gitlib.py", line 124, in last_commit
+    if len(self.repo.refs) > 0:  # type: ignore[arg-type]
+           ^^^^^^^^^^^^^^
+  File "c:\Users\mohammed\AppData\Local\Programs\Python\Python311\Lib\site-packages\git\repo\base.py", line 413, in references
+    return Reference.list_items(self)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\mohammed\AppData\Local\Programs\Python\Python311\Lib\site-packages\git\util.py", line 1283, in list_items
+    out_list.extend(cls.iter_items(repo, *args, **kwargs))
+  File "c:\Users\mohammed\AppData\Local\Programs\Python\Python311\Lib\site-packages\git\refs\symbolic.py", line 820, in _iter_items
+    for root, dirs, files in os.walk(join_path_native(repo.common_dir, common_path)):
+  File "<frozen os>", line 418, in _walk
+  File "<frozen ntpath>", line 261, in islink
+KeyboardInterrupt

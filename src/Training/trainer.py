@@ -1,0 +1,405 @@
+import torch
+import torch.nn.functional as F
+import torch.nn as nn
+import matplotlib.pyplot as plt
+from torch.autograd import grad
+from tqdm import tqdm
+from numpy.polynomial.legendre import legval
+import wandb
+import seaborn as sns
+from src.Models.models import PINN_Net, CustomPINN
+from src.Operators.Diff_Op import pdeOperator
+from src.Operators.Bound_Op import BoundaryCondition, BoundaryLoss, BoundaryType, BoundaryLocation
+
+
+class Trainer:
+    def __init__(
+        self,
+        coords,
+        boundary_conditions,
+        pde_configurations,
+        watch=False,
+        name=None,
+        input_size=2,
+        output_size=1,
+        hidden=100,
+        layers=5,
+        lr=0.01
+    ):
+        """
+        Physics-Informed Neural Network (PINN) class for solving PDEs.
+
+        Parameters
+        ----------
+        coords : list of torch.Tensor
+            Coordinate tensors (e.g. for 1D: [x], for 2D: [x,y], etc.)
+        f : callable
+            Forcing (source) function of the PDE.
+        boundary_conditions : list of dict
+            List of boundary conditions, each dict must have keys:
+            {'type': str, 'location': str, 'value': torch.Tensor}.
+        pde_configurations : callable
+            PDE pde_configurations that takes u_pred and coords and returns the PDE residual.
+        watch : bool, optional
+            If True, log training with wandb.
+        name : str, optional
+            Name for the wandb run (if watch=True).
+        u_exact : callable, optional
+            Exact solution for reference or error computations.
+        input_size : int
+            Dimensionality of input to the neural net (e.g. 1, 2, or 3).
+        output_size : int
+            Dimensionality of the network output (usually 1).
+        hidden : int
+            Number of hidden units in each layer.
+        layers : int
+            Number of hidden layers.
+        lr : float
+            Learning rate.
+        """
+        self.device = "cuda" if torch.cuda.is_available() else "cpu"
+        self.coords = coords
+        self.f = pde_configurations.source_function 
+        self.boundary_conditions = boundary_conditions
+        self.pde_configurations = pde_configurations
+        self.operator = pde_configurations.operator
+        self.exact_solution = pde_configurations.u_exact
+        self.watch = watch
+        self.lr = lr
+
+        # Build the model
+        self.model = self.build_model(input_size, output_size, hidden, layers)
+
+        # Initialize wandb if needed
+        if self.watch:
+            run_name = self._construct_run_name(name)
+            wandb.init(project="pinn-project", name=run_name, reinit=True)
+            wandb.watch(self.model)
+
+        # Learnable weights for adaptive boundary conditions
+        self.weights = []
+        self.weights_handler()
+
+        # Optimizer and Scheduler
+        self.optimizer = torch.optim.Adam(
+            [{'params': self.model.parameters()}, {'params': self.weights}], lr=self.lr
+        )
+        self.scheduler = torch.optim.lr_scheduler.StepLR(self.optimizer, step_size=100, gamma=0.9)
+
+    def build_model(self, input_size, output_size, hidden, layers):
+        """Build the neural network model."""
+        model = PINN_Net(input_size, output_size, hidden, layers).to(self.device)
+        return model
+
+    def _construct_run_name(self, name):
+        """Construct a run name for wandb logging based on dimension and user-specified name."""
+        dim = len(self.coords)
+        if dim == 1:
+            prefix = "1D"
+        elif dim == 2:
+            prefix = "2D"
+        else:
+            prefix = "3D"
+        return prefix + (name if name else "")
+    
+    def weights_handler(self):
+        """Handle adaptive weights."""
+        if self.pde_configurations.trainable:
+            self.weights.append(torch.tensor(1.0, requires_grad=True, device=self.device))
+
+        for boundarie in self.boundary_conditions:
+            if boundarie.trainable :
+                self.weights.append(torch.tensor(1.0, requires_grad=True, device=self.device))
+            else:
+                pass
+
+
+    def compute_loss(self, u_pred, coords, f, loss_function=None):
+        """Compute the total loss including PDE and boundary conditions."""
+        # PDE residual
+        
+        f_pred = self.operator(u_pred, *coords)
+        pde_loss = loss_function(f_pred.squeeze(), f.squeeze()) if loss_function else F.mse_loss(f_pred.squeeze(), f.squeeze())
+        self.error = torch.abs(f_pred.squeeze() - f.squeeze())
+
+        
+
+        boundary_loss = BoundaryLoss()
+        if self.pde_configurations.trainable: 
+            trainable_idx = 1  # Start from 1 since weights[0] is for something else
+            self.pde_configurations.weight = self.weights[0]
+        else:
+            trainable_idx = 0
+        for i in range(len(self.boundary_conditions)):
+            if self.boundary_conditions[i].trainable:
+                self.boundary_conditions[i].weight = self.weights[trainable_idx]
+                trainable_idx += 1 
+
+             
+        boundary_losses = [boundary_loss(u_pred, bc , coords) for bc in self.boundary_conditions]
+
+        # Weighted loss
+        weight_function = self.pde_configurations.weight_function  
+        
+
+
+        #loss = sum(boundary_losses[i] * weight_function(self.weights[i+1]) for i in range(len(boundary_losses)))
+        loss = sum(boundary_losses[i]  for i in range(len(boundary_losses)))
+        total_loss = pde_loss*weight_function(self.pde_configurations.weight) + loss
+            
+
+        # Logging to wandb
+        if self.watch:
+            self._log_to_wandb(total_loss, pde_loss, boundary_losses)
+
+        return total_loss
+
+    def _log_to_wandb(self, total_loss, pde_loss, boundary_losses):
+        """Log metrics to wandb."""
+        wandb.log({"loss": total_loss.item(), "pde_loss": pde_loss.item()})
+        for i, bc_loss in enumerate(boundary_losses):
+            wandb.log({f"boundary_loss_{i}": bc_loss.item()})
+        for i, weight in enumerate(self.weights):
+            wandb.log({f"weight_{i}": torch.exp(-weight)})
+
+
+    def train_one_epoch(self, epoch, inputs , coords, rate=100, loss_function=None):
+        self.optimizer.zero_grad()
+        u_pred = self.model(inputs).squeeze()
+        #print(u_pred.shape , inputs.shape)
+        u_exact = self.exact_solution(*coords) if self.exact_solution else None
+        f_values = self.f(*coords)
+
+        # Compute loss
+        loss = self.compute_loss(u_pred, coords, f_values, loss_function)
+
+        # Adaptive collocation
+        if self.pde_configurations.adaptive_nodes > 0 and (epoch + 1) % rate == 0:
+
+            coords = self.update_collocation_points(coords, u_pred, u_exact)
+            #self.visualize_distribution(coords , self.error)
+            inputs = torch.cat([c.unsqueeze(-1) for c in coords], dim=-1)
+            #print(inputs.shape)
+            
+
+        loss.backward(retain_graph=True)
+        self.optimizer.step()
+        self.scheduler.step()
+
+        return loss , coords
+
+
+    def train(self, epochs=500, rate=100, loss_function=None):
+        """Train the PINN model."""
+
+        progress_bar = tqdm(range(epochs), desc="Training", unit="epoch")
+        print("Training the model...")
+        coords = self.coords
+        for epoch in progress_bar:
+            
+            inputs = torch.cat([c.unsqueeze(-1) for c in coords], dim=-1)
+            loss , coords = self.train_one_epoch(epoch, inputs , coords, rate, loss_function)
+
+            # Update progress bar
+            mse = self.test() if self.exact_solution else None
+            postfix = {"Loss": f"{loss.item():.4e}"}
+            if mse is not None:
+                postfix["MSE"] = f"{mse.item():.4e}"
+                if self.watch:
+                    wandb.log({"MSE": mse.item()})
+            progress_bar.set_postfix(postfix)
+        self.coords = coords
+        wandb.finish()
+
+        final_mse = mse.item() if mse is not None else 0
+        return final_mse, loss.item()
+
+    def adaptive_collocation_points(self, coords, u_pred, u_exact, num_samples=100 , noise_level = 0.01):
+        """Select new collocation points based on residual distribution."""
+        residuals = torch.abs(self.operator(u_pred, *coords).squeeze() - self.f(*coords).squeeze())
+        p = (residuals**2) / torch.sum(residuals**2)
+        indices = torch.multinomial(p.flatten(), num_samples=num_samples, replacement=True)
+
+        new_coords = []
+        for c in coords:
+            new_coord = c.flatten()[indices]
+            coord_range = c.max() - c.min()
+            noise = torch.randn_like(new_coord) * noise_level * coord_range
+            
+            # Add noise and clip to domain bounds
+            noisy_coord = torch.clamp(
+                new_coord + noise,
+                min=c.min(),
+                max=c.max()
+            )
+            new_coords.append(noisy_coord.squeeze())
+        return new_coords
+
+    def update_collocation_points(self, coords, outputs, u_exact):
+        """Update collocation points for adaptive sampling."""
+        # Example: For now, we just call adaptive_collocation_points once for 1D
+        # For higher dims, user must adapt logic.
+        # This code should be made dimension-specific if needed.
+        if len(coords) == 1:
+            num_samples = self.pde_configurations.adaptive_nodes
+            adaptive_x = self.adaptive_collocation_points(coords, outputs, u_exact, num_samples = num_samples)[0]
+            x = coords[0]
+            x = torch.cat([x, adaptive_x])
+            x = torch.sort(x)[0]
+            coords[0] = x
+        elif len(coords) == 2:
+            num_samples = self.pde_configurations.adaptive_nodes
+            adaptive_x ,adaptive_y  = self.adaptive_collocation_points(coords, outputs, u_exact , num_samples = num_samples)
+            x ,y = coords[0], coords[1] 
+            n_shape = int(num_samples ** (1/2) + 0.5)
+            x = torch.cat([x[:,0], adaptive_x.reshape(n_shape, n_shape)[:,0]])
+            y = torch.cat([y[0,:], adaptive_y.reshape(n_shape, n_shape)[0,:]])
+            x, y = torch.sort(x)[0], torch.sort(y)[0]
+            x,y = torch.meshgrid(x,y)
+            coords = [x,y]
+
+        elif len(coords) == 3:
+            num_samples = self.pde_configurations.adaptive_nodes
+            adaptive_x, adaptive_y, adaptive_z = self.adaptive_collocation_points(coords, outputs, u_exact , num_samples = num_samples)
+            x, y, z = coords[0], coords[1], coords[2]
+            n_shape = int(num_samples ** (1/3) + 0.5)
+
+            x = torch.cat([x[:, 0, 0], adaptive_x.reshape(n_shape, n_shape, n_shape)[:, 0, 0]])
+            y = torch.cat([y[0, :, 0], adaptive_y.reshape(n_shape, n_shape, n_shape)[0, :, 0]])
+            z = torch.cat([z[0, 0, :], adaptive_z.reshape(n_shape, n_shape, n_shape)[0, 0, :]])
+            x, y, z = torch.sort(x)[0], torch.sort(y)[0], torch.sort(z)[0]
+            x, y, z = torch.meshgrid(x, y, z)
+            coords = [x, y, z]
+
+        if self.exact_solution is not None:
+            u_exact = self.exact_solution(*coords)
+            
+
+
+
+        return coords
+    
+    def visualize_distribution(self , coords , error ):
+        """
+        Visualize distribution of vector elements
+        Args:
+            coords: List of coordinate tensors
+            selected_indices: Indices of selected points
+            original_shape: Original shape of the domain
+        """
+        fig = plt.figure(figsize=(15, 5))
+        
+        # 1. Histogram of values
+        plt.subplot(131)
+        for i, coord in enumerate(['x']):
+            sns.histplot(coords[i].flatten().detach().numpy(), label=coord, alpha=0.3)
+        plt.title('Distribution of Coordinates')
+        plt.legend()
+        # plt of error
+        plt.subplot(132)
+        plt.plot(error.detach().numpy()  , label = "Error")
+
+    def plot_solution(self, coords, u_exact):
+        """Visualize the solution for 1D, 2D, or 3D PDEs."""
+        inputs = torch.cat([c.unsqueeze(-1) for c in coords], dim=-1)
+        u_pred = self.model(inputs).cpu().detach().numpy().squeeze()
+
+        dim = len(coords)
+        if dim == 1:
+            self._plot_1D(coords, u_pred, u_exact)
+        elif dim == 2:
+            self._plot_2D(coords, u_pred, u_exact)
+        elif dim == 3:
+            self._plot_3D(coords, u_pred, u_exact)
+        else:
+            raise ValueError("Unsupported dimension for plotting.")
+
+    def _plot_1D(self, coords, u_pred, u_exact):
+        plt.plot(coords[0].cpu().detach().numpy().squeeze(), u_pred, label="Prediction", linestyle="--")
+        if u_exact is not None:
+            plt.plot(coords[0].cpu().detach().numpy().squeeze(),
+                     u_exact.cpu().detach().numpy().squeeze(), label="Exact")
+        plt.legend()
+        plt.show()
+
+    def _plot_2D(self, coords, u_pred, u_exact):
+        fig, axes = plt.subplots(1, 2, figsize=(12, 5))
+        X = coords[0].cpu().detach().numpy()
+        Y = coords[1].cpu().detach().numpy()
+        cf1 = axes[0].contourf(X, Y, u_pred, levels=100, cmap="jet")
+        axes[0].set_title("Prediction")
+        fig.colorbar(cf1, ax=axes[0])
+
+        if u_exact is not None:
+            cf2 = axes[1].contourf(X, Y, u_exact.cpu().detach().numpy(), levels=100, cmap="jet")
+            axes[1].set_title("Exact")
+            fig.colorbar(cf2, ax=axes[1])
+
+        plt.show()
+
+    def _plot_3D(self, coords, u_pred, u_exact):
+        x_test, y_test, z_test = [c.cpu().detach().numpy().squeeze() for c in coords]
+        slice_idx = u_pred.shape[2] // 2
+        x_slice = x_test[:, :, slice_idx]
+        y_slice = y_test[:, :, slice_idx]
+        u_slice = u_pred[:, :, slice_idx]
+        u_exact_slice = u_exact.cpu().detach().numpy()[:, :, slice_idx] if u_exact is not None else None
+
+        fig = plt.figure(figsize=(20, 7))
+        ax1 = fig.add_subplot(1, 2, 1, projection='3d')
+        surf1 = ax1.plot_surface(x_slice, y_slice, u_slice, cmap="viridis")
+        ax1.set_title("Predicted Solution (z=mid)")
+        ax1.set_xlabel("X")
+        ax1.set_ylabel("Y")
+        ax1.set_zlabel("u_pred")
+        fig.colorbar(surf1, ax=ax1, shrink=0.5, aspect=12)
+
+        if u_exact_slice is not None:
+            ax2 = fig.add_subplot(1, 2, 2, projection='3d')
+            surf2 = ax2.plot_surface(x_slice, y_slice, u_exact_slice, cmap="viridis")
+            ax2.set_title("Exact Solution (z=mid)")
+            ax2.set_xlabel("X")
+            ax2.set_ylabel("Y")
+            ax2.set_zlabel("u_exact")
+            fig.colorbar(surf2, ax=ax2, shrink=0.5, aspect=12)
+
+        plt.tight_layout()
+        plt.show()
+
+    def test(self):
+        """
+        Test the model on a fixed grid and compute MSE with the exact solution if available.
+        """
+        dimensions = len(self.coords)
+        if self.exact_solution is None:
+            return None
+
+        if dimensions == 1:
+            a = torch.linspace(-1, 1, 100).unsqueeze(-1).to(self.device)
+            coords = [a]
+            inputs = a
+        elif dimensions == 2:
+            a = torch.linspace(-1, 1, 100).to(self.device)
+            b = torch.linspace(-1, 1, 100).to(self.device)
+            a, b = torch.meshgrid(a, b)
+            coords = [a, b]
+            inputs = torch.cat([c.unsqueeze(-1) for c in [a, b]], dim=-1)
+        elif dimensions == 3:
+            a = torch.linspace(-1, 1, 10).to(self.device)
+            b = torch.linspace(-1, 1, 10).to(self.device)
+            c = torch.linspace(-1, 1, 10).to(self.device)
+            a, b, c = torch.meshgrid(a, b, c)
+            coords = [a, b, c]
+            inputs = torch.cat([co.unsqueeze(-1) for co in [a, b, c]], dim=-1)
+        else:
+            raise ValueError(f"Unsupported dimension: {dimensions}")
+
+        u_test = self.model(inputs)
+        mse = F.mse_loss(u_test.squeeze(), self.exact_solution(*coords).squeeze())
+        return mse
+    
+    def get_coords(self):
+        return self.coords
+    
+    def get_risidual(self):
+        return self.error

@@ -1,0 +1,36 @@
+2025-01-25 23:47:11,654 INFO    MainThread:9716 [wandb_setup.py:_flush():68] Current SDK version is 0.19.0
+2025-01-25 23:47:11,657 INFO    MainThread:9716 [wandb_setup.py:_flush():68] Configure stats pid to 9716
+2025-01-25 23:47:11,657 INFO    MainThread:9716 [wandb_setup.py:_flush():68] Loading settings from C:\Users\mohammed\.config\wandb\settings
+2025-01-25 23:47:11,657 INFO    MainThread:9716 [wandb_setup.py:_flush():68] Loading settings from c:\Users\mohammed\OneDrive\Documents\QFM -S2\Solving PDE's using ANN\Solving-PDE-s-using-neural-network\wandb\settings
+2025-01-25 23:47:11,657 INFO    MainThread:9716 [wandb_setup.py:_flush():68] Loading settings from environment variables
+2025-01-25 23:47:11,657 INFO    MainThread:9716 [wandb_init.py:_log_setup():528] Logging user logs to c:\Users\mohammed\OneDrive\Documents\QFM -S2\Solving PDE's using ANN\Solving-PDE-s-using-neural-network\wandb\run-20250125_234711-rdl7mmgv\logs\debug.log
+2025-01-25 23:47:11,657 INFO    MainThread:9716 [wandb_init.py:_log_setup():529] Logging internal logs to c:\Users\mohammed\OneDrive\Documents\QFM -S2\Solving PDE's using ANN\Solving-PDE-s-using-neural-network\wandb\run-20250125_234711-rdl7mmgv\logs\debug-internal.log
+2025-01-25 23:47:11,664 INFO    MainThread:9716 [wandb_init.py:_jupyter_setup():474] configuring jupyter hooks <wandb.sdk.wandb_init._WandbInit object at 0x000001F58673B050>
+2025-01-25 23:47:11,672 INFO    MainThread:9716 [wandb_init.py:init():639] calling init triggers
+2025-01-25 23:47:11,672 INFO    MainThread:9716 [wandb_init.py:init():645] wandb.init called with sweep_config: {}
+config: {}
+2025-01-25 23:47:11,672 INFO    MainThread:9716 [wandb_init.py:init():688] starting backend
+2025-01-25 23:47:11,673 INFO    MainThread:9716 [wandb_init.py:init():692] sending inform_init request
+2025-01-25 23:47:11,793 INFO    MainThread:9716 [backend.py:_multiprocessing_setup():104] multiprocessing start_methods=spawn, using: spawn
+2025-01-25 23:47:11,799 INFO    MainThread:9716 [wandb_init.py:init():705] backend started and connected
+2025-01-25 23:47:14,232 INFO    MainThread:9716 [wandb_run.py:_label_probe_notebook():1327] probe notebook
+2025-01-25 23:47:14,237 INFO    MainThread:9716 [wandb_run.py:_label_probe_notebook():1337] Unable to probe notebook: 'charmap' codec can't decode byte 0x8f in position 15731: character maps to <undefined>
+2025-01-25 23:47:14,241 INFO    MainThread:9716 [wandb_init.py:init():798] updated telemetry
+2025-01-25 23:47:14,343 INFO    MainThread:9716 [wandb_init.py:init():830] communicating run to backend with 90.0 second timeout
+2025-01-25 23:47:15,702 INFO    MainThread:9716 [wandb_init.py:init():882] starting run threads in backend
+2025-01-25 23:47:21,501 INFO    MainThread:9716 [wandb_run.py:_console_start():2443] atexit reg
+2025-01-25 23:47:21,503 INFO    MainThread:9716 [wandb_run.py:_redirect():2293] redirect: wrap_raw
+2025-01-25 23:47:21,504 INFO    MainThread:9716 [wandb_run.py:_redirect():2358] Wrapping output streams.
+2025-01-25 23:47:21,506 INFO    MainThread:9716 [wandb_run.py:_redirect():2383] Redirects installed.
+2025-01-25 23:47:21,548 INFO    MainThread:9716 [wandb_init.py:init():925] run started, returning control to user process
+2025-01-25 23:47:21,551 INFO    MainThread:9716 [wandb_watch.py:_watch():71] Watching
+2025-01-25 23:48:26,401 INFO    MainThread:9716 [wandb_run.py:_finish():2169] finishing run mohammedkhlifi1357-um6p/pinn-project/rdl7mmgv
+2025-01-25 23:48:26,414 ERROR   MainThread:9716 [jupyter.py:save_history():451] Run pip install nbformat to save notebook history
+2025-01-25 23:48:26,415 INFO    MainThread:9716 [jupyter.py:save_ipynb():387] not saving jupyter notebook
+2025-01-25 23:48:26,415 INFO    MainThread:9716 [wandb_init.py:_jupyter_teardown():456] cleaning up jupyter logic
+2025-01-25 23:48:26,418 INFO    MainThread:9716 [wandb_run.py:_atexit_cleanup():2408] got exitcode: 0
+2025-01-25 23:48:26,421 INFO    MainThread:9716 [wandb_run.py:_restore():2390] restore
+2025-01-25 23:48:26,422 INFO    MainThread:9716 [wandb_run.py:_restore():2396] restore done
+2025-01-25 23:48:28,836 INFO    MainThread:9716 [wandb_run.py:_footer_history_summary_info():3951] rendering history
+2025-01-25 23:48:28,843 INFO    MainThread:9716 [wandb_run.py:_footer_history_summary_info():3983] rendering summary
+2025-01-25 23:48:28,984 INFO    MainThread:9716 [wandb_run.py:_footer_sync_info():3912] logging synced files
