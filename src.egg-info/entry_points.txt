@@ -1,4 +1,0 @@
-[console_scripts]
-pino = src.Training.NeuralPINN:main
-solve = src.Training.solver:main
-train = src.Training.trainer:main

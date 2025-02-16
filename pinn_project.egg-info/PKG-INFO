@@ -1,9 +1,0 @@
-Metadata-Version: 2.1
-Name: pinn_project
-Version: 0.1
-Summary: Physics Informed Neural Networks Project
-Author: Your Name
-Requires-Python: >=3.7
-Requires-Dist: torch
-Requires-Dist: numpy
-Requires-Dist: matplotlib
