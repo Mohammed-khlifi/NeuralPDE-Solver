@@ -3,7 +3,6 @@
 #imports
 from .Training import Trainer
 from .Training import Solver
-from .Training import PINO
 from .Operators import BoundaryCondition , BoundaryType , BoundaryLocation , BoundaryLoss
 from .Operators import pdeOperator , OperatorConfig
 from .Models import PINN_Net, CustomPINN
