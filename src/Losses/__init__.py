@@ -1,0 +1,1 @@
+from .PINN_losses import LpLoss, VariationalLoss

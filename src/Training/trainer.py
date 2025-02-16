@@ -20,6 +20,7 @@ class Trainer:
         pde_configurations,
         watch=False,
         name=None,
+        model = None,
         input_size=2,
         output_size=1,
         hidden=100,
@@ -68,7 +69,10 @@ class Trainer:
         self.lr = lr
 
         # Build the model
-        self.model = self.build_model(input_size, output_size, hidden, layers)
+        if model is None:
+            self.model = self.build_model(input_size, output_size, hidden, layers)
+        else:
+            self.model = model
 
         # Initialize wandb if needed
         if self.watch:
@@ -89,6 +93,7 @@ class Trainer:
     def build_model(self, input_size, output_size, hidden, layers):
         """Build the neural network model."""
         model = PINN_Net(input_size, output_size, hidden, layers).to(self.device)
+
         return model
 
     def _construct_run_name(self, name):
@@ -105,11 +110,15 @@ class Trainer:
     def weights_handler(self):
         """Handle adaptive weights."""
         if self.pde_configurations.trainable:
-            self.weights.append(torch.tensor(1.0, requires_grad=True, device=self.device))
+            weight = self.pde_configurations.weight
+            weight.requires_grad = True
+            self.weights.append(weight.to(self.device))
 
         for boundarie in self.boundary_conditions:
             if boundarie.trainable :
-                self.weights.append(torch.tensor(1.0, requires_grad=True, device=self.device))
+                weight = boundarie.weight
+                weight.requires_grad = True
+                self.weights.append(weight.to(self.device))
             else:
                 pass
 
@@ -118,11 +127,14 @@ class Trainer:
         """Compute the total loss including PDE and boundary conditions."""
         # PDE residual
         
-        f_pred = self.operator(u_pred, *coords)
-        pde_loss = loss_function(f_pred.squeeze(), f.squeeze()) if loss_function else F.mse_loss(f_pred.squeeze(), f.squeeze())
-        self.error = torch.abs(f_pred.squeeze() - f.squeeze())
+        f_pred = self.operator(u_pred, *coords).squeeze()
+        f = f.squeeze()
 
-        
+        if f.shape == 5 :
+            pde_loss = loss_function(f_pred[1 : -1], f[1 : -1]) if loss_function else F.mse_loss(f_pred[1 : -1], f[1 : -1])
+        else:
+            pde_loss = loss_function(f_pred, f) if loss_function else F.mse_loss(f_pred, f)
+        self.error = torch.abs(f_pred - f)  
 
         boundary_loss = BoundaryLoss()
         if self.pde_configurations.trainable: 
@@ -169,7 +181,8 @@ class Trainer:
         #print(u_pred.shape , inputs.shape)
         u_exact = self.exact_solution(*coords) if self.exact_solution else None
         f_values = self.f(*coords)
-
+        #f_exact = (f_values - f_values.max())/(f_values.max() - f_values.min())
+        #u_pred = self.model(f_exact.unsqueeze(-1)).squeeze()
         # Compute loss
         loss = self.compute_loss(u_pred, coords, f_values, loss_function)
 

@@ -91,8 +91,6 @@ class VariatinalLoss(object):
     
 
 
-    import torch
-
 class VariationalLoss:
     def __init__(self, dim, dx , reduction="mean"):
         """
