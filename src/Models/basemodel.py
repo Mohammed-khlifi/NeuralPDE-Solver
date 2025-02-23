@@ -77,8 +77,8 @@ class Basemodel:
         self.model = trainer.model
 
         if self.param['save_version']: 
-            print(self.param['save_version'])
-            #self.save_version(self.model, {"mse": mse, "loss": loss})
+            #print(self.param['save_version'])
+            self.save_version(self.model, {"mse": mse, "loss": loss})
 
         return mse, loss
 

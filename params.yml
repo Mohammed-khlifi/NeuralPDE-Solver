@@ -22,4 +22,4 @@ update_rate : 100
 
 #tracking 
 wandb_logs : False
-save_version : False
+save_version : 0

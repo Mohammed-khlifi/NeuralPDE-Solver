@@ -10,3 +10,8 @@ def callPDE(PDE_name):
     elif PDE_name == 'PDE3':
         from .PDE3 import operator, f, u_exact, load_data
         return operator, f, u_exact, load_data
+    
+def callData(Dataloader_name):
+    if Dataloader_name == 'Dataloader':
+        from .Dataloader import Train_Test_loaders
+        return Train_Test_loaders
