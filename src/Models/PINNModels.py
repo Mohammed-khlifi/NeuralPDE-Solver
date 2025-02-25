@@ -44,7 +44,7 @@ class PINNModel_2D(Basemodel):
         super().__init__(**kwargs)
         
 
-        self.model =  (2, 1, self.param['N_hidden'], self.param['N_layers'])
+        self.model =  PINN_Net(2, 1, self.param['N_hidden'], self.param['N_layers'])
 
         self.boundary_conditions = [
                 BoundaryCondition(

@@ -31,7 +31,7 @@ class FNO_model(NO_basemodel):
                   use_distributed=False,
                   verbose=True) 
 
-    def fit(self, train_loader , test_loaders , epochs=100):
+    """def fit(self, train_loader , test_loaders , epochs=100):
 
 
         train_loss = H1Loss(d=2)
@@ -44,4 +44,4 @@ class FNO_model(NO_basemodel):
             scheduler= self.scheduler,
             regularizer=False,
             training_loss= train_loss,
-            eval_losses=val_loss,)
+            eval_losses=val_loss,)"""

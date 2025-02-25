@@ -16,6 +16,16 @@ def callmodel(model_name):
     elif model_name == 'FNO':
         from .FNO_model import FNO_model
         return FNO_model
+    elif model_name == 'CNN':
+        from .CNN_model import CNN_model
+        return CNN_model
+    elif model_name == 'UNO':
+        from .NO_models import UNO_model
+        return UNO_model
+    elif model_name == 'TFNO':
+        from .NO_models import TFNO_model
+        return TFNO_model
+        
     
     else:
         print("model not found ")

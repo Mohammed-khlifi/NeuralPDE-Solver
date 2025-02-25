@@ -11,7 +11,7 @@ from .Losses import LpLoss, VariationalLoss
 import sys
 sys.path.append(r"C:\Users\mohammed\OneDrive\Documents\QFM -S2\Solving PDE's using ANN\Solving-PDE-s-using-neural-network\src\neuraloperator")
 
-from .neuraloperator.neuralop.models import FNO
+from .neuraloperator.neuralop.models import FNO , UNO ,GINO, UQNO , FNOGNO, TFNO
 from .neuraloperator.neuralop import Trainer
 from .neuraloperator.neuralop.training import AdamW
 from .neuraloperator.neuralop.data.datasets import load_darcy_flow_small
