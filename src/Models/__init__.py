@@ -25,7 +25,10 @@ def callmodel(model_name):
     elif model_name == 'TFNO':
         from .NO_models import TFNO_model
         return TFNO_model
-        
+    
+    elif model_name == 'CODANO':
+        from .NO_models import CODANO_model
+        return CODANO_model
     
     else:
         print("model not found ")

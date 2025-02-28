@@ -1,9 +1,10 @@
 from .basemodel import Basemodel
 from .NO_basemodel import NO_basemodel
 from .models import PINN_Net, CustomPINN
-from src import FNO , UNO ,GINO, UQNO , FNOGNO, TFNO
+from src import FNO , UNO ,GINO, UQNO , FNOGNO, TFNO, CODANO
 import torch
 import torch.nn as nn
+
 
 
 class CNN_model(NO_basemodel):
@@ -70,7 +71,50 @@ class UNO_model(NO_basemodel):
         self.optimizer = torch.optim.Adam(self.model.parameters(), lr=self.learning_rate)
         self.scheduler = torch.optim.lr_scheduler.StepLR(self.optimizer, step_size=5000, gamma=0.1)
 
+class CODANO_model(NO_basemodel):
 
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        output_variable_codimension = 1
+        n_layers = 5
+        n_heads = [2] * n_layers
+        n_modes = [[16, 16]] * n_layers
+        attention_scalings = [0.5] * n_layers
+        scalings = [[1, 1], [0.5, 0.5], [1, 1], [2, 2], [1, 1]]
+        use_horizontal_skip_connection = True
+        horizontal_skips_map = {3: 1, 4: 0}
+
+        hidden_variable_codimension = [1, 2]
+        lifting_channels = [4, 2, None]
+        use_positional_encoding = True
+        positional_encoding_dim = [4, 8]
+        positional_encoding_modes = [[8, 8], [16, 16]]
+        static_channel_dim = 2
+        variable_ids = [None]
+
+    
+        self.model = CODANO(
+            output_variable_codimension=output_variable_codimension,
+            hidden_variable_codimension=hidden_variable_codimension,
+            lifting_channels=lifting_channels,
+            use_positional_encoding=use_positional_encoding,
+            positional_encoding_dim=positional_encoding_dim,
+            positional_encoding_modes=positional_encoding_modes,
+            use_horizontal_skip_connection=use_horizontal_skip_connection,
+            static_channel_dim=static_channel_dim,
+            horizontal_skips_map=horizontal_skips_map,
+            variable_ids=variable_ids,
+            n_layers=n_layers,
+            n_heads=n_heads,
+            n_modes=n_modes,
+            attention_scaling_factors=attention_scalings,
+            per_layer_scaling_factors=scalings,
+            enable_cls_token=False,
+        )
+        
+        self.learning_rate = self.param['lr']
+        self.optimizer = torch.optim.Adam(self.model.parameters(), lr=self.learning_rate)
+        self.scheduler = torch.optim.lr_scheduler.StepLR(self.optimizer, step_size=5000, gamma=0.1)
 
 class quickCNN(nn.Module):
     def __init__(self, N_input, N_output, N_Hidden, N_layers, kernel_size=3, num_filters=16):

@@ -11,7 +11,7 @@ from .Losses import LpLoss, VariationalLoss
 import sys
 sys.path.append(r"C:\Users\mohammed\OneDrive\Documents\QFM -S2\Solving PDE's using ANN\Solving-PDE-s-using-neural-network\src\neuraloperator")
 
-from .neuraloperator.neuralop.models import FNO , UNO ,GINO, UQNO , FNOGNO, TFNO
+from .neuraloperator.neuralop.models import FNO , UNO ,GINO, UQNO , FNOGNO, TFNO,CODANO
 from .neuraloperator.neuralop import Trainer
 from .neuraloperator.neuralop.training import AdamW
 from .neuraloperator.neuralop.data.datasets import load_darcy_flow_small
@@ -19,4 +19,4 @@ from .neuraloperator.neuralop.utils import count_model_params
 from .neuraloperator.neuralop import LpLoss, H1Loss
 
 # Define what should be available when importing from src
-__all__ = ['Trainer', 'Solver', 'PINO', 'PINN_Net', 'CustomPINN' , 'LpLoss', 'VariationalLoss', 'BoundaryCondition' , 'BoundaryType' , 'BoundaryLocation' , 'BoundaryLoss' , 'pdeOperator' , 'OperatorConfig']
+__all__ = ['Trainer', 'Solver', 'PINN_Net', 'CustomPINN' , 'LpLoss', 'VariationalLoss', 'BoundaryCondition' , 'BoundaryType' , 'BoundaryLocation' , 'BoundaryLoss' , 'pdeOperator' , 'OperatorConfig']
