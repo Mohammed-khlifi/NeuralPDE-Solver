@@ -21,6 +21,10 @@ def parse_args():
                       help='Number of epochs to train')
     parser.add_argument('--lr', type=float, default=1e-3,
                       help='Learning rate')
+    parser.add_argument('--AC', type = int , default = 0,
+                      help='Adaptive nodes')
+    parser.add_argument('--update_rate', type = int , default = 0,
+                      help='Update rate')
     parser.add_argument('--save_version', action='store_true',
                       help='Save model version')
     return parser.parse_args()
