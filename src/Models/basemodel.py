@@ -8,6 +8,9 @@ from src import pdeOperator , OperatorConfig
 from src.Training.trainer import Trainer
 from .models import PINN_Net, CustomPINN
 
+def l2_error(pred, true):
+    return torch.sqrt(torch.sum((pred - true) ** 2))/torch.sqrt(torch.sum(true**2))
+
 class Basemodel:
 
 
@@ -30,7 +33,7 @@ class Basemodel:
             u_exact=self.u_exact,
             trainable=self.param['TF'],
             weight_function= lambda x : torch.exp(x) ,
-            pde_loss = None,
+            pde_loss = l2_error,
             adaptive_nodes = self.param['adaptive_nodes'],
             update_rate = self.param['update_rate'],
 
