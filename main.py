@@ -60,6 +60,8 @@ def main():
         PINNmodel = callmodel(args.model_name)
         if args.epochs == 0:
             param['epochs'] = args
+
+        print("hello world")
         model = PINNmodel(param=param, operator=operator, f=f, u_exact=u_exact, load_data=load_data)
         mse, loss = train_pinn(model, x, param)
         
