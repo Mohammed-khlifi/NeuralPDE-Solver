@@ -227,13 +227,20 @@ class Trainer:
         final_mse = mse.item() if mse is not None else 0
         return final_mse, loss.item()
 
-    def adaptive_collocation_points(self, coords, u_pred, u_exact, num_samples=100 , noise_level = 0.01):
+    def adaptive_collocation_points(self, coords, u_pred, u_exact, num_samples=100 , noise_level = 0.0001):
         """Select new collocation points based on residual distribution."""
+        fake_inputs = torch.cat([c.unsqueeze(-1) for c in coords], dim=-1)
+        u_pred = self.model(fake_inputs).squeeze()
         residuals = torch.abs(self.operator(u_pred, *coords).squeeze() - self.f(*coords).squeeze())
         p = (residuals**2) / torch.sum(residuals**2)
         indices = torch.multinomial(p.flatten(), num_samples=num_samples, replacement=True)
 
         new_coords = []
+
+        """plt.scatter(coords[0].flatten().detach().numpy(), coords[1].flatten().detach().numpy(), c=residuals.flatten().detach().numpy())
+        plt.colorbar()
+        plt.show()"""
+
         for c in coords:
             new_coord = c.flatten()[indices]
             coord_range = c.max() - c.min()
@@ -245,52 +252,93 @@ class Trainer:
                 min=c.min(),
                 max=c.max()
             )
-            new_coords.append(noisy_coord.squeeze())
+            new_coords.append(new_coord.squeeze())
+
+        """plt.scatter(new_coords[0].detach().numpy(), new_coords[1].detach().numpy())
+        plt.colorbar()
+        plt.show()"""
+
+        
+        #import sys ; sys.exit()
         return new_coords
 
     def update_collocation_points(self, coords, outputs, u_exact):
-        """Update collocation points for adaptive sampling."""
-        # Example: For now, we just call adaptive_collocation_points once for 1D
-        # For higher dims, user must adapt logic.
-        # This code should be made dimension-specific if needed.
+        """
+        Update collocation points for adaptive sampling.
+
+        Args:
+            coords (list of torch.Tensor): Current collocation points (1D, 2D, or 3D).
+            outputs (torch.Tensor): Model predictions at current collocation points.
+            u_exact (torch.Tensor): Exact solution values (if available).
+
+        Returns:
+            list of torch.Tensor: Updated collocation points with adaptive sampling.
+        """
+
+        num_samples = self.pde_configurations.adaptive_nodes
+
+        # Handle 1D case
         if len(coords) == 1:
-            num_samples = self.pde_configurations.adaptive_nodes
-            adaptive_x = self.adaptive_collocation_points(coords, outputs, u_exact, num_samples = num_samples)[0]
-            x = coords[0]
-            x = torch.cat([x, adaptive_x])
-            x = torch.sort(x)[0]
-            coords[0] = x
+            fake_x = torch.linspace(-1, 1, 1000, device=self.device, requires_grad=True)
+            adaptive_x = self.adaptive_collocation_points([fake_x], outputs, u_exact, num_samples=num_samples)[0]
+            
+            # Combine old and new collocation points
+            x = torch.cat([coords[0], adaptive_x])
+            coords[0] = torch.sort(x)[0]
+
+        # Handle 2D case
         elif len(coords) == 2:
-            num_samples = self.pde_configurations.adaptive_nodes
-            adaptive_x ,adaptive_y  = self.adaptive_collocation_points(coords, outputs, u_exact , num_samples = num_samples)
-            x ,y = coords[0], coords[1] 
-            n_shape = int(num_samples ** (1/2) + 0.5)
-            x = torch.cat([x[:,0], adaptive_x.reshape(n_shape, n_shape)[:,0]])
-            y = torch.cat([y[0,:], adaptive_y.reshape(n_shape, n_shape)[0,:]])
+            fake_x = torch.linspace(-1, 1, 200, device=self.device)
+            fake_y = torch.linspace(-1, 1, 200, device=self.device)
+            fake_x, fake_y = torch.meshgrid(fake_x, fake_y, indexing="ij")
+
+            fake_x.requires_grad = fake_y.requires_grad = True
+
+            adaptive_x, adaptive_y = self.adaptive_collocation_points([fake_x, fake_y], outputs, u_exact, num_samples=num_samples)
+            x, y = coords[0], coords[1]
+            
+            # Compute the shape for adaptive sampling
+            n_shape = int(num_samples ** 0.5 + 0.5)
+            adaptive_x = adaptive_x.reshape(n_shape, n_shape)
+            adaptive_y = adaptive_y.reshape(n_shape, n_shape)
+
+            # Merge and sort collocation points
+            x = torch.cat([x[:, 0], adaptive_x[:, 0]])
+            y = torch.cat([y[0, :], adaptive_y[0, :]])
             x, y = torch.sort(x)[0], torch.sort(y)[0]
-            x,y = torch.meshgrid(x,y)
-            coords = [x,y]
+            coords = torch.meshgrid(x, y, indexing="ij")
 
+        # Handle 3D case
         elif len(coords) == 3:
-            num_samples = self.pde_configurations.adaptive_nodes
-            adaptive_x, adaptive_y, adaptive_z = self.adaptive_collocation_points(coords, outputs, u_exact , num_samples = num_samples)
+            fake_x = torch.linspace(-1, 1, 200, device=self.device)
+            fake_y = torch.linspace(-1, 1, 200, device=self.device)
+            fake_z = torch.linspace(-1, 1, 200, device=self.device)
+            fake_x, fake_y, fake_z = torch.meshgrid(fake_x, fake_y, fake_z, indexing="ij")
+
+            fake_x.requires_grad = fake_y.requires_grad = fake_z.requires_grad = True
+
+            adaptive_x, adaptive_y, adaptive_z = self.adaptive_collocation_points([fake_x, fake_y, fake_z], outputs, u_exact, num_samples=num_samples)
             x, y, z = coords[0], coords[1], coords[2]
+
+            # Compute the shape for adaptive sampling
             n_shape = int(num_samples ** (1/3) + 0.5)
+            adaptive_x = adaptive_x.reshape(n_shape, n_shape, n_shape)
+            adaptive_y = adaptive_y.reshape(n_shape, n_shape, n_shape)
+            adaptive_z = adaptive_z.reshape(n_shape, n_shape, n_shape)
 
-            x = torch.cat([x[:, 0, 0], adaptive_x.reshape(n_shape, n_shape, n_shape)[:, 0, 0]])
-            y = torch.cat([y[0, :, 0], adaptive_y.reshape(n_shape, n_shape, n_shape)[0, :, 0]])
-            z = torch.cat([z[0, 0, :], adaptive_z.reshape(n_shape, n_shape, n_shape)[0, 0, :]])
+            # Merge and sort collocation points
+            x = torch.cat([x[:, 0, 0], adaptive_x[:, 0, 0]])
+            y = torch.cat([y[0, :, 0], adaptive_y[0, :, 0]])
+            z = torch.cat([z[0, 0, :], adaptive_z[0, 0, :]])
             x, y, z = torch.sort(x)[0], torch.sort(y)[0], torch.sort(z)[0]
-            x, y, z = torch.meshgrid(x, y, z)
-            coords = [x, y, z]
+            coords = torch.meshgrid(x, y, z, indexing="ij")
 
+        # Update exact solution if available
         if self.exact_solution is not None:
             u_exact = self.exact_solution(*coords)
-            
-
-
 
         return coords
+
     
     def visualize_distribution(self , coords , error ):
         """

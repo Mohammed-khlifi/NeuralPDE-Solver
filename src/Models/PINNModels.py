@@ -45,13 +45,13 @@ class PINNModel_2D(Basemodel):
         
 
         self.model =  PINN_Net(2, 1, self.param['N_hidden'], self.param['N_layers'])
-
+        weight= torch.tensor(self.param['weight'])
         self.boundary_conditions = [
                 BoundaryCondition(
                         type=BoundaryType.DIRICHLET,
                         location=BoundaryLocation.Y_MAX,
                         value= self.load_data()['bound_up'] ,#lambda x,y : torch.exp(-10*(y[0,:]**2 + 1)).squeeze(),
-                        weight= self.param['weight'],
+                        weight= weight,
                         trainable=self.param['TF'],
                         weight_function= lambda x : torch.exp(x),
                         ),
@@ -59,7 +59,7 @@ class PINNModel_2D(Basemodel):
                         type=BoundaryType.DIRICHLET,
                         location=BoundaryLocation.Y_MIN,
                         value= self.load_data()['bound_down'] ,#lambda x,y : torch.exp(-10*(y[0,:]**2 + 1)).squeeze(),
-                        weight= self.param['weight'],
+                        weight= weight,
                         trainable=self.param['TF'],
                         weight_function= lambda x : torch.exp(x),
 
@@ -69,7 +69,7 @@ class PINNModel_2D(Basemodel):
                         type=BoundaryType.DIRICHLET,
                         location=BoundaryLocation.X_MIN,
                         value= self.load_data()['bound_right'] ,#lambda x,y : torch.exp(-10*(1 + x[:,0]**2)).squeeze(),
-                        weight=self.param['weight'],
+                        weight= weight,
                         trainable= self.param['TF'],
                         weight_function= lambda x : torch.exp(x),
                         ),
@@ -77,7 +77,7 @@ class PINNModel_2D(Basemodel):
                         type=BoundaryType.DIRICHLET,
                         location=BoundaryLocation.X_MAX,
                         value= self.load_data()['bound_left'] ,#lambda x,y : torch.exp(-10*(1 + x[:,0]**2)).squeeze(),
-                        weight=self.param['weight'],
+                        weight= weight,
                         trainable= self.param['TF'],
                         weight_function= lambda x : torch.exp(x),
                         )
@@ -92,55 +92,55 @@ class PINNModel_3D(Basemodel):
         
 
         self.model = PINN_Net(3, 1, self.param['N_hidden'], self.param['N_layers'])
-
+        weight= torch.tensor(self.param['weight'])
         self.boundary_conditions = [
             BoundaryCondition(
                     type=BoundaryType.DIRICHLET,
                     location=BoundaryLocation.Z_MIN,
                     value= self.load_data()['bound_in'],#lambda x,y,z : self.u_exact(x , y , z)[0, :, :],
-                    weight=self.param['weight'],
+                    weight= weight,
                     trainable=self.param['TF'],
-                    weight_function= lambda x: torch.exp(-x),
+                    weight_function= lambda x: torch.abs(-x),
                     ),
             BoundaryCondition(
                     type=BoundaryType.DIRICHLET,
                     location=BoundaryLocation.Z_MAX,
                     value= self.load_data()['bound_out'], #lambda x,y,z : self.u_exact(x , y , z)[-1, :, :],
-                    weight=self.param['weight'],
+                    weight=weight,
                     trainable=self.param['TF'],
-                    weight_function= lambda x: torch.exp(-x),
+                    weight_function= lambda x: torch.abs(-x),
                     ),
             BoundaryCondition(
                     type=BoundaryType.DIRICHLET,
                     location=BoundaryLocation.Y_MIN,
                     value= self.load_data()['bound_down'], #lambda x,y,z : self.u_exact(x , y , z)[:, 0, :],
-                    weight=self.param['weight'],
+                    weight=weight,
                     trainable=self.param['TF'],
-                    weight_function= lambda x: torch.exp(-x),
+                    weight_function= lambda x: torch.abs(-x),
                     ),
             BoundaryCondition(
                     type=BoundaryType.DIRICHLET,
                     location=BoundaryLocation.Y_MAX,
                     value= self.load_data()['bound_up'], #lambda x,y,z : self.u_exact(x , y , z)[:, -1, :],
-                    weight=self.param['weight'],
+                    weight=weight,
                     trainable=self.param['TF'],
-                    weight_function= lambda x: torch.exp(-x),
+                    weight_function= lambda x: torch.abs(-x),
                     ),
             BoundaryCondition(
                     type=BoundaryType.DIRICHLET,
                     location=BoundaryLocation.X_MIN,
                     value= self.load_data()['bound_left'], #lambda x,y,z : self.u_exact(x , y , z)[:, :, 0],
-                    weight=self.param['weight'],
+                    weight=weight,
                     trainable=self.param['TF'],
-                    weight_function= lambda x: torch.exp(-x),
+                    weight_function= lambda x: torch.abs(-x),
                     ),
             BoundaryCondition(
                     type=BoundaryType.DIRICHLET,
                     location=BoundaryLocation.X_MAX,
                     value= self.load_data()['bound_right'], #lambda x,y,z : self.u_exact(x , y , z)[:, :, -1],
-                    weight=self.param['weight'],
+                    weight=weight,
                     trainable=self.param['TF'],
-                    weight_function= lambda x: torch.exp(-x),
+                    weight_function= lambda x: torch.abs(-x),
                     )
     ]
 
