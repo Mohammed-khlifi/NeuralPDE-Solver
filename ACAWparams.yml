@@ -15,8 +15,8 @@ lr : 0.001
 #pde parameters
 TF : True
 weight : 1.0
-adaptive_nodes : 16
-update_rate : 50
+adaptive_nodes : 10
+update_rate : 200
 
 
 
