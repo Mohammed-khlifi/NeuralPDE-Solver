@@ -156,7 +156,7 @@ class Trainer:
 
 
         #loss = sum(boundary_losses[i] * weight_function(self.weights[i+1]) for i in range(len(boundary_losses)))
-        loss = sum(boundary_losses[i]  for i in range(len(boundary_losses)))
+        loss = sum(boundary_losses[i] for i in range(len(boundary_losses)))
         total_loss = pde_loss*weight_function(self.pde_configurations.weight) + loss
             
 

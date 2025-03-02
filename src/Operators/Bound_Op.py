@@ -114,7 +114,7 @@ class BoundaryLoss(BoundaryExtractor):
             return bc.weight * F.mse_loss(
                 self.extract_boundary(u_pred, bc.location),
                 boundarie
-            )
+            ) + torch.abs(bc.weight)
         elif bc.type == BoundaryType.NEUMANN:
             return self.compute_neumann_loss(u_pred, bc)
         else:
