@@ -8,17 +8,16 @@ N_layers : 2
 N_output : 1
 
 #training
-epochs : 10
+epochs : 1000
 lr : 0.001
 
 
 #pde parameters
 TF : True
-weight : 1
+weight : 1.0
 adaptive_nodes : 0
 update_rate : 100
 bound_left : 1
-bound_right : -1
 
 
 

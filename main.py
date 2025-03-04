@@ -11,7 +11,7 @@ def parse_args():
                       default='PINN', help='Model type (PINN or Neural Operator)')
     parser.add_argument('--model_name', type=str, default='1D_PINNmodel',
                       help='Specific model architecture')
-    parser.add_argument('--config', type=str, default='params.yml',
+    parser.add_argument('--config', type=str, default='Config/params.yml',
                       help='Path to config file')
     parser.add_argument('--wandb_logs', action='store_true',
                       help='Enable wandb logging')
@@ -25,7 +25,7 @@ def parse_args():
                       help='Adaptive nodes')
     parser.add_argument('--update_rate', type = int , default = 0,
                       help='Update rate')
-    parser.add_argument('--save_version', action='store_true',
+    parser.add_argument('--save_version', type= int, default=False,
                       help='Save model version')
     return parser.parse_args()
 
