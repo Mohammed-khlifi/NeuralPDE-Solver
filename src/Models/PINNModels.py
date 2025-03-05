@@ -31,7 +31,7 @@ class PINNModel(Basemodel):
                     type=BoundaryType.DIRICHLET,
                     location=BoundaryLocation.X_MIN,
                     value= self.load_data()['bound_right'],
-                    weight= torch.tensor(self.param['weight']),
+                    weight= torch.tensor(1.0),
                     trainable=self.param['TF'],
                     weight_function = lambda x: torch.exp(-x),
                 )

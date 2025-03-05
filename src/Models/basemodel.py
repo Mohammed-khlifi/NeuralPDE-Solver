@@ -32,7 +32,7 @@ class Basemodel:
             source_function=self.f,
             u_exact=self.u_exact,
             trainable=self.param['TF'],
-            weight_function= lambda x : torch.exp(x) ,
+            weight_function= lambda x : torch.exp(-x) ,
             pde_loss = l2_error,
             adaptive_nodes = self.param['adaptive_nodes'],
             update_rate = self.param['update_rate'],
