@@ -46,7 +46,10 @@ def main():
         'save_version': args.save_version,
         'model_name': args.model_name,
         'epochs': args.epochs if args.epochs > 0 else param.get('epochs', 1000),
-        'lr': args.lr if args.lr > 0 else param.get('lr', 1e-3)
+        'lr': args.lr if args.lr > 0 else param.get('lr', 1e-3),
+        'wandb_logs': args.wandb_logs,
+        'adaptive_nodes': args.AC,
+        'update_rate' : args.update_rate
     })
 
     # Initialize PDE and data
