@@ -14,6 +14,6 @@ def load_data():
     "bound_down": lambda x,y : torch.exp(-10*(y[0,:]**2 + 1)).squeeze(),
     "bound_right": lambda x,y : torch.exp(-10*(x[:,0]**2 + 1)).squeeze(),
     "bound_left": lambda x,y : torch.exp(-10*(x[:,0]**2 + 1)).squeeze(),
-    "input": [torch.linspace(-1, 1, 32), torch.linspace(-1, 1, 32)],
+    "input": [torch.linspace(-1, 1, 10), torch.linspace(-1, 1, 10)],
     }
     return inputs
