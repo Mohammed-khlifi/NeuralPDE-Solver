@@ -4,10 +4,10 @@ set -e  # Exit immediately if a command exits with a non-zero status
 # Define model configurations:
 # "model_type model_name epochs learning_rate PDE num_points update_rate config_file [save_model]"
 models=(
-    "PINN 2D_PINNmodel 10000 0.01 PDE1 0 500 Config/params.yml"
-    "PINN 2D_PINNmodel 10000 0.01 PDE1 0 500 Config/AWparams.yml"
-    "PINN 2D_PINNmodel 10000 0.01 PDE1 16 500 Config/ACparams.yml"
-    "PINN 2D_PINNmodel 10000 0.01 PDE1 16 500 Config/ACAWparams.yml"
+    "PINN 2D_PINNmodel 10000 0.01 PDE2 0 500 Config/params.yml 1"
+    "PINN 2D_PINNmodel 10000 0.01 PDE2 0 500 Config/AWparams.yml 1"
+    "PINN 2D_PINNmodel 10000 0.01 PDE2 16 500 Config/ACparams.yml 1"
+    "PINN 2D_PINNmodel 10000 0.01 PDE2 16 500 Config/ACAWparams.yml 1"
 )
 
 # Create a results directory if it doesn't exist
