@@ -52,7 +52,7 @@ for model in "${models[@]}"; do
     start_time=$(date +%s)
 
     # Construct the command
-    cmd="python main.py --model_type \"$model_type\" --model_name \"$model_name\" --epochs \"$epochs\" --lr \"$lr\" --PDE \"$pde\" --AC \"$num_points\" --update_rate \"$update_rate\" --config \"$config_file\" --save_model \"$save_model\""
+    cmd="python main.py --model_type \"$model_type\" --model_name \"$model_name\" --epochs \"$epochs\" --lr \"$lr\" --PDE \"$pde\" --AC \"$num_points\" --update_rate \"$update_rate\" --config \"$config_file\" --save_version \"$save_model\""
     echo "Executing: $cmd"
     
     # Run the command and redirect all output to the log file
