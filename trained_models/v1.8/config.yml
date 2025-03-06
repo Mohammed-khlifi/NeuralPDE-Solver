@@ -1,0 +1,13 @@
+N_hidden: 100
+N_input: 2
+N_layers: 2
+N_output: 1
+TF: false
+adaptive_nodes: 0
+epochs: 1000
+lr: 0.01
+model_name: 2D_PINNmodel
+save_version: 1
+update_rate: 0
+wandb_logs: false
+weight: 1
