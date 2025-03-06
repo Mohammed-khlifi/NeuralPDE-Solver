@@ -1,20 +1,20 @@
 #!/bin/bash
 set -e  # Exit immediately if a command exits with a non-zero status
 
-# Define model configurations: "model_type model_name epochs learning_rate PDE config_file"
+# Define model configurations:
+# "model_type model_name epochs learning_rate PDE num_points update_rate config_file [save_model]"
 models=(
-    "PINN 1D_PINNmodel 10000 0.01 PDE1 params.yml"
-    "PINN 1D_PINNmodel 10000 0.01 PDE1 AWparams.yml"
-    "PINN 1D_PINNmodel 10000 0.01 PDE1 ACparams.yml"
-    "PINN 1D_PINNmodel 10000 0.01 PDE1 ACAWparams.yml"
+    "PINN 3D_PINNmodel 10000 0.01 PDE3 0 500 Config/params.yml 1"
+    "PINN 3D_PINNmodel 10000 0.01 PDE3 0 500 Config/AWparams.yml 1"
+    "PINN 3D_PINNmodel 10000 0.01 PDE3 64 500 Config/ACparams.yml 1"
+    "PINN 3D_PINNmodel 10000 0.01 PDE3 64 500 Config/ACAWparams.yml 1"
 )
 
 # Create a results directory if it doesn't exist
 mkdir -p benchmark_results
 
-echo "Starting Benchmarking Process for 1D models..."
+echo "Starting Benchmarking Process for 2D models..."
 
-# Loop over each model configuration
 for model in "${models[@]}"; do
     # Split the model string into individual parameters
     set -- $model
@@ -23,7 +23,15 @@ for model in "${models[@]}"; do
     epochs=$3
     lr=$4
     pde=$5
-    config_file=$6
+    num_points=$6
+    update_rate=$7
+    config_file=$8
+    # Use a default value (0) for save_model if not provided
+    if [ -z "$9" ]; then
+        save_model=0
+    else
+        save_model=$9
+    fi
 
     # Create a log file for this run
     log_file="benchmark_results/${model_name}_$(basename ${config_file})_log.txt"
@@ -35,20 +43,22 @@ for model in "${models[@]}"; do
     echo "   Epochs: $epochs"
     echo "   Learning Rate: $lr"
     echo "   PDE: $pde"
-    echo "   Config File: $config_file"
+    echo "   Num Points: $num_points"
+    echo "   Update Rate: $update_rate"
+    echo "   Save Model Flag: $save_model"
     echo "---------------------------------------------"
 
     # Start timing the execution
     start_time=$(date +%s)
 
     # Construct the command
-    cmd="python main.py --model_type \"$model_type\" --model_name \"$model_name\" --epochs \"$epochs\" --lr \"$lr\" --PDE \"$pde\" --config \"$config_file\""
+    cmd="python main.py --model_type \"$model_type\" --model_name \"$model_name\" --epochs \"$epochs\" --lr \"$lr\" --PDE \"$pde\" --AC \"$num_points\" --update_rate \"$update_rate\" --config \"$config_file\" --save_version \"$save_model\""
     echo "Executing: $cmd"
     
     # Run the command and redirect all output to the log file
     eval $cmd > "$log_file" 2>&1
 
-    # Optionally, check if the log file contains error messages
+    # Optionally check log for errors
     if grep -qi "error" "$log_file"; then
         echo "Warning: Errors detected during training. Check $log_file for details."
     fi

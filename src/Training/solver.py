@@ -171,14 +171,14 @@ class Solver:
 
         if plot:
             u_exact = pde_configurations.u_exact
-            a, b = x[0].item(), x[-1].item()
+            """a, b = x[0].item(), x[-1].item()
             c, d = y[0].item(), y[-1].item()
-            e, f_ = z[0].item(), z[-1].item()
+            e, f_ = z[0].item(), z[-1].item()"""
 
             # Generate test points
-            x_test = a + (b - a) * torch.rand(num_test_points, requires_grad=True).to(self.device)
-            y_test = c + (d - c) * torch.rand(num_test_points, requires_grad=True).to(self.device)
-            z_test = e + (f_ - e) * torch.rand(num_test_points, requires_grad=True).to(self.device)
+            x_test = torch.linspace(-1, 1, num_test_points, requires_grad=True).to(self.device)
+            y_test = torch.linspace(-1, 1, num_test_points, requires_grad=True).to(self.device)
+            z_test = torch.linspace(-1, 1, num_test_points, requires_grad=True).to(self.device)
             x_test, y_test, z_test = torch.sort(x_test)[0], torch.sort(y_test)[0], torch.sort(z_test)[0]
             x_test, y_test, z_test = torch.meshgrid(x_test, y_test, z_test)
 
