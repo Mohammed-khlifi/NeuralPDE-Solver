@@ -310,9 +310,9 @@ class Trainer:
 
         # Handle 3D case
         elif len(coords) == 3:
-            fake_x = torch.linspace(-1, 1, 200, device=self.device)
-            fake_y = torch.linspace(-1, 1, 200, device=self.device)
-            fake_z = torch.linspace(-1, 1, 200, device=self.device)
+            fake_x = torch.linspace(-1, 1, 100, device=self.device)
+            fake_y = torch.linspace(-1, 1, 100, device=self.device)
+            fake_z = torch.linspace(-1, 1, 100, device=self.device)
             fake_x, fake_y, fake_z = torch.meshgrid(fake_x, fake_y, fake_z, indexing="ij")
 
             fake_x.requires_grad = fake_y.requires_grad = fake_z.requires_grad = True
