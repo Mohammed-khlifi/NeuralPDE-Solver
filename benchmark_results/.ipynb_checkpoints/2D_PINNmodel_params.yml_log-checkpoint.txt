@@ -1,0 +1,17 @@
+/home/mohammed.khlifi/Solving-PDE-s-using-neural-network/src/neuraloperator/neuralop/layers/gno_block.py:15: SyntaxWarning: invalid escape sequence '\i'
+  """GNOBlock implements a Graph Neural Operator layer as described in [1]_.
+/home/mohammed.khlifi/Solving-PDE-s-using-neural-network/src/neuraloperator/neuralop/layers/integral_transform.py:10: SyntaxWarning: invalid escape sequence '\i'
+  """Integral Kernel Transform (GNO)
+/home/mohammed.khlifi/Solving-PDE-s-using-neural-network/src/neuraloperator/neuralop/losses/data_losses.py:17: SyntaxWarning: invalid escape sequence '\s'
+  """
+/home/mohammed.khlifi/Solving-PDE-s-using-neural-network/src/neuraloperator/neuralop/layers/gno_block.py:15: SyntaxWarning: invalid escape sequence '\i'
+  """GNOBlock implements a Graph Neural Operator layer as described in [1]_.
+/home/mohammed.khlifi/Solving-PDE-s-using-neural-network/src/neuraloperator/neuralop/layers/integral_transform.py:10: SyntaxWarning: invalid escape sequence '\i'
+  """Integral Kernel Transform (GNO)
+/home/mohammed.khlifi/Solving-PDE-s-using-neural-network/src/neuraloperator/neuralop/losses/data_losses.py:17: SyntaxWarning: invalid escape sequence '\s'
+  """
+usage: main.py [-h] [--model_type {PINN,NO}] [--model_name MODEL_NAME]
+               [--config CONFIG] [--wandb_logs] [--PDE PDE] [--epochs EPOCHS]
+               [--lr LR] [--AC AC] [--update_rate UPDATE_RATE]
+               [--save_version SAVE_VERSION]
+main.py: error: unrecognized arguments: --save_model 0
