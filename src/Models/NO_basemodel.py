@@ -92,7 +92,9 @@ class NO_basemodel(Basemodel):
             if epoch % 10 == 0:
                 print(f"Epoch {epoch}: Train Loss = {epoch_loss/len(train_loader):.4e}, "
                     f"Val Loss = {val_loss:.4e}, H1 Loss = {h1_loss:.4e}")
-        
+        if self.param['save_version']: 
+            #print(self.param['save_version'])
+            self.save_version(self.model, {"train loss": epoch_loss/len(train_loader), "val loss": val_loss})
         return epoch_loss/len(train_loader), val_loss
 
     def validate(self, test_loaders):
