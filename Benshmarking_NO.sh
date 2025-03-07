@@ -7,7 +7,7 @@ set -e
 models=("CNN" "FNO" "TFNO" "UNO")
 
 # Common parameters
-EPOCHS=10
+EPOCHS=500
 LR=0.01
 SAVE_VERSION=1
 MODEL_TYPE="NO"
