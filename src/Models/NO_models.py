@@ -4,6 +4,8 @@ from .models import PINN_Net, CustomPINN
 from src import FNO , UNO ,GINO, UQNO , FNOGNO, TFNO, CODANO
 import torch
 import torch.nn as nn
+import torch.nn.functional as F
+from src.neuraloperator.neuralop import LpLoss, H1Loss
 
 
 
@@ -70,6 +72,110 @@ class UNO_model(NO_basemodel):
         self.learning_rate = self.param['lr']
         self.optimizer = torch.optim.Adam(self.model.parameters(), lr=self.learning_rate)
         self.scheduler = torch.optim.lr_scheduler.StepLR(self.optimizer, step_size=5000, gamma=0.1)
+
+
+class PINO_model(NO_basemodel):
+    
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+    
+        self.model = FNO(n_modes=(16, 16),
+            in_channels=1,
+            out_channels=1,
+            hidden_channels=32,
+            projection_channel_ratio=2)
+        self.learning_rate = self.param['lr']
+        self.optimizer = torch.optim.Adam(self.model.parameters(), lr=self.learning_rate)
+        self.scheduler = torch.optim.lr_scheduler.StepLR(self.optimizer, step_size=5000, gamma=0.1)
+
+    def fit(self, train_loader, test_loaders):
+        """Custom training loop"""
+        train_loss = H1Loss(d=2)
+        l2loss = LpLoss(d=2 ,p=2)
+        
+        # Initialize tracking
+        best_loss = float('inf')
+        train_losses = []
+        val_losses = []
+        
+        # Training loop
+        for epoch in range(self.param['epochs']):
+            # Train phase
+            self.model.train()
+            epoch_loss = 0.0
+            
+            for batch in train_loader:
+                self.optimizer.zero_grad()
+                
+                # Forward pass
+                x = batch['x']
+                y_true = batch['y']
+                y_pred = self.model(x)
+                
+                # Calculate losses
+                mse_loss = F.mse_loss(y_pred.flatten(), y_true.flatten())
+                h1_loss = train_loss(y_pred.reshape(y_true.shape), y_true)
+                pde_loss = self.calculate_pde_loss(x, y_pred)
+                total_loss = mse_loss + pde_loss
+                
+                # Backward pass
+                total_loss.backward(retain_graph=True)
+                self.optimizer.step()
+                
+                
+                epoch_loss += mse_loss.item()
+            
+            # Validation phase
+            val_loss = self.validate(test_loaders)
+            
+            # Update learning rate
+            if self.scheduler:
+                self.scheduler.step()
+
+            if epoch % 10 == 0:
+                print(f"Epoch {epoch}: Train Loss = {epoch_loss/len(train_loader):.4e}, "
+                    f"Val Loss = {val_loss:.4e}, H1 Loss = {h1_loss:.4e} pde_loss = {pde_loss:.4e}")
+        
+        if self.param['save_version']: 
+            self.save_version(self.model, {"train loss": epoch_loss/len(train_loader), "val loss": val_loss})
+        return epoch_loss/len(train_loader), val_loss
+                         
+    def calculate_pde_loss(self, x, y_pred):
+        """Calculate PDE loss for Darcy Flow using FDM
+        -div(a∇u) = f where a = exp(x)
+        """
+        batch_size,_ , nx, ny = y_pred.shape
+        
+        # Grid spacing
+        dx = 2.0 / (nx - 1)
+        dy = 2.0 / (ny - 1)
+        
+        # Calculate coefficient a = exp(x)
+        a = torch.exp(x)
+        
+        # Calculate derivatives using finite differences
+        # Central differences for interior points
+        du_dx = (y_pred[:, 2:, 1:-1] - y_pred[:, :-2, 1:-1]) / (2 * dx)
+        du_dy = (y_pred[:, 1:-1, 2:] - y_pred[:, 1:-1, :-2]) / (2 * dy)
+        
+        # Calculate second derivatives
+        d2u_dx2 = (y_pred[:, 2:, 1:-1] - 2*y_pred[:, 1:-1, 1:-1] + y_pred[:, :-2, 1:-1]) / dx**2
+        d2u_dy2 = (y_pred[:, 1:-1, 2:] - 2*y_pred[:, 1:-1, 1:-1] + y_pred[:, 1:-1, :-2]) / dy**2
+        
+        # Calculate div(a∇u)
+        div_a_grad_u = (
+            d2u_dx2 * a[:, 1:-1, 1:-1] + 
+            d2u_dy2 * a[:, 1:-1, 1:-1] +
+            du_dx * (a[:, 2:, 1:-1] - a[:, :-2, 1:-1]) / (2 * dx) +
+            du_dy * (a[:, 1:-1, 2:] - a[:, 1:-1, :-2]) / (2 * dy)
+        )
+        
+        # PDE residual: -div(a∇u) = f (f=0 in this case)
+        residual = -div_a_grad_u
+        
+        # Return mean squared residual
+        return torch.mean(residual**2)
+        
 
 class CODANO_model(NO_basemodel):
 

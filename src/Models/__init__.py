@@ -30,5 +30,9 @@ def callmodel(model_name):
         from .NO_models import CODANO_model
         return CODANO_model
     
+    elif model_name == 'PINO':
+        from .NO_models import PINO_model
+        return PINO_model
+    
     else:
         print("model not found ")
