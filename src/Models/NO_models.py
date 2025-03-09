@@ -144,20 +144,22 @@ class PINO_model(NO_basemodel):
         """Calculate PDE loss for Darcy Flow using FDM
         -div(a∇u) = f where a = exp(x)
         """
-        batch_size,_ , nx, ny = y_pred.shape
+        y_pred = y_pred.squeeze()
+        batch_size , nx, ny = y_pred.shape
         
         # Grid spacing
         dx = 2.0 / (nx - 1)
         dy = 2.0 / (ny - 1)
         
         # Calculate coefficient a = exp(x)
-        a = torch.exp(x)
+        a = torch.exp(x).squeeze()
         
         # Calculate derivatives using finite differences
         # Central differences for interior points
         du_dx = (y_pred[:, 2:, 1:-1] - y_pred[:, :-2, 1:-1]) / (2 * dx)
         du_dy = (y_pred[:, 1:-1, 2:] - y_pred[:, 1:-1, :-2]) / (2 * dy)
-        
+        #print(du_dx.shape)
+        #import sys ; sys.exit()
         # Calculate second derivatives
         d2u_dx2 = (y_pred[:, 2:, 1:-1] - 2*y_pred[:, 1:-1, 1:-1] + y_pred[:, :-2, 1:-1]) / dx**2
         d2u_dy2 = (y_pred[:, 1:-1, 2:] - 2*y_pred[:, 1:-1, 1:-1] + y_pred[:, 1:-1, :-2]) / dy**2
