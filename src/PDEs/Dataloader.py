@@ -52,7 +52,7 @@ def split_dataset(dataset, train_size = 0.8):
     train_dataset, test_dataset = random_split(dataset, [train_size, test_size])
     return train_dataset, test_dataset
 
-def Train_Test_loaders(resolution=16, p_min=5, p_max=15 ,n_samples=20 ,u_exact = u_exact , operator = operator ,train_size = 0.8, batch_size = 32):
+def Train_Test_loaders(resolution=16, p_min=5, p_max=25 ,n_samples=500 ,u_exact = u_exact , operator = operator ,train_size = 0.8, batch_size = 32):
     Nx, Ny = resolution , resolution
     p_values = np.linspace(p_min, p_max, n_samples)
     dataset = create_dataset(Nx, Ny, p_values, u_exact, operator)
@@ -63,3 +63,22 @@ def Train_Test_loaders(resolution=16, p_min=5, p_max=15 ,n_samples=20 ,u_exact =
     test_loaders = {resolution: test_loader}
     train_loaders = {resolution: train_loader}
     return train_loaders, test_loaders
+
+
+
+
+def load_dataset(data_name):
+    if data_name == 'darcy_flow_small':
+        train_loader, test_loaders, _ = load_darcy_flow_small(
+            n_train=500, batch_size=32,
+            test_resolutions=[16, 32], n_tests=[100, 50],
+            test_batch_sizes=[32, 32],
+        )
+        return train_loader, test_loaders
+    
+    elif data_name == 'Poisson':
+        train_loaders, test_loaders = Train_Test_loaders(resolution=16, p_min=5, p_max=25 ,n_samples=500 ,u_exact = u_exact , operator = operator ,train_size = 0.8, batch_size = 32)
+        train_loader = train_loaders[16]
+        return train_loader, test_loaders
+    else:
+        raise ValueError(f'Unknown dataset: {data_name}')

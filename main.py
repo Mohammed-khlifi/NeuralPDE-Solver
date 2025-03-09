@@ -1,5 +1,5 @@
 from src.Models import callmodel
-from src.PDEs import callPDE, callData
+from src.PDEs import load_PDE, load_dataset
 from src.neuraloperator.neuralop.data.datasets import load_darcy_flow_small
 import yaml
 import torch
@@ -25,8 +25,11 @@ def parse_args():
                       help='Adaptive nodes')
     parser.add_argument('--update_rate', type = int , default = 0,
                       help='Update rate')
+    parser.add_argument('--Dataset', type=str, default='Darcy_flow_small',
+                      help='Dataset to use')
     parser.add_argument('--save_version', type= int, default=False,
                       help='Save model version')
+    
     return parser.parse_args()
 
 def train_pinn(model, x, param):
@@ -53,7 +56,7 @@ def main():
     })
 
     # Initialize PDE and data
-    operator, f, u_exact, load_data = callPDE(args.PDE)
+    operator, f, u_exact, load_data = load_PDE(args.PDE)
     
     if args.model_type == 'PINN':
         # PINN specific setup
@@ -65,18 +68,15 @@ def main():
             param['epochs'] = args
         model = PINNmodel(param=param, operator=operator, f=f, u_exact=u_exact, load_data=load_data)
         mse, loss = train_pinn(model, x, param)
+        print(f"Training completed. MSE: {mse:.4e}, Loss: {loss:.4e}")
         
     else:  # Neural Operator
         # Load NO specific data
-        train_loader, test_loaders, _ = load_darcy_flow_small(
-            n_train=500, batch_size=32,
-            test_resolutions=[16, 32], n_tests=[100, 50],
-            test_batch_sizes=[32, 32],
-        )
+        train_loader, test_loaders = load_dataset(args.Dataset)
         model = callmodel(args.model_name)(param=param)
-        mse, loss = train_neural_operator(model, train_loader, test_loaders, param)
-    
-    print(f"Training completed. MSE: {mse:.4e}, Loss: {loss:.4e}")
+        train_loss, val_loss = train_neural_operator(model, train_loader, test_loaders, param)
+        print(f"Training completed. Train Loss: {train_loss:.4e}, Val Loss: {val_loss:.4e}")
+   
 
 if __name__ == "__main__":
     main()

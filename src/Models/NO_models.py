@@ -115,8 +115,8 @@ class PINO_model(NO_basemodel):
                 # Calculate losses
                 mse_loss = F.mse_loss(y_pred.flatten(), y_true.flatten())
                 h1_loss = train_loss(y_pred.reshape(y_true.shape), y_true)
-                pde_loss = self.calculate_pde_loss(x, y_pred)
-                total_loss = mse_loss + pde_loss
+                pde_loss = self.calculate_pde_loss(y_true, y_pred)
+                total_loss = mse_loss + pde_loss * 10**-5
                 
                 # Backward pass
                 total_loss.backward(retain_graph=True)
@@ -138,24 +138,25 @@ class PINO_model(NO_basemodel):
         
         if self.param['save_version']: 
             self.save_version(self.model, {"train loss": epoch_loss/len(train_loader), "val loss": val_loss})
+            
         return epoch_loss/len(train_loader), val_loss
                          
-    def calculate_pde_loss(self, x, y_pred):
-        """Calculate PDE loss for Darcy Flow using FDM
-        -div(a∇u) = f where a = exp(x)
+    def calculate_pde_loss(self, u_exact , u_pred):
+        """Calculate PDE loss for Poisson equation
         """
+
+        fexact_fdm = self.laplacian(u_exact.squeeze())
+        fapprox_fdm = self.laplacian(u_pred)
+        pde_loss = F.mse_loss(fexact_fdm, fapprox_fdm)
+        return pde_loss
+        
+    
+    def laplacian(self, y_pred):
+        """Calculate Laplacian using FVM"""
         y_pred = y_pred.squeeze()
-        batch_size , nx, ny = y_pred.shape
-        
-        # Grid spacing
-        dx = 2.0 / (nx - 1)
-        dy = 2.0 / (ny - 1)
-        
-        # Calculate coefficient a = exp(x)
-        a = torch.exp(x).squeeze()
-        
-        # Calculate derivatives using finite differences
-        # Central differences for interior points
+        batch_size, nx , ny = y_pred.shape
+        dx = 1 / nx
+        dy = 1 / ny
         du_dx = (y_pred[:, 2:, 1:-1] - y_pred[:, :-2, 1:-1]) / (2 * dx)
         du_dy = (y_pred[:, 1:-1, 2:] - y_pred[:, 1:-1, :-2]) / (2 * dy)
         #print(du_dx.shape)
@@ -163,20 +164,10 @@ class PINO_model(NO_basemodel):
         # Calculate second derivatives
         d2u_dx2 = (y_pred[:, 2:, 1:-1] - 2*y_pred[:, 1:-1, 1:-1] + y_pred[:, :-2, 1:-1]) / dx**2
         d2u_dy2 = (y_pred[:, 1:-1, 2:] - 2*y_pred[:, 1:-1, 1:-1] + y_pred[:, 1:-1, :-2]) / dy**2
+
+        laplacian = d2u_dx2 + d2u_dy2
         
-        # Calculate div(a∇u)
-        div_a_grad_u = (
-            d2u_dx2 * a[:, 1:-1, 1:-1] + 
-            d2u_dy2 * a[:, 1:-1, 1:-1] +
-            du_dx * (a[:, 2:, 1:-1] - a[:, :-2, 1:-1]) / (2 * dx) +
-            du_dy * (a[:, 1:-1, 2:] - a[:, 1:-1, :-2]) / (2 * dy)
-        )
-        
-        # PDE residual: -div(a∇u) = f (f=0 in this case)
-        residual = -div_a_grad_u
-        
-        # Return mean squared residual
-        return torch.mean(residual**2)
+        return laplacian
         
 
 class CODANO_model(NO_basemodel):
