@@ -85,7 +85,12 @@ class PINO_model(NO_basemodel):
             hidden_channels=32,
             projection_channel_ratio=2)
         self.learning_rate = self.param['lr']
-        self.optimizer = torch.optim.Adam(self.model.parameters(), lr=self.learning_rate)
+        self.weights = [torch.tensor(0.0), torch.tensor(10.0)]
+        #kdkdkdk
+        self.optimizer = torch.optim.Adam([
+            {'params': self.model.parameters(), 'lr': self.learning_rate},
+            {'params': self.weights, 'lr': self.learning_rate}
+        ])
         self.scheduler = torch.optim.lr_scheduler.StepLR(self.optimizer, step_size=5000, gamma=0.1)
 
     def fit(self, train_loader, test_loaders):
@@ -116,7 +121,8 @@ class PINO_model(NO_basemodel):
                 mse_loss = F.mse_loss(y_pred.flatten(), y_true.flatten())
                 h1_loss = train_loss(y_pred.reshape(y_true.shape), y_true)
                 pde_loss = self.calculate_pde_loss(y_true, y_pred)
-                total_loss = mse_loss + pde_loss * 10**-5
+                total_loss = mse_loss * torch.exp(-self.weights[0]) + pde_loss * torch.exp(-self.weights[1]) + torch.abs(self.weights[0]) + torch.abs(self.weights[1])
+
                 
                 # Backward pass
                 total_loss.backward(retain_graph=True)
@@ -138,7 +144,7 @@ class PINO_model(NO_basemodel):
         
         if self.param['save_version']: 
             self.save_version(self.model, {"train loss": epoch_loss/len(train_loader), "val loss": val_loss})
-            
+
         return epoch_loss/len(train_loader), val_loss
                          
     def calculate_pde_loss(self, u_exact , u_pred):
