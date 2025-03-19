@@ -1,4 +1,4 @@
-from src.Training.trainer import Trainer
+from Training.trainer import Trainer
 import torch
 import torch.nn.functional as F
 import matplotlib.pyplot as plt

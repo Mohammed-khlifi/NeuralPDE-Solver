@@ -1,4 +1,4 @@
-from src.Operators.Diff_Op import pdeOperator
+from Operators.Diff_Op import pdeOperator
 import torch
 
 d = pdeOperator()

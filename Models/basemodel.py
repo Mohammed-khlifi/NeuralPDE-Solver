@@ -4,8 +4,8 @@ from datetime import datetime
 import os
 import json
 import yaml
-from src import pdeOperator , OperatorConfig
-from src.Training.trainer import Trainer
+from Operators import pdeOperator , OperatorConfig
+from Training.trainer import Trainer
 from .models import PINN_Net, CustomPINN
 
 def l2_error(pred, true):
@@ -26,19 +26,7 @@ class Basemodel:
         self.param = param
         self.model = None
         self.load_data = load_data
-        self.pde_configurations = OperatorConfig(
-            operator=self.operator,
-            weight= torch.tensor(self.param['weight']),
-            source_function=self.f,
-            u_exact=self.u_exact,
-            trainable=self.param['TF'],
-            weight_function= lambda x : torch.exp(-x) ,
-            pde_loss = l2_error,
-            adaptive_nodes = self.param['adaptive_nodes'],
-            update_rate = self.param['update_rate'],
-
-        )
-
+        self.pde_configurations = None
         self.boundary_conditions = []
 
     def fit(self , inputs) :
@@ -88,7 +76,7 @@ class Basemodel:
 
 
     def predict(self , inputs) :
-        pass
+        return self.model(inputs)
 
     def create_version_dir(self, version):
         """Create directory structure for new model version"""
@@ -141,3 +129,4 @@ class Basemodel:
         weights = torch.load(weights_path)
         
         return config, weights
+    

@@ -1,13 +1,13 @@
 from .basemodel import Basemodel
 from .models import PINN_Net, CustomPINN
-from src.Operators.Bound_Op import BoundaryCondition, BoundaryLocation, BoundaryType    
-from src import pdeOperator , OperatorConfig
+from Operators.Bound_Op import BoundaryCondition, BoundaryLocation, BoundaryType    
+from Operators import pdeOperator , OperatorConfig
 import torch
 import torch.nn as nn
 import typing as tp
-from src import FNO
-from src.neuraloperator.neuralop import Trainer
-from src.neuraloperator.neuralop import LpLoss, H1Loss
+from neuraloperator.neuralop.models import FNO
+from neuraloperator.neuralop import Trainer
+from neuraloperator.neuralop import LpLoss, H1Loss
 import torch.nn.functional as F
 
 class NO_basemodel(Basemodel):
@@ -66,7 +66,7 @@ class NO_basemodel(Basemodel):
                 #total_loss = mse_loss + self.param['weight'] * pde_loss
                 
                 # Backward pass
-                mse_loss.backward(retain_graph=True)
+                h1_loss.backward(retain_graph=True)
                 self.optimizer.step()
                 
                 

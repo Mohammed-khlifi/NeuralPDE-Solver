@@ -1,6 +1,6 @@
-from src.Models import callmodel
-from src.PDEs import load_PDE, load_dataset
-from src.neuraloperator.neuralop.data.datasets import load_darcy_flow_small
+from Models import callmodel
+from PDEs import load_PDE, load_dataset
+from neuraloperator.neuralop.data.datasets import load_darcy_flow_small
 import yaml
 import torch
 import argparse
@@ -25,7 +25,7 @@ def parse_args():
                       help='Adaptive nodes')
     parser.add_argument('--update_rate', type = int , default = 0,
                       help='Update rate')
-    parser.add_argument('--Dataset', type=str, default='Darcy_flow_small',
+    parser.add_argument('--Dataset', type=str, default='darcy_flow_small',
                       help='Dataset to use')
     parser.add_argument('--save_version', type= int, default=False,
                       help='Save model version')

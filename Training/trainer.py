@@ -7,9 +7,9 @@ from tqdm import tqdm
 from numpy.polynomial.legendre import legval
 import wandb
 import seaborn as sns
-from src.Models.models import PINN_Net, CustomPINN
-from src.Operators.Diff_Op import pdeOperator
-from src.Operators.Bound_Op import BoundaryCondition, BoundaryLoss, BoundaryType, BoundaryLocation
+from Models.models import PINN_Net, CustomPINN
+from Operators.Diff_Op import pdeOperator
+from Operators.Bound_Op import BoundaryCondition, BoundaryLoss, BoundaryType, BoundaryLocation
 
 
 class Trainer:
@@ -125,17 +125,14 @@ class Trainer:
 
     def compute_loss(self, u_pred, coords, f, loss_function=None):
         """Compute the total loss including PDE and boundary conditions."""
-        # PDE residual
         
+        # PDE residual
         f_pred = self.operator(u_pred, *coords).squeeze()
         f = f.squeeze()
-
-        if f.shape == 5 :
-            pde_loss = loss_function(f_pred[1 : -1], f[1 : -1]) if loss_function else F.mse_loss(f_pred[1 : -1], f[1 : -1])
-        else:
-            pde_loss = loss_function(f_pred, f) if loss_function else F.mse_loss(f_pred, f)
+        pde_loss = loss_function(f_pred, f) if loss_function else F.mse_loss(f_pred, f)
         self.error = torch.abs(f_pred - f)  
-
+ 
+        # Boundary conditions
         boundary_loss = BoundaryLoss()
         if self.pde_configurations.trainable: 
             trainable_idx = 1  # Start from 1 since weights[0] is for something else
@@ -146,16 +143,13 @@ class Trainer:
             if self.boundary_conditions[i].trainable:
                 self.boundary_conditions[i].weight = self.weights[trainable_idx]
                 trainable_idx += 1 
-
              
         boundary_losses = [boundary_loss(u_pred, bc , coords) for bc in self.boundary_conditions]
 
-        # Weighted loss
+        # Weight function (by default: exponential(-weight))
         weight_function = self.pde_configurations.weight_function  
-        
 
-
-        #loss = sum(boundary_losses[i] * weight_function(self.weights[i+1]) for i in range(len(boundary_losses)))
+        # Total loss
         loss = sum(boundary_losses[i] for i in range(len(boundary_losses)))
         total_loss = pde_loss*weight_function(self.pde_configurations.weight) + loss
             
@@ -177,24 +171,26 @@ class Trainer:
 
     def train_one_epoch(self, epoch, inputs , coords, rate=100, loss_function=None):
         self.optimizer.zero_grad()
+        
+        # Forward pass
         u_pred = self.model(inputs).squeeze()
-        #print(u_pred.shape , inputs.shape)
+        
+        # Compute exact solution if available
         u_exact = self.exact_solution(*coords) if self.exact_solution else None
+        
+        # Compute forcing function
         f_values = self.f(*coords)
-        #f_exact = (f_values - f_values.max())/(f_values.max() - f_values.min())
-        #u_pred = self.model(f_exact.unsqueeze(-1)).squeeze()
+
         # Compute loss
         loss = self.compute_loss(u_pred, coords, f_values, loss_function)
 
         # Adaptive collocation
         if self.pde_configurations.adaptive_nodes > 0 and (epoch + 1) % rate == 0:
-
+            # Update collocation points
             coords = self.update_collocation_points(coords, u_pred, u_exact)
-            #self.visualize_distribution(coords , self.error)
             inputs = torch.cat([c.unsqueeze(-1) for c in coords], dim=-1)
-            #print(inputs.shape)
-            
 
+        # Backward pass
         loss.backward(retain_graph=True)
         self.optimizer.step()
         self.scheduler.step()
@@ -204,12 +200,14 @@ class Trainer:
 
     def train(self, epochs=500, rate=100, loss_function=None):
         """Train the PINN model."""
-
-        progress_bar = tqdm(range(epochs), desc="Training", unit="epoch")
+        
         print("Training the model...")
+        progress_bar = tqdm(range(epochs), desc="Training", unit="epoch")
         coords = self.coords
+        #inputs = torch.cat([c.unsqueeze(-1) for c in coords], dim=-1)
         for epoch in progress_bar:
             
+            # Train for one epoch
             inputs = torch.cat([c.unsqueeze(-1) for c in coords], dim=-1)
             loss , coords = self.train_one_epoch(epoch, inputs , coords, rate, loss_function)
 
@@ -234,32 +232,12 @@ class Trainer:
         residuals = torch.abs(self.operator(u_pred, *coords).squeeze() - self.f(*coords).squeeze())
         p = (residuals**2) / torch.sum(residuals**2)
         indices = torch.multinomial(p.flatten(), num_samples=num_samples, replacement=True)
-
         new_coords = []
-
-        """plt.scatter(coords[0].flatten().detach().numpy(), coords[1].flatten().detach().numpy(), c=residuals.flatten().detach().numpy())
-        plt.colorbar()
-        plt.show()"""
 
         for c in coords:
             new_coord = c.flatten()[indices]
-            coord_range = c.max() - c.min()
-            noise = torch.randn_like(new_coord) * noise_level * coord_range
-            
-            # Add noise and clip to domain bounds
-            noisy_coord = torch.clamp(
-                new_coord + noise,
-                min=c.min(),
-                max=c.max()
-            )
             new_coords.append(new_coord.squeeze())
-
-        """plt.scatter(new_coords[0].detach().numpy(), new_coords[1].detach().numpy())
-        plt.colorbar()
-        plt.show()"""
-
-        
-        #import sys ; sys.exit()
+            
         return new_coords
 
     def update_collocation_points(self, coords, outputs, u_exact):
@@ -279,7 +257,9 @@ class Trainer:
 
         # Handle 1D case
         if len(coords) == 1:
-            fake_x = torch.linspace(-1, 1, 1000, device=self.device, requires_grad=True)
+            a = coords[0].min().item()
+            b = coords[0].max().item()
+            fake_x = torch.linspace(a, b, 1000, device=self.device, requires_grad=True)
             adaptive_x = self.adaptive_collocation_points([fake_x], outputs, u_exact, num_samples=num_samples)[0]
             
             # Combine old and new collocation points
@@ -288,8 +268,12 @@ class Trainer:
 
         # Handle 2D case
         elif len(coords) == 2:
-            fake_x = torch.linspace(-1, 1, 200, device=self.device)
-            fake_y = torch.linspace(-1, 1, 200, device=self.device)
+            a = coords[0].min().item()
+            b = coords[0].max().item()
+            c = coords[1].min().item()
+            d = coords[1].max().item()
+            fake_x = torch.linspace(a, b, 100, device=self.device)
+            fake_y = torch.linspace(c, d, 100, device=self.device)
             fake_x, fake_y = torch.meshgrid(fake_x, fake_y, indexing="ij")
 
             fake_x.requires_grad = fake_y.requires_grad = True
@@ -310,9 +294,16 @@ class Trainer:
 
         # Handle 3D case
         elif len(coords) == 3:
-            fake_x = torch.linspace(-1, 1, 100, device=self.device)
-            fake_y = torch.linspace(-1, 1, 100, device=self.device)
-            fake_z = torch.linspace(-1, 1, 100, device=self.device)
+            a = coords[0].min().item()
+            b = coords[0].max().item()
+            c = coords[1].min().item()
+            d = coords[1].max().item()
+            e = coords[2].min().item()
+            f = coords[2].max().item()
+            
+            fake_x = torch.linspace(a, b, 50, device=self.device)
+            fake_y = torch.linspace(c, d, 50, device=self.device)
+            fake_z = torch.linspace(e, f, 50, device=self.device)
             fake_x, fake_y, fake_z = torch.meshgrid(fake_x, fake_y, fake_z, indexing="ij")
 
             fake_x.requires_grad = fake_y.requires_grad = fake_z.requires_grad = True
@@ -432,31 +423,10 @@ class Trainer:
         Test the model on a fixed grid and compute MSE with the exact solution if available.
         """
         dimensions = len(self.coords)
-        if self.exact_solution is None:
-            return None
-
-        if dimensions == 1:
-            a = torch.linspace(-1, 1, 100).unsqueeze(-1).to(self.device)
-            coords = [a]
-            inputs = a
-        elif dimensions == 2:
-            a = torch.linspace(-1, 1, 100).to(self.device)
-            b = torch.linspace(-1, 1, 100).to(self.device)
-            a, b = torch.meshgrid(a, b)
-            coords = [a, b]
-            inputs = torch.cat([c.unsqueeze(-1) for c in [a, b]], dim=-1)
-        elif dimensions == 3:
-            a = torch.linspace(-1, 1, 10).to(self.device)
-            b = torch.linspace(-1, 1, 10).to(self.device)
-            c = torch.linspace(-1, 1, 10).to(self.device)
-            a, b, c = torch.meshgrid(a, b, c)
-            coords = [a, b, c]
-            inputs = torch.cat([co.unsqueeze(-1) for co in [a, b, c]], dim=-1)
-        else:
-            raise ValueError(f"Unsupported dimension: {dimensions}")
+        inputs = torch.cat([c.unsqueeze(-1) for c in self.coords], dim=-1)
 
         u_test = self.model(inputs)
-        mse = F.mse_loss(u_test.squeeze(), self.exact_solution(*coords).squeeze())
+        mse = F.mse_loss(u_test.squeeze(), self.exact_solution(*self.coords).squeeze())
         return mse
     
     def get_coords(self):
