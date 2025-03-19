@@ -5,7 +5,7 @@ d = pdeOperator()
 
 def load_PDE(PDE_name):
     if PDE_name == 'PDE1':
-        operator = lambda u, x: d.derivative(u, x, order=2) 
+        operator = lambda u, x: d.derivative(u, x, order=2)
         f = lambda x: (-1.6 * (torch.pi**2) * torch.sin(torch.pi * x * 4) - 50 * torch.tanh(5 * x) * (1 - torch.tanh(5 * x)**2))
         u_exact = lambda x: 0.1*torch.sin(torch.pi*x*4) + torch.tanh(5*x)
         def load_data():
