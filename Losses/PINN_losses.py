@@ -318,4 +318,223 @@ class VariationalLoss:
             return integral
         else:  # "none"
             return integral.unsqueeze(0)
-    
+ 
+ 
+ 
+ 
+ 
+####################################################################################
+ 
+def generate_default_test_functions(grid_coords, dim, degree=2):
+    """
+    Generate a small set of polynomial test functions as defaults if none are provided.
+    - For 1D: [1, x, x^2, ... up to given degree]
+    - For 2D: polynomials up to a given total degree in x, y
+    - For 3D: polynomials up to a given total degree in x, y, z
+
+    Args:
+        grid_coords (list[torch.Tensor]): 
+            A list of length dim, e.g. [x], or [x, y], or [x, y, z].
+            Each tensor has shape (Nx, 1), (Nx, Ny, 1), ...
+        dim (int): 1, 2, or 3
+        degree (int): maximum total polynomial degree
+
+    Returns:
+        list of torch.Tensor: each is shape matching the PDE residual (e.g., Nx, Ny), 
+                             representing one "test function".
+    """
+    # If dim=1, assume grid_coords = [x], shape (Nx,1)
+    # If dim=2, assume grid_coords = [x, y], each shape (Nx, Ny, 1)
+    # If dim=3, similarly. 
+    # We'll flatten them to perform polynomial expansions, then reshape back.
+
+    # Flatten for easier polynomial expansions
+    if dim == 1:
+        x = grid_coords[0].squeeze(-1)  # shape (Nx,)
+        polynomials = []
+        # e.g., up to the given 'degree'
+        for d in range(degree+1):
+            polynomials.append((x**d).clone())
+        # shape is (Nx,), reshape to (Nx,1) if needed 
+        # but typical PDE "residual" might also be Nx
+        # we keep them Nx for simpler usage
+        return polynomials
+
+    elif dim == 2:
+        x = grid_coords[0].squeeze(-1)  # shape (Nx, Ny)
+        y = grid_coords[1].squeeze(-1)  # shape (Nx, Ny)
+        
+        polynomials = []
+        # For total polynomial degree up to 'degree':
+        # e.g. for degree=2, we generate: (x^0 y^0), (x^1 y^0), (x^0 y^1), (x^2 y^0), (x^1 y^1), ...
+        for dx_deg in range(degree+1):
+            for dy_deg in range(degree+1):
+                if dx_deg + dy_deg <= degree:
+                    poly = (x**dx_deg) * (y**dy_deg)
+                    polynomials.append(poly.clone())
+        return polynomials
+
+    elif dim == 3:
+        x = grid_coords[0].squeeze(-1)  # shape (Nx, Ny, Nz)
+        y = grid_coords[1].squeeze(-1)
+        z = grid_coords[2].squeeze(-1)
+
+        polynomials = []
+        # Similarly for total polynomial degree in x,y,z
+        for dx_deg in range(degree+1):
+            for dy_deg in range(degree+1):
+                for dz_deg in range(degree+1):
+                    if dx_deg + dy_deg + dz_deg <= degree:
+                        poly = (x**dx_deg) * (y**dy_deg) * (z**dz_deg)
+                        polynomials.append(poly.clone())
+        return polynomials
+
+
+class VariationalLoss:
+    def __init__(self, dim, dx, reduction="mean", integration_method="simpson", degree=2):
+        """
+        Enhanced variational loss for PINNs or neural operators with test functions,
+        providing a default polynomial-based approach if no test functions are supplied.
+
+        Args:
+            dim (int): Dimensionality of the problem (1, 2, or 3).
+            dx (float or tuple): Grid spacing in each dimension.
+            reduction (str): How to reduce the loss ('mean', 'sum', or 'none').
+            integration_method (str): Method of integration ('simpson', 'trapezoidal', or 'riemann').
+            degree (int): Maximum polynomial degree for default test functions.
+        """
+        self.dim = dim
+        self.reduction = reduction
+        # Convert dx to tuple if scalar
+        self.dx = dx if isinstance(dx, tuple) else (dx,) * dim
+        
+        self.integration_method = integration_method
+        self.degree = degree
+
+        # Basic checks
+        if dim not in [1, 2, 3]:
+            raise ValueError("Dimension must be 1, 2, or 3.")
+        if reduction not in ["mean", "sum", "none"]:
+            raise ValueError("Reduction must be 'mean', 'sum', or 'none'.")
+        if integration_method not in ["simpson", "trapezoidal", "riemann"]:
+            raise ValueError("Integration method must be 'simpson', 'trapezoidal', or 'riemann'.")
+
+    def compute_residual(self, residual):
+        """
+        Placeholder for stable residual handling if needed.
+        For now, returns 'residual' directly.
+        """
+        return residual
+
+    def simpson_integrate_1d(self, values, dx):
+        n = len(values)
+        if n % 2 == 0:
+            n -= 1  # ensure odd number of points
+        weights = torch.ones_like(values[:n])
+        weights[1:n-1:2] = 4
+        weights[2:n-1:2] = 2
+        return (dx / 3) * torch.sum(weights * values[:n])
+
+    def trapezoidal_integrate_1d(self, values, dx):
+        weights = torch.ones_like(values)
+        weights[0] = weights[-1] = 0.5
+        return dx * torch.sum(weights * values)
+
+    def integrate(self, values, dx):
+        """
+        Integrate the given tensor over the domain using the specified method.
+        'values' is the function to integrate, e.g., residual * test_function.
+        """
+        # 1D
+        if self.dim == 1:
+            if self.integration_method == "simpson":
+                integral = self.simpson_integrate_1d(values, dx[0])
+            elif self.integration_method == "trapezoidal":
+                integral = self.trapezoidal_integrate_1d(values, dx[0])
+            else:  # riemann
+                integral = torch.sum(values) * dx[0]
+            return integral
+        
+        # 2D
+        elif self.dim == 2:
+            if self.integration_method == "simpson":
+                # integrate in y, then in x
+                integral = torch.tensor(0., device=values.device)
+                for i in range(values.shape[0]):
+                    row_integral = self.simpson_integrate_1d(values[i], dx[1])
+                    integral += row_integral
+                integral = self.simpson_integrate_1d(integral.unsqueeze(0), dx[0])
+            else:
+                # trapezoidal or riemann
+                integral = torch.sum(values) * dx[0] * dx[1]
+            return integral
+        
+        # 3D
+        else:
+            if self.integration_method == "simpson":
+                # integrate in z, then y, then x
+                integral = torch.tensor(0., device=values.device)
+                for i in range(values.shape[0]):
+                    plane_integral = torch.tensor(0., device=values.device)
+                    for j in range(values.shape[1]):
+                        row_integral = self.simpson_integrate_1d(values[i,j], dx[2])
+                        plane_integral += row_integral
+                    plane_integral = self.simpson_integrate_1d(plane_integral.unsqueeze(0), dx[1])
+                    integral += plane_integral
+                integral = self.simpson_integrate_1d(integral.unsqueeze(0), dx[0])
+            else:
+                # trapezoidal or riemann
+                integral = torch.sum(values) * dx[0] * dx[1] * dx[2]
+            return integral
+
+    def __call__(self, residual, grid_coords, test_functions=None):
+        """
+        Compute a 'variational' (weak) loss: ∑_v ( ∫ residual(x)*v(x) dx )^2 
+        by default, uses polynomial test functions up to degree self.degree if test_functions is None.
+
+        Args:
+            residual (torch.Tensor): PDE residual at each grid point, shape e.g. (Nx,) or (Nx,Ny), etc.
+            grid_coords (list[torch.Tensor]): A list of coordinate arrays, e.g. [x], or [x,y].
+                                              shape must match residual. 
+            test_functions (list[torch.Tensor] or None): 
+                If None, a set of polynomial test functions is automatically generated.
+
+        Returns:
+            torch.Tensor: The computed variational (weak) form loss.
+        """
+        # Input checks
+        if not isinstance(grid_coords, list) or len(grid_coords) != self.dim:
+            raise ValueError("grid_coords must be a list of length dim.")
+        if residual.shape != grid_coords[0].shape:
+            # we assume all grid_coords have same shape
+            raise ValueError("residual and grid_coords shape mismatch.")
+        
+        # If no test_functions provided, generate them by default
+        if test_functions is None:
+            test_functions = generate_default_test_functions(grid_coords, self.dim, self.degree)
+        
+        # single test function => put in list
+        if isinstance(test_functions, torch.Tensor):
+            test_functions = [test_functions]
+        
+        # Possibly do stable transformation if needed
+        residual = self.compute_residual(residual)
+        
+        integrated_list = []
+        for v in test_functions:
+            if v.shape != residual.shape:
+                raise ValueError("Test function shape mismatch with residual.")
+            val = self.integrate(residual * v, self.dx)
+            integrated_list.append(val)
+        
+        # Sum of squares approach
+        out = torch.stack(integrated_list)**2
+        total = torch.sum(out)
+        
+        if self.reduction == "mean":
+            total = total / residual.numel()
+        elif self.reduction == "none":
+            return out  # possibly used in multi-objective training
+        
+        return total
+   

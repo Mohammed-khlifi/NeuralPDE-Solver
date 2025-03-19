@@ -1,13 +1,13 @@
 from .basemodel import Basemodel
 from .NO_basemodel import NO_basemodel
 from .models import PINN_Net, CustomPINN
-from src.Operators.Bound_Op import BoundaryCondition, BoundaryLocation, BoundaryType    
-from src import pdeOperator , OperatorConfig
+from Operators.Bound_Op import BoundaryCondition, BoundaryLocation, BoundaryType    
+from Operators import pdeOperator , OperatorConfig
 import torch
 import typing as tp
-from src import FNO
-from src.neuraloperator.neuralop import Trainer
-from src.neuraloperator.neuralop import LpLoss, H1Loss
+from neuraloperator.neuralop.models import FNO
+from neuraloperator.neuralop import Trainer
+from neuraloperator.neuralop import LpLoss, H1Loss
 import torch.nn.functional as F
 
 class FNO_model(NO_basemodel):

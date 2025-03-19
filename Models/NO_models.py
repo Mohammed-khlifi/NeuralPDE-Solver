@@ -1,11 +1,12 @@
 from .basemodel import Basemodel
 from .NO_basemodel import NO_basemodel
 from .models import PINN_Net, CustomPINN
-from src import FNO , UNO ,GINO, UQNO , FNOGNO, TFNO, CODANO
+from neuraloperator.neuralop.models import FNO , UNO ,GINO, UQNO , FNOGNO, TFNO, CODANO
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
-from src.neuraloperator.neuralop import LpLoss, H1Loss
+from neuraloperator.neuralop import LpLoss, H1Loss
+
 
 
 
@@ -119,7 +120,7 @@ class PINO_model(NO_basemodel):
                 
                 # Calculate losses
                 mse_loss = F.mse_loss(y_pred.flatten(), y_true.flatten())
-                #h1_loss = train_loss(y_pred.reshape(y_true.shape), y_true)
+                h1_loss = train_loss(y_pred.reshape(y_true.shape), y_true)
                 pde_loss = self.calculate_pde_loss(y_true, y_pred)
                 total_loss = mse_loss * torch.exp(-self.weights[0]) + pde_loss * torch.exp(-self.weights[1]) + torch.abs(self.weights[0]) + torch.abs(self.weights[1])
 

@@ -13,10 +13,20 @@ class pdeOperator:
         self.z = z
         self.u = u
 
-    def derivative(self, u, x, order=1):
+    def derivative(self, u, x, order=1 , methode = 'autograd'):
         """Compute the nth-order derivative of u with respect to x."""
-        for _ in range(order):
-            u = torch.autograd.grad(u, x, grad_outputs=torch.ones_like(u), create_graph=True, retain_graph=True, allow_unused=True)[0]
+        
+        if methode == 'autograd':
+            for _ in range(order):
+                u = torch.autograd.grad(u, x, grad_outputs=torch.ones_like(u), create_graph=True, retain_graph=True, allow_unused=True)[0]
+        elif methode == 'fdm':
+            if order == 1:
+                u = torch.cat((u[1:] - u[:-1], torch.tensor([0.], dtype=torch.float32)))
+            elif order == 2:
+                u = torch.cat((u[2:] - 2 * u[1:-1] + u[:-2], torch.tensor([0., 0.], dtype=torch.float32)))
+            else:
+                raise ValueError("Finite difference method only supports first and second order derivatives.")
+            
         return u
 
     def gradient(self, u, x, y=None, z=None):
@@ -36,7 +46,6 @@ class pdeOperator:
         if z is not None:
             lap += self.derivative(u , z , order = 2)  # Second derivative w.r.t. z
         return lap
-
     def divergence(self, vec, x, y=None, z=None):
         """Compute the divergence of a vector field in 1D, 2D, or 3D."""
         div = self.derivative(vec[..., 0], x)  # Derivative of the x-component

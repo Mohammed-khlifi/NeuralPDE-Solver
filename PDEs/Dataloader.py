@@ -1,7 +1,7 @@
 import torch
-from src.neuraloperator.neuralop.data.datasets import load_darcy_flow_small
+from neuraloperator.neuralop.data.datasets import load_darcy_flow_small
 from torch.utils.data import Dataset, DataLoader, random_split
-from src.Operators.Diff_Op import pdeOperator
+from Operators.Diff_Op import pdeOperator
 import torch
 import numpy as np
 
@@ -77,7 +77,7 @@ def load_dataset(data_name):
         return train_loader, test_loaders
     
     elif data_name == 'Poisson':
-        train_loaders, test_loaders = Train_Test_loaders(resolution=16, p_min=5, p_max=25 ,n_samples=500 ,u_exact = u_exact , operator = operator ,train_size = 0.8, batch_size = 32)
+        train_loaders, test_loaders = Train_Test_loaders(resolution=16, p_min=3, p_max=60 ,n_samples=500 ,u_exact = u_exact , operator = operator ,train_size = 0.8, batch_size = 32)
         train_loader = train_loaders[16]
         return train_loader, test_loaders
     else:
