@@ -1,11 +1,8 @@
-from .basemodel import Basemodel
 from .NO_basemodel import NO_basemodel
-from .models import PINN_Net, CustomPINN
-from neuraloperator.neuralop.models import FNO , UNO ,GINO, UQNO , FNOGNO, TFNO, CODANO
+from neuraloperator.neuralop.models import FNO , UNO ,GINO, UQNO , FNOGNO, TFNO
 import torch
 import torch.nn as nn
-import torch.nn.functional as F
-from neuraloperator.neuralop import LpLoss, H1Loss
+
 
 
 
@@ -74,7 +71,7 @@ class UNO_model(NO_basemodel):
         self.scheduler = torch.optim.lr_scheduler.StepLR(self.optimizer, step_size=5000, gamma=0.1)
 
         
-
+"""
 class CODANO_model(NO_basemodel):
 
     def __init__(self, **kwargs):
@@ -118,7 +115,7 @@ class CODANO_model(NO_basemodel):
         
         self.learning_rate = self.param['lr']
         self.optimizer = torch.optim.Adam(self.model.parameters(), lr=self.learning_rate)
-        self.scheduler = torch.optim.lr_scheduler.StepLR(self.optimizer, step_size=5000, gamma=0.1)
+        self.scheduler = torch.optim.lr_scheduler.StepLR(self.optimizer, step_size=5000, gamma=0.1)"""
 
 class quickCNN(nn.Module):
     def __init__(self, N_input, N_output, N_Hidden, N_layers, kernel_size=3, num_filters=16):

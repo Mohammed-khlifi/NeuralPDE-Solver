@@ -1,6 +1,4 @@
 from numpy.polynomial.legendre import legval
-from scipy.special import comb
-from scipy.special import gamma
 import torch
 
 
