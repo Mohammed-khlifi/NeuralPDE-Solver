@@ -4,9 +4,8 @@ from datetime import datetime
 import os
 import json
 import yaml
-from Operators import pdeOperator , OperatorConfig
 from Training.trainer import Trainer
-from .models import PINN_Net, CustomPINN
+
 
 def l2_error(pred, true):
     return torch.sqrt(torch.sum((pred - true) ** 2))/torch.sqrt(torch.sum(true**2))

@@ -2,8 +2,7 @@ from .NO_basemodel import NO_basemodel
 import torch
 from neuraloperator.neuralop.models import FNO
 from neuraloperator.neuralop import Trainer
-from neuraloperator.neuralop import LpLoss, H1Loss
-import torch.nn.functional as F
+
 
 class FNO_model(NO_basemodel):
 

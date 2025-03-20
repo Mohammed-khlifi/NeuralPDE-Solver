@@ -4,7 +4,7 @@ from Models.PINO import PINO_darcy, PINO_poisson
 from sklearn.model_selection import KFold
 from torch.utils.data import DataLoader, SubsetRandomSampler
 import numpy as np
-from PDEs import load_PDE, load_dataset
+#from PDEs import load_PDE, load_dataset
 from neuraloperator.neuralop.data.datasets import load_darcy_flow_small
 from PDEs.Dataloader import Train_Test_loaders
 
@@ -83,7 +83,7 @@ def main():
     train_loaders, test_loaders = Train_Test_loaders(resolution=16, p_min=3, p_max= 100 ,n_samples=556 ,train_size = 0.9, batch_size = 32)
     train_loader = train_loaders[16]
     
-    models = [PINO_poisson]
+    models = [PINO_darcy]
     #models = [PINO_poisson]
     #train
     train_scores , val_scores = evaluate_learners(models, train_loader)

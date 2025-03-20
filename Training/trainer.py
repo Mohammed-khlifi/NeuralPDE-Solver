@@ -1,6 +1,5 @@
 import torch
 import torch.nn.functional as F
-import torch.nn as nn
 import matplotlib.pyplot as plt
 from torch.autograd import grad
 from tqdm import tqdm
@@ -220,7 +219,8 @@ class Trainer:
                     wandb.log({"MSE": mse.item()})
             progress_bar.set_postfix(postfix)
         self.coords = coords
-        wandb.finish()
+        if self.watch:
+            wandb.finish()
 
         final_mse = mse.item() if mse is not None else 0
         return final_mse, loss.item()

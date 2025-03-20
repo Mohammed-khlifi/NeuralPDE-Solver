@@ -1,8 +1,6 @@
 from Models import callmodel
 from PDEs import load_PDE, load_dataset
-from neuraloperator.neuralop.data.datasets import load_darcy_flow_small
 import yaml
-import torch
 import argparse
 
 def parse_args():

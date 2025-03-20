@@ -1,9 +1,8 @@
 import torch
-from neuraloperator.neuralop.data.datasets import load_darcy_flow_small
 from torch.utils.data import Dataset, DataLoader, random_split
 from Operators.Diff_Op import pdeOperator
-import torch
 import numpy as np
+import torch
 
 d = pdeOperator()
 derivation = d.derivative
@@ -68,7 +67,8 @@ def Train_Test_loaders(resolution=16, p_min=5, p_max=25 ,n_samples=500 ,u_exact 
 
 
 def load_dataset(data_name):
-    if data_name == 'darcy_flow_small':
+    if data_name == 'darcy_flow':
+        from neuraloperator.neuralop.data.datasets import load_darcy_flow_small
         train_loader, test_loaders, _ = load_darcy_flow_small(
             n_train=500, batch_size=32,
             test_resolutions=[16, 32], n_tests=[100, 50],
