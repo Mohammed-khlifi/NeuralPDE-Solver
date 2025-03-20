@@ -1,6 +1,4 @@
-from .basemodel import Basemodel
 from .NO_basemodel import NO_basemodel
-from .models import PINN_Net, CustomPINN
 import torch
 import torch.nn as nn
 
