@@ -211,7 +211,6 @@ The table below presents training and test losses for different **Neural Operato
   </tbody>
 </table>
 
-
 ---
 
 
@@ -306,10 +305,37 @@ Options :
 To introduce a new Partial Differential Equation (PDE), update PDE.py:
 
 1. Define the PDE name.
-2. Specify the PDE operator (e.g., `Laplacian`, `convection-diffusion`).
-3. Add the boundary conditions.
-4. Include the coordinate system.
-5. Provide the exact solution (if available, otherwise set to `None`).
+2. Specify the PDE operator (e.g., `Laplacian` or any custumized operator).
+   How to define PDE operator :
+   ```bash
+   from Operators.Diff_Op import pdeOperator
+   D = pdeOperator()
+   1D_operator = lambda u, x: D.derivative(u, x, order=2)*u
+   2D_operator = lambda u, x, y: D.derivative(u, x, order=2)*u + D.derivative(u, y, order=1)
+   3D_operator = lambda u, x, y, z: D.derivative(u, x, order=2) + D.derivative(u, y, order=2) + D.derivative(u, y, order=2) # equivalant to d.laplacian(u, x, y, z) 
+   ```
+   
+4. Add the boundary conditions.
+5. Include the coordinate system.
+6. Provide the exact solution (if available, otherwise set to `None`).
+
+Example :  
+```bash
+def load_PDE(PDE_name):
+    ## existing PDEs
+    if PDE_name == 'New PDE':
+        operator = lambda u, x: d.derivative(u, x, order=2)*u # operator example
+        f = lambda x: torche.ones_like(x) # source function example
+        u_exact = None # if not available return None
+        def load_data():
+            inputs = {
+            "bound_left": torch.tensor(1.0),
+            "bound_right": torch.tensor(-1.0),   
+            "input": torch.linspace(-1, 1, 10), # coordinates
+            }
+            return inputs
+        return operator, f, u_exact, load_data
+```
 
     
 ### 2.2 Adding New dataset
@@ -342,7 +368,7 @@ def load_dataset(data_name):
 
         return train_loader, test_loaders
 
-````
+```
     
 ### 2.3 Adding New Model
 
