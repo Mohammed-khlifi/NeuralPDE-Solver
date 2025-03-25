@@ -4,10 +4,10 @@ set -e  # Exit immediately if a command exits with a non-zero status
 # Define model configurations:
 # "model_type model_name epochs learning_rate PDE num_points update_rate config_file save_model_flag"
 models=(
-    "PINN 1D_PINNmodel 10000 0.01 PDE1 0 500 Config/params.yml 1"
-    "PINN 1D_PINNmodel 10000 0.01 PDE1 0 500 Config/AWparams.yml 1"
-    "PINN 1D_PINNmodel 10000 0.01 PDE1 5 500 Config/ACparams.yml 1"
-    "PINN 1D_PINNmodel 10000 0.01 PDE1 5 500 Config/ACAWparams.yml 1"
+    "PINN 1D_PINNmodel 10000 0.01 1DPoisson 0 500 Config/params.yml 1"
+    "PINN 1D_PINNmodel 10000 0.01 1DPoisson 0 500 Config/AWparams.yml 1"
+    "PINN 1D_PINNmodel 10000 0.01 1DPoisson 5 500 Config/ACparams.yml 1"
+    "PINN 1D_PINNmodel 10000 0.01 1DPoisson 5 500 Config/ACAWparams.yml 1"
 )
 
 # Create a results directory if it doesn't exist
@@ -48,7 +48,7 @@ for model in "${models[@]}"; do
     start_time=$(date +%s)
 
     # Construct the command
-    cmd="python main.py --model_type \"$model_type\" --model_name \"$model_name\" --epochs \"$epochs\" --lr \"$lr\" --PDE \"$pde\" --AC \"$num_points\" --update_rate \"$update_rate\" --config \"$config_file\" --save_version \"$save_model\""
+    cmd="python3 main.py --model_type \"$model_type\" --model_name \"$model_name\" --epochs \"$epochs\" --lr \"$lr\" --PDE \"$pde\" --AC \"$num_points\" --update_rate \"$update_rate\" --config \"$config_file\" --save_version \"$save_model\""
     echo "Executing: $cmd"
     
     # Run the command and redirect all output to the log file

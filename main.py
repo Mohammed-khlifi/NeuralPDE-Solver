@@ -13,7 +13,7 @@ def parse_args():
                       help='Path to config file')
     parser.add_argument('--wandb_logs', action='store_true',
                       help='Enable wandb logging')
-    parser.add_argument('--PDE', type=str, default='PDE1',
+    parser.add_argument('--PDE', type=str, default='1DPoisson',
                       help='PDE to solve')
     parser.add_argument('--epochs', type=int, default=0,
                       help='Number of epochs to train')

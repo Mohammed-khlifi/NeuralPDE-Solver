@@ -4,10 +4,10 @@ set -e  # Exit immediately if a command exits with a non-zero status
 # Define model configurations:
 # "model_type model_name epochs learning_rate PDE num_points update_rate config_file save_model adaptive_weights"
 models=(
-    "PINN 2D_PINNmodel 10000 0.01 PDE2 0 1000 Config/params.yml 1 0"
-    "PINN 2D_PINNmodel 10000 0.01 PDE2 0 1000 Config/paramsAW.yml 1 1"
-    "PINN 2D_PINNmodel 10000 0.01 PDE2 16 1000 Config/paramsAC.yml 1 0"
-    "PINN 2D_PINNmodel 10000 0.01 PDE2 16 1000 Config/paramsACAW.yml 1 1"
+    "PINN 2D_PINNmodel 10000 0.01 2DPoisson 0 1000 Config/params.yml 1 0"
+    "PINN 2D_PINNmodel 10000 0.01 2DPoisson 0 1000 Config/paramsAW.yml 1 1"
+    "PINN 2D_PINNmodel 10000 0.01 2DPoisson 16 1000 Config/paramsAC.yml 1 0"
+    "PINN 2D_PINNmodel 10000 0.01 2DPoisson 16 1000 Config/paramsACAW.yml 1 1"
 )
 
 # Create a results directory if it doesn't exist
@@ -49,7 +49,7 @@ for model in "${models[@]}"; do
     start_time=$(date +%s)
 
     # Construct the command with adaptive_weights
-    cmd="python main.py --model_type \"$model_type\" --model_name \"$model_name\" --epochs \"$epochs\" --lr \"$lr\" --PDE \"$pde\" --AC \"$num_points\" --update_rate \"$update_rate\" --config \"$config_file\" --save_version \"$save_model\" --adaptive_weights \"$adaptive_weights\""
+    cmd="python3 main.py --model_type \"$model_type\" --model_name \"$model_name\" --epochs \"$epochs\" --lr \"$lr\" --PDE \"$pde\" --AC \"$num_points\" --update_rate \"$update_rate\" --config \"$config_file\" --save_version \"$save_model\" --adaptive_weights \"$adaptive_weights\""
     echo "Executing: $cmd"
     
     # Run the command and redirect all output to the log file
