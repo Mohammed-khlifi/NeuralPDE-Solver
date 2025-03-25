@@ -264,9 +264,9 @@ Options :
   - `2D_PINNmodel`: for 2D equations
   - `3D_PINNmodel`: for 3D equations
 - `--PDE <PDE_NAME>`: The PDE to be solved (e.g., `Poisson`, etc.).
-  - 1DPoisson 
-  - 2DPoisson
-  - 3DPoisson
+  - `1DPoisson`
+  - `2DPoisson`
+  - `3DPoisson`
 - `--config <CONFIG_FILE>`: Path to the yaml configuration file specifying hyperparameters
 - (Optional) `--adaptive_weights` (1 , 0)
 - (Optional) `--AC` 
@@ -289,11 +289,11 @@ python main.py --model_type NO --model_name <MODEL_NAME> --Dataset <DATASET_NAME
 Options :
 - `--model_type NO`: Indicates a Neural Operator–based model.
 - `--model_name <MODEL_NAME>`: User-defined identifier for the model (e.g., `FNO`).
-  - CNN: Convolution Neural Network
-  - FNO: Fourier Neural Operator
-  - UNO: U-shaped Neural Operator
-  - TFNO: Tensorized Fourier Neural Operator
-  - PINO: Physics Informed Neural Operator
+  - `CNN`: Convolution Neural Network
+  - `FNO`: Fourier Neural Operator
+  - `UNO`: U-shaped Neural Operator
+  - `TFNO`: Tensorized Fourier Neural Operator
+  - `PINO`: Physics Informed Neural Operator
 - `--Dataset <DATASET_NAME>`: Dataset name to be used for training (e.g., `darcy_flow`, `Poisson`).
   - darcy_flow
   - Poisson
