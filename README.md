@@ -204,7 +204,21 @@
 
 ---
 
+
 ## 1. How to Use
+
+### 1.0 Cloning the repository
+This repository uses Git submodules, so it's essential to clone it recursively to ensure that all required submodules are properly initialized and updated.
+
+To clone the repository with submodules, run:
+
+```bash
+git clone --recursive 
+```
+If you've already cloned the repository without the ```--recursive``` flag, initialize and update the submodules by executing
+```bash
+git submodule update --init --recursive
+```
 
 ### 1.1 Solving a Single PDE
 
