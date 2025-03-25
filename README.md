@@ -272,6 +272,12 @@ Options :
 
 ### 1.3 Training a single model on a single dataset
 
+Install first `neuraloperator` package
+```bash
+cd neuraloperator
+pip3 install -e .
+```
+
 To train a Neural Operator-based model, run:
 
 ```bash
