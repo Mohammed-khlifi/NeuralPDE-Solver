@@ -268,8 +268,14 @@ python main.py --model_type PINN --model_name <MODEL_NAME> --PDE <PDE_NAME> --co
 Options :
 - `--model_type PINN`: Specifies that the chosen model is a physics-informed neural network variant.
 - `--model_name <MODEL_NAME>`: User-defined name for the model (e.g., `1D_PINNmodel`).
+  - 1D_PINNmodel:
+  - 2D_PINNmodel:
+  - 3D_PINNmodel:
 - `--PDE <PDE_NAME>`: The PDE to be solved (e.g., `Poisson`, `Burgers`, etc.).
-- `--config <CONFIG_FILE>`: Path to a configuration file specifying hyperparameters  
+  - PDE1: 
+  - PDE2:
+  - PDE3:
+- `--config <CONFIG_FILE>`: Path to the yaml configuration file specifying hyperparameters  
 
 
 ### 1.3 Training a single model on a single dataset
@@ -282,8 +288,15 @@ python main.py --model_type NO --model_name <MODEL_NAME> --Dataset <DATASET_NAME
 Options :
 - `--model_type NO`: Indicates a Neural Operator–based model.
 - `--model_name <MODEL_NAME>`: User-defined identifier for the model (e.g., `FNO`).
+  - CNN:
+  - FNO:
+  - UNO:
+  - TFNO:
+  - PINO:
 - `--Dataset <DATASET_NAME>`: Dataset name to be used for training (e.g., `darcy_flow`, `Poisson`).
-- `--config <CONFIG_FILE>`: Path to the config file. This file can include settings for batch size, number of training epochs, or resolution details.
+  - darcy_flow
+  - Poisson
+- `--config <CONFIG_FILE>`: Path to the yaml configuration file specifying hyperparameters
 
 ## 2. Extending the Repository
 
