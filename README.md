@@ -224,11 +224,11 @@ This repository uses Git submodules, so it's essential to clone it recursively t
 To clone the repository with submodules, run:
 
 ```bash
-git clone --recursive 
+git clone --recursive  https://github.com/Mohammed-khlifi/Solving-PDE-s-using-neural-network.git
 ```
 If you've already cloned the repository without the ```--recursive``` flag, initialize and update the submodules by executing
 ```bash
-git submodule update --init --recursive
+git submodule update --init --recursive 
 ```
 
 #### Step 2: Install Dependencies
