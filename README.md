@@ -217,7 +217,8 @@ The table below presents training and test losses for different **Neural Operato
 
 ## 1. How to Use
 
-### 1.1 Cloning the repository
+### 1.1 Installation
+#### Step 1: Cloning the repository
 This repository uses Git submodules, so it's essential to clone it recursively to ensure that all required submodules are properly initialized and updated.
 
 To clone the repository with submodules, run:
@@ -230,56 +231,108 @@ If you've already cloned the repository without the ```--recursive``` flag, init
 git submodule update --init --recursive
 ```
 
+#### Step 2: Install Dependencies
+
+- For PINNS model:
+
+```bash
+pip install -r PINN_requirements.txt
+```
+
+- For Neural Operator model:
+
+```bash
+pip install -r NO_requirements.txt
+```
+
+#### Step 3: Install the library
+
+- Developement mode:
+```bash
+python3 -m pip install --user -e .
+```
+
+- Install globaly
+```bash
+pip install .
+```
 
 ### 1.2 Solving a Single PDE
+
+To solve a PDE using Physics-Informed Neural Networks (PINNs), run:
 
 ```bash
 python main.py --model_type PINN --model_name <MODEL_NAME> --PDE <PDE_NAME> --config <CONFIG_FILE>
 ```
 
 Options :
-- model_type PINN: Specifies that the chosen model is a physics-informed neural network variant.
-- model_name <MODEL_NAME>: User-defined name for the model (e.g., 1D_PINNmodel).
-- PDE <PDE_NAME>: The PDE to be solved (e.g., Poisson, Burgers, etc.).
-- config <CONFIG_FILE>: Path to a configuration file specifying hyperparameters  
+- `--model_type PINN`: Specifies that the chosen model is a physics-informed neural network variant.
+- `--model_name <MODEL_NAME>`: User-defined name for the model (e.g., `1D_PINNmodel`).
+- `--PDE <PDE_NAME>`: The PDE to be solved (e.g., `Poisson`, `Burgers`, etc.).
+- `--config <CONFIG_FILE>`: Path to a configuration file specifying hyperparameters  
 
 
-### Training a single model on a single dataset
+### 1.3 Training a single model on a single dataset
+
+To train a Neural Operator-based model, run:
 
 ```bash
 python main.py --model_type NO --model_name <MODEL_NAME> --Dataset <DATASET_NAME> --config <CONFIG_FILE>
 ```
 Options :
-- model_type NO: Indicates a Neural Operator–based model.
-- model_name <MODEL_NAME>: User-defined identifier for the model (e.g., FNO).
-- Dataset <DATASET_NAME>: Dataset name to be used for training (e.g., darcy_flow , Poisson).
-- config <CONFIG_FILE>: Path to the config file. This file can include settings for batch size, number of training epochs, or resolution details.
+- `--model_type NO`: Indicates a Neural Operator–based model.
+- `--model_name <MODEL_NAME>`: User-defined identifier for the model (e.g., `FNO`).
+- `--Dataset <DATASET_NAME>`: Dataset name to be used for training (e.g., `darcy_flow`, `Poisson`).
+- `--config <CONFIG_FILE>`: Path to the config file. This file can include settings for batch size, number of training epochs, or resolution details.
 
-### Adding a new PDE
+## 2. Extending the Repository
 
-in PDE.py add the following 
+### 2.1 Adding a new PDE
 
-- the PDE name
-- the PDE operator
-- the boundary consitions
-- the coordinates
-- exact solution (None if not available)
+To introduce a new Partial Differential Equation (PDE), update PDE.py:
 
-### adding New dataset
+1. Define the PDE name.
+2. Specify the PDE operator (e.g., `Laplacian`, `convection-diffusion`).
+3. Add the boundary conditions.
+4. Include the coordinate system.
+5. Provide the exact solution (if available, otherwise set to `None`).
 
-in Dataloader.py add 
-- Dataset name 
-- return Dataloader and the Testloaders (the code is designed to test the models on different resolutions)
+    
+### 2.2 Adding New dataset
+
+To add a new dataset, modify `Dataloader.py`:
+
+1. Define the dataset name.
+2. Return DataLoader and TestLoaders (for different resolutions).
+    
+### 2.3 Adding New Model
+
+All models should inherit from:
+
+1. `BaseModel` (for PINNs).
+2. `NO_BaseModel` (for Neural Operator models).
+
+Note: ***all models should inherit from besemodel and NO_basemodel for databased models***
 
 
-### adding New Model
+Steps to add a model:
 
-all models should inherit from besemodel and NO_basemodel for databased models
+1. Define the model:
 
-define the following :
+```python
+class NewModel(BaseModel):
+    def __init__(self, ...):
+        super().__init__()
+        # Define layers and architecture
+```
 
-- def __init__ : defining the model
-- def fit(dataloader , testloders): 
+2. Implement the training function:
 
+```python
+def fit(self, dataloader, testloaders):
+    # Training loop implementation
 
-Add your ```<model>.py``` file to the models directory and do not forget to update the Models/__init__.py file.
+```
+
+3. Add your`<model>.py` file to the `models/` directory.
+4. Update `models/__init__.py` to register your model.
