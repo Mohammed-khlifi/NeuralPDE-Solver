@@ -1,12 +1,11 @@
-<style>
-  table {
-    font-size: 12px;
-  }
-</style>
+# PINNs and Neural Operators for PDE Solving
+
+This repository provides implementations of **Physics-Informed Neural Networks (PINNs)** and **Neural Operators (NOs)** for solving Partial Differential Equations (PDEs). It includes multiple models and training configurations to handle different PDE types efficiently.
 
 ## PINNs Results
 
-<div style="overflow-x:auto; font-size:12px;">
+The table below presents the performance of different **PINN variants** on **1D and 2D Poisson equations** using **L2 error** and **Mean Squared Error (MSE)** as evaluation metrics.
+
 <table>
   <thead>
     <tr>
@@ -150,9 +149,14 @@
     </tr>
   </tbody>
 </table>
-<\div>
+
+**Boundary Errors:**  
+Detailed L2 and MSE errors are provided for the **Top, Bottom, Left, and Right boundaries** in the full table above.
+
 
 ## Neural Operators results
+
+The table below presents training and test losses for different **Neural Operator models** on **Darcy Flow** and **Poisson equations**.
 
 <table>
   <thead>
@@ -213,7 +217,7 @@
 
 ## 1. How to Use
 
-### 1.0 Cloning the repository
+### 1.1 Cloning the repository
 This repository uses Git submodules, so it's essential to clone it recursively to ensure that all required submodules are properly initialized and updated.
 
 To clone the repository with submodules, run:
@@ -226,7 +230,8 @@ If you've already cloned the repository without the ```--recursive``` flag, init
 git submodule update --init --recursive
 ```
 
-### 1.1 Solving a Single PDE
+
+### 1.2 Solving a Single PDE
 
 ```bash
 python main.py --model_type PINN --model_name <MODEL_NAME> --PDE <PDE_NAME> --config <CONFIG_FILE>
