@@ -260,13 +260,13 @@ python main.py --model_type PINN --model_name <MODEL_NAME> --PDE <PDE_NAME> --co
 Options :
 - `--model_type PINN`: Specifies that the chosen model is a physics-informed neural network variant.
 - `--model_name <MODEL_NAME>`: User-defined name for the model (e.g., `1D_PINNmodel`).
-  - `1D_PINNmodel`:
-  - `2D_PINNmodel`:
-  - `3D_PINNmodel`:
-- `--PDE <PDE_NAME>`: The PDE to be solved (e.g., `Poisson`, `Burgers`, etc.).
-  - PDE1: 
-  - PDE2:
-  - PDE3:
+  - `1D_PINNmodel`: for 1D equations
+  - `2D_PINNmodel`: for 2D equations
+  - `3D_PINNmodel`: for 3D equations
+- `--PDE <PDE_NAME>`: The PDE to be solved (e.g., `Poisson`, etc.).
+  - 1DPoisson 
+  - 2DPoisson
+  - 3DPoisson
 - `--config <CONFIG_FILE>`: Path to the yaml configuration file specifying hyperparameters  
 
 
@@ -286,11 +286,11 @@ python main.py --model_type NO --model_name <MODEL_NAME> --Dataset <DATASET_NAME
 Options :
 - `--model_type NO`: Indicates a Neural Operator–based model.
 - `--model_name <MODEL_NAME>`: User-defined identifier for the model (e.g., `FNO`).
-  - CNN:
-  - FNO:
-  - UNO:
-  - TFNO:
-  - PINO:
+  - CNN: Convolution Neural Network
+  - FNO: Fourier Neural Operator
+  - UNO: U-shaped Neural Operator
+  - TFNO: Tensorized Fourier Neural Operator
+  - PINO: Physics Informed Neural Operator
 - `--Dataset <DATASET_NAME>`: Dataset name to be used for training (e.g., `darcy_flow`, `Poisson`).
   - darcy_flow
   - Poisson
@@ -311,39 +311,70 @@ To introduce a new Partial Differential Equation (PDE), update PDE.py:
     
 ### 2.2 Adding New dataset
 
-To add a new dataset, modify `Dataloader.py`:
+**Adding a New Dataset**
 
-1. Define the dataset name.
-2. Return DataLoader and TestLoaders (for different resolutions).
+To introduce a new dataset, open the `Dataloader.py` file and follow these steps:
+
+1. **Define the Dataset Name**  
+   Add a condition for your dataset name in the `load_dataset()` function (or whichever main loader function you are using).
+
+2. **Return DataLoader and TestLoaders**  
+   Implement the logic for constructing and returning the training dataloader along with any test dataloaders (possibly at different resolutions).
+
+For example:
+```bash
+def load_dataset(data_name):
+    # ... existing code for other datasets ...
+
+    if data_name == 'New data':
+        # Your data loading logic here
+        # e.g., read files, preprocess, create dataset objects
+        
+        train_loader = ...
+        test_loaders = {
+            'low_res': ...,
+            'high_res': ...
+            # or any structure you prefer
+        }
+
+        return train_loader, test_loaders
+
+````
     
 ### 2.3 Adding New Model
 
-All models should inherit from:
+All new model classes must inherit from:
+1. `Basemodel` (for PINNs), or  
+2. `NO_Basemodel` (for neural-operator-based models).  
 
-1. `BaseModel` (for PINNs).
-2. `NO_BaseModel` (for Neural Operator models).
+In other words, **all PINN-type models** derive from `Basemodel`, and **Neural Operator models** (those trained primarily on data) derive from `NO_Basemodel`.
 
-Note: ***all models should inherit from `basemodel` and `NO_basemodel` for databased models***
+### Steps to Add a Model
 
+1. **Create the Model Class**  
+   Define your model in a new file named `<model_name>.py` inside the `models/` directory.  
+   ```python
+   from .basemodel import Basemodel  # or NO_Basemodel if it's a neural operator
 
-Steps to add a model:
+   class NewModel(Basemodel):
+       def __init__(self, ...):
+           super().__init__()
+           # Define layers and architecture here
+    ```
 
-1. Define the model:
-
-```python
-class NewModel(BaseModel):
-    def __init__(self, ...):
-        super().__init__()
-        # Define layers and architecture
-```
-
-2. Implement the training function:
+2. Implement the fit Method
 
 ```python
 def fit(self, dataloader, testloaders):
-    # Training loop implementation
+    # Implement your custom training loop
+    pass
 
 ```
 
-3. Add your`<model>.py` file to the `models/` directory.
+3. Add the`<model>.py` file to the `Models/` directory.
 4. Update `models/__init__.py` to register your model.
+ ````bash
+  elif model_name == 'CNN':
+      from .CNN_model import CNN_model
+      return CNN_model
+ ````
