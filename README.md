@@ -224,11 +224,11 @@ This repository uses Git submodules, so it's essential to clone it recursively t
 To clone the repository with submodules, run:
 
 ```bash
-git clone --recursive 
+git clone --recursive  https://github.com/Mohammed-khlifi/Solving-PDE-s-using-neural-network.git
 ```
 If you've already cloned the repository without the ```--recursive``` flag, initialize and update the submodules by executing
 ```bash
-git submodule update --init --recursive
+git submodule update --init --recursive 
 ```
 
 #### Step 2: Install Dependencies
@@ -268,8 +268,14 @@ python main.py --model_type PINN --model_name <MODEL_NAME> --PDE <PDE_NAME> --co
 Options :
 - `--model_type PINN`: Specifies that the chosen model is a physics-informed neural network variant.
 - `--model_name <MODEL_NAME>`: User-defined name for the model (e.g., `1D_PINNmodel`).
+  - `1D_PINNmodel`:
+  - `2D_PINNmodel`:
+  - `3D_PINNmodel`:
 - `--PDE <PDE_NAME>`: The PDE to be solved (e.g., `Poisson`, `Burgers`, etc.).
-- `--config <CONFIG_FILE>`: Path to a configuration file specifying hyperparameters  
+  - PDE1: 
+  - PDE2:
+  - PDE3:
+- `--config <CONFIG_FILE>`: Path to the yaml configuration file specifying hyperparameters  
 
 
 ### 1.3 Training a single model on a single dataset
@@ -282,8 +288,15 @@ python main.py --model_type NO --model_name <MODEL_NAME> --Dataset <DATASET_NAME
 Options :
 - `--model_type NO`: Indicates a Neural Operator–based model.
 - `--model_name <MODEL_NAME>`: User-defined identifier for the model (e.g., `FNO`).
+  - CNN:
+  - FNO:
+  - UNO:
+  - TFNO:
+  - PINO:
 - `--Dataset <DATASET_NAME>`: Dataset name to be used for training (e.g., `darcy_flow`, `Poisson`).
-- `--config <CONFIG_FILE>`: Path to the config file. This file can include settings for batch size, number of training epochs, or resolution details.
+  - darcy_flow
+  - Poisson
+- `--config <CONFIG_FILE>`: Path to the yaml configuration file specifying hyperparameters
 
 ## 2. Extending the Repository
 
@@ -312,7 +325,7 @@ All models should inherit from:
 1. `BaseModel` (for PINNs).
 2. `NO_BaseModel` (for Neural Operator models).
 
-Note: ***all models should inherit from besemodel and NO_basemodel for databased models***
+Note: ***all models should inherit from `basemodel` and `NO_basemodel` for databased models***
 
 
 Steps to add a model:
