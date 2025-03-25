@@ -1,6 +1,12 @@
+<style>
+  table {
+    font-size: 12px;
+  }
+</style>
 
 ## PINNs Results
 
+<div style="overflow-x:auto; font-size:12px;">
 <table>
   <thead>
     <tr>
@@ -144,7 +150,7 @@
     </tr>
   </tbody>
 </table>
-
+<\div>
 
 ## Neural Operators results
 
