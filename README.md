@@ -233,16 +233,8 @@ git submodule update --init --recursive
 
 #### Step 2: Install Dependencies
 
-- For PINNS model:
-
 ```bash
-pip install -r PINN_requirements.txt
-```
-
-- For Neural Operator model:
-
-```bash
-pip install -r NO_requirements.txt
+pip install -r requirements.txt
 ```
 
 #### Step 3: Install the library
