@@ -312,7 +312,7 @@ All models should inherit from:
 1. `BaseModel` (for PINNs).
 2. `NO_BaseModel` (for Neural Operator models).
 
-Note: ***all models should inherit from besemodel and NO_basemodel for databased models***
+Note: ***all models should inherit from `basemodel` and `NO_basemodel` for databased models***
 
 
 Steps to add a model:
