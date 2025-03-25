@@ -72,4 +72,4 @@ for model in "${models[@]}"; do
     echo "---------------------------------------------"
 done
 
-echo "✅ Benchmarking Completed! All results are in the 'benchmark_results' folder."
+echo "Benchmarking Completed! All results are in the 'benchmark_results' folder."
