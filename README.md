@@ -26,126 +26,126 @@ The table below presents the performance of different **PINN variants** on **1D 
   </thead>
   <tbody>
     <tr>
-      <td><strong>Domain L2 Error</strong></td>
-      <td>3.24×10<sup>0</sup></td>
-      <td>3.65×10<sup>0</sup></td>
-      <td>8.44×10<sup>-2</sup></td>
-      <td>5.13×10<sup>-1</sup></td>
-      <td>4.42×10<sup>-1</sup></td>
-      <td>1.15×10<sup>-1</sup></td>
-      <td>6.83×10<sup>-4</sup></td>
-      <td>2.73×10<sup>-3</sup></td>
+      <td>Domain L2 Error</td>
+      <td>4.47×10<sup>0</sup></td>
+      <td>9.03×10<sup>−1</sup></td>
+      <td>1.32×10<sup>−2</sup></td>
+      <td>1.22×10<sup>−1</sup></td>
+      <td>4.42×10<sup>−1</sup></td>
+      <td>1.15×10<sup>−1</sup></td>
+      <td>6.83×10<sup>−4</sup></td>
+      <td>2.73×10<sup>−3</sup></td>
     </tr>
     <tr>
-      <td><strong>Domain MSE Error</strong></td>
-      <td>1.05×10<sup>-3</sup></td>
-      <td>1.33×10<sup>-3</sup></td>
-      <td>7.13×10<sup>-7</sup></td>
-      <td>2.63×10<sup>-5</sup></td>
-      <td>1.55×10<sup>-1</sup></td>
-      <td>1.05×10<sup>-2</sup></td>
-      <td>3.71×10<sup>-7</sup></td>
-      <td>5.93×10<sup>-6</sup></td>
+      <td>Domain MSE Error</td>
+      <td>2.24×10<sup>−3</sup></td>
+      <td>8.16×10<sup>−5</sup></td>
+      <td>1.75×10<sup>−6</sup></td>
+      <td>1.48×10<sup>−6</sup></td>
+      <td>1.55×10<sup>−1</sup></td>
+      <td>1.05×10<sup>−2</sup></td>
+      <td>3.71×10<sup>−7</sup></td>
+      <td>5.93×10<sup>−6</sup></td>
     </tr>
     <tr>
-      <td colspan="9"><strong>Bottom Boundary</strong></td>
+      <th colspan="9" style="text-align:left;">Bottom Boundary</th>
     </tr>
     <tr>
-      <td><strong>Bottom L2</strong></td>
-      <td>3.13×10<sup>-2</sup></td>
-      <td>1.13×10<sup>-2</sup></td>
-      <td>1.34×10<sup>-2</sup></td>
-      <td>1.14×10<sup>-2</sup></td>
-      <td>--</td>
-      <td>--</td>
-      <td>--</td>
-      <td>--</td>
-    </tr>
-    <tr>
-      <td><strong>Bottom MSE</strong></td>
-      <td>9.82×10<sup>-6</sup></td>
-      <td>1.27×10<sup>-6</sup></td>
-      <td>1.79×10<sup>-6</sup></td>
-      <td>1.30×10<sup>-6</sup></td>
+      <td>Bottom L2</td>
+      <td>1.17×10<sup>−2</sup></td>
+      <td>6.11×10<sup>−3</sup></td>
+      <td>1.96×10<sup>−2</sup></td>
+      <td>1.24×10<sup>−2</sup></td>
       <td>--</td>
       <td>--</td>
       <td>--</td>
       <td>--</td>
     </tr>
     <tr>
-      <td colspan="9"><strong>Top Boundary</strong></td>
-    </tr>
-    <tr>
-      <td><strong>Top L2</strong></td>
-      <td>4.03×10<sup>-2</sup></td>
-      <td>2.80×10<sup>-2</sup></td>
-      <td>1.21×10<sup>-2</sup></td>
-      <td>2.34×10<sup>-2</sup></td>
+      <td>Bottom MSE</td>
+      <td>1.38×10<sup>−6</sup></td>
+      <td>3.74×10<sup>−7</sup></td>
+      <td>3.83×10<sup>−6</sup></td>
+      <td>1.53×10<sup>−6</sup></td>
       <td>--</td>
       <td>--</td>
       <td>--</td>
       <td>--</td>
     </tr>
     <tr>
-      <td><strong>Top MSE</strong></td>
-      <td>1.62×10<sup>-5</sup></td>
-      <td>7.83×10<sup>-6</sup></td>
-      <td>1.46×10<sup>-6</sup></td>
-      <td>5.49×10<sup>-6</sup></td>
+      <th colspan="9" style="text-align:left;">Top Boundary</th>
+    </tr>
+    <tr>
+      <td>Top L2</td>
+      <td>1.35×10<sup>−2</sup></td>
+      <td>7.27×10<sup>−3</sup></td>
+      <td>1.45×10<sup>−2</sup></td>
+      <td>3.98×10<sup>−3</sup></td>
       <td>--</td>
       <td>--</td>
       <td>--</td>
       <td>--</td>
     </tr>
     <tr>
-      <td colspan="9"><strong>Left Boundary</strong></td>
+      <td>Top MSE</td>
+      <td>1.83×10<sup>−6</sup></td>
+      <td>5.28×10<sup>−7</sup></td>
+      <td>2.11×10<sup>−6</sup></td>
+      <td>1.58×10<sup>−7</sup></td>
+      <td>--</td>
+      <td>--</td>
+      <td>--</td>
+      <td>--</td>
     </tr>
     <tr>
-      <td><strong>Left L2</strong></td>
-      <td>1.16×10<sup>-2</sup></td>
-      <td>9.15×10<sup>-3</sup></td>
-      <td>6.46×10<sup>-3</sup></td>
-      <td>1.83×10<sup>-2</sup></td>
-      <td>5.26×10<sup>-4</sup></td>
-      <td>4.29×10<sup>-4</sup></td>
-      <td>1.06×10<sup>-3</sup></td>
-      <td>1.57×10<sup>-4</sup></td>
+      <th colspan="9" style="text-align:left;">Left Boundary</th>
     </tr>
     <tr>
-      <td><strong>Left MSE</strong></td>
-      <td>1.36×10<sup>-6</sup></td>
-      <td>8.37×10<sup>-7</sup></td>
-      <td>4.17×10<sup>-7</sup></td>
-      <td>3.37×10<sup>-6</sup></td>
-      <td>2.76×10<sup>-7</sup></td>
-      <td>1.84×10<sup>-7</sup></td>
-      <td>1.11×10<sup>-6</sup></td>
-      <td>2.46×10<sup>-8</sup></td>
+      <td>Left L2</td>
+      <td>1.37×10<sup>−2</sup></td>
+      <td>8.11×10<sup>−3</sup></td>
+      <td>2.29×10<sup>−2</sup></td>
+      <td>5.87×10<sup>−3</sup></td>
+      <td>5.26×10<sup>−4</sup></td>
+      <td>4.29×10<sup>−4</sup></td>
+      <td>1.06×10<sup>−3</sup></td>
+      <td>1.57×10<sup>−4</sup></td>
     </tr>
     <tr>
-      <td colspan="9"><strong>Right Boundary</strong></td>
+      <td>Left MSE</td>
+      <td>1.88×10<sup>−6</sup></td>
+      <td>6.58×10<sup>−7</sup></td>
+      <td>5.24×10<sup>−6</sup></td>
+      <td>3.44×10<sup>−7</sup></td>
+      <td>2.76×10<sup>−7</sup></td>
+      <td>1.84×10<sup>−7</sup></td>
+      <td>1.11×10<sup>−6</sup></td>
+      <td>2.46×10<sup>−8</sup></td>
     </tr>
     <tr>
-      <td><strong>Right L2</strong></td>
-      <td>9.94×10<sup>-3</sup></td>
-      <td>1.20×10<sup>-2</sup></td>
-      <td>2.68×10<sup>-2</sup></td>
-      <td>1.96×10<sup>-2</sup></td>
-      <td>7.01×10<sup>-4</sup></td>
-      <td>4.26×10<sup>-3</sup></td>
-      <td>1.05×10<sup>-3</sup></td>
-      <td>1.88×10<sup>-4</sup></td>
+      <th colspan="9" style="text-align:left;">Right Boundary</th>
     </tr>
     <tr>
-      <td><strong>Right MSE</strong></td>
-      <td>9.89×10<sup>-7</sup></td>
-      <td>1.45×10<sup>-6</sup></td>
-      <td>7.20×10<sup>-6</sup></td>
-      <td>3.83×10<sup>-6</sup></td>
-      <td>4.86×10<sup>-7</sup></td>
-      <td>1.79×10<sup>-5</sup></td>
-      <td>1.08×10<sup>-6</sup></td>
-      <td>3.50×10<sup>-8</sup></td>
+      <td>Right L2</td>
+      <td>8.33×10<sup>−3</sup></td>
+      <td>5.50×10<sup>−3</sup></td>
+      <td>8.57×10<sup>−3</sup></td>
+      <td>1.14×10<sup>−2</sup></td>
+      <td>7.01×10<sup>−4</sup></td>
+      <td>4.26×10<sup>−3</sup></td>
+      <td>1.05×10<sup>−3</sup></td>
+      <td>1.88×10<sup>−4</sup></td>
+    </tr>
+    <tr>
+      <td>Right MSE</td>
+      <td>6.94×10<sup>−7</sup></td>
+      <td>3.02×10<sup>−7</sup></td>
+      <td>7.35×10<sup>−7</sup></td>
+      <td>1.29×10<sup>−6</sup></td>
+      <td>4.86×10<sup>−7</sup></td>
+      <td>1.79×10<sup>−5</sup></td>
+      <td>1.08×10<sup>−6</sup></td>
+      <td>3.50×10<sup>−8</sup></td>
     </tr>
   </tbody>
 </table>
@@ -267,8 +267,11 @@ Options :
   - 1DPoisson 
   - 2DPoisson
   - 3DPoisson
-- `--config <CONFIG_FILE>`: Path to the yaml configuration file specifying hyperparameters  
-
+- `--config <CONFIG_FILE>`: Path to the yaml configuration file specifying hyperparameters
+- (Optional) `--adaptive_weights` (1 , 0)
+- (Optional) `--AC` 
+- (Optional) `--update_rate` 
+- ... and so on, use `python main.py -h` to see all the other possible parameters
 
 ### 1.3 Training a single model on a single dataset
 
