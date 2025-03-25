@@ -268,9 +268,9 @@ python main.py --model_type PINN --model_name <MODEL_NAME> --PDE <PDE_NAME> --co
 Options :
 - `--model_type PINN`: Specifies that the chosen model is a physics-informed neural network variant.
 - `--model_name <MODEL_NAME>`: User-defined name for the model (e.g., `1D_PINNmodel`).
-  - 1D_PINNmodel:
-  - 2D_PINNmodel:
-  - 3D_PINNmodel:
+  - `1D_PINNmodel`:
+  - `2D_PINNmodel`:
+  - `3D_PINNmodel`:
 - `--PDE <PDE_NAME>`: The PDE to be solved (e.g., `Poisson`, `Burgers`, etc.).
   - PDE1: 
   - PDE2:
