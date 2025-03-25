@@ -1,5 +1,5 @@
 from .basemodel import Basemodel
-from .models import PINN_Net, CustomPINN
+from .Net import PINN_Net, CustomPINN
 from Training.trainer import Trainer
 from Operators.Bound_Op import BoundaryCondition, BoundaryLocation, BoundaryType    
 from Operators import pdeOperator , OperatorConfig
@@ -54,7 +54,7 @@ class PINNModel_2D(Basemodel):
         self.model =  PINN_Net(2, 1, self.param['N_hidden'], self.param['N_layers'])
         self.pde_configurations = OperatorConfig(
             operator=self.operator,
-            weight= torch.tensor(self.param['weight']),
+            weight= torch.tensor(1.0),
             source_function=self.f,
             u_exact=self.u_exact,
             trainable=self.param['TF'],
@@ -72,7 +72,7 @@ class PINNModel_2D(Basemodel):
                         type=BoundaryType.DIRICHLET,
                         location=location,
                         value= self.load_data()[boundary_name] ,#lambda x,y : torch.exp(-10*(y[0,:]**2 + 1)).squeeze(),
-                        weight= weight,
+                        weight= torch.tensor(1.0),
                         trainable=self.param['TF'],
                         weight_function= lambda x : torch.exp(x),
                         )  for boundary_name, location in zip(boundary_names, locations)   

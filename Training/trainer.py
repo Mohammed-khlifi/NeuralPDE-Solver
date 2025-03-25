@@ -6,7 +6,7 @@ from tqdm import tqdm
 from numpy.polynomial.legendre import legval
 import wandb
 import seaborn as sns
-from Models.models import PINN_Net, CustomPINN
+from Models.Net import PINN_Net, CustomPINN
 from Operators.Diff_Op import pdeOperator
 from Operators.Bound_Op import BoundaryCondition, BoundaryLoss, BoundaryType, BoundaryLocation
 

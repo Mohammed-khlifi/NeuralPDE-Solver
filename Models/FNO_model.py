@@ -25,17 +25,3 @@ class FNO_model(NO_basemodel):
                   use_distributed=False,
                   verbose=True) 
 
-    """def fit(self, train_loader , test_loaders , epochs=100):
-
-
-        train_loss = H1Loss(d=2)
-        l2loss = LpLoss(d=2 ,p=2)
-        val_loss = {'h1': train_loss, 'l2': l2loss}
-
-        self.trainer.train(train_loader=train_loader,
-            test_loaders=test_loaders,
-            optimizer=self.optimizer,
-            scheduler= self.scheduler,
-            regularizer=False,
-            training_loss= train_loss,
-            eval_losses=val_loss,)"""

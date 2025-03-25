@@ -17,9 +17,9 @@ def load_PDE(PDE_name):
             return inputs
         return operator, f, u_exact, load_data
     elif PDE_name == 'PDE2':
-        f = lambda x,y : -2 * torch.pi**2 * torch.sin(torch.pi * x) * torch.sin(torch.pi * y)
+        f = lambda X,Y : torch.exp(-10*(X**2 + Y**2))*(-20)*(1-20*X**2) + torch.exp(-10*(X**2 + Y**2))*(-20)*(1-20*Y**2)
         operator = lambda u,x,y : d.laplacian(u , x , y)
-        u_exact = lambda x,y : torch.sin(torch.pi * x) * torch.sin(torch.pi * y)
+        u_exact = lambda x,y : torch.exp(-10*(x**2 + y**2))
         def load_data():
             inputs = {
             "bound_up": lambda x,y : torch.exp(-10*(y[0,:]**2 + 1)).squeeze(),

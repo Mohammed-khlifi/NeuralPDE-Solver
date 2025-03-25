@@ -9,8 +9,10 @@ class CNN_model(NO_basemodel):
         super().__init__(**kwargs)
         self.model = quickCNN(1, 1, 3, 4)
         self.learning_rate = self.param['lr']
-        self.optimizer = torch.optim.Adam(self.model.parameters(), lr=self.learning_rate)
-        self.scheduler = torch.optim.lr_scheduler.StepLR(self.optimizer, step_size=5000, gamma=0.1)
+        #self.optimizer = torch.optim.Adam(self.model.parameters(), lr=self.learning_rate)
+        self.optimizer = self.get_optimizer()
+        self.scheduler = self.get_scheduler()
+        #self.scheduler = torch.optim.lr_scheduler.StepLR(self.optimizer, step_size=5000, gamma=0.1)
         
 
 class quickCNN(nn.Module):

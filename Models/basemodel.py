@@ -24,6 +24,7 @@ class Basemodel:
         self.u_exact = u_exact
         self.param = param
         self.model = None
+        self.optimizer = None
         self.load_data = load_data
         self.pde_configurations = None
         self.boundary_conditions = []
@@ -35,7 +36,7 @@ class Basemodel:
             x.requires_grad = True 
             y = torch.sort(y)[0]
             y.requires_grad = True
-            x, y = torch.meshgrid(x, y)
+            x, y = torch.meshgrid(x, y , indexing="ij")
 
             inputs = [x,y]
         elif len(inputs) == 3:
@@ -46,7 +47,7 @@ class Basemodel:
             y.requires_grad = True
             z = torch.sort(z)[0]
             z.requires_grad = True
-            x, y, z = torch.meshgrid(x, y, z)
+            x, y, z = torch.meshgrid(x, y, z , indexing="ij")
 
             inputs = [x,y,z]
         else:
@@ -55,7 +56,7 @@ class Basemodel:
             inputs = [inputs]
 
         
-
+        torch.random.manual_seed(0)
         trainer = Trainer(
             inputs, self.boundary_conditions, self.pde_configurations, model=self.model , watch=self.param['wandb_logs'] , name= self.param['model_name'], lr=self.param['lr'])
 
@@ -129,3 +130,24 @@ class Basemodel:
         
         return config, weights
     
+    def get_optimizer(self):
+        optimizer_type = self.param['optimizer'].lower()
+        optimizers = {
+            "adam": torch.optim.Adam,
+            "sgd": torch.optim.SGD,
+            "rmsprop": torch.optim.RMSprop,
+            "adamw": torch.optim.AdamW,
+            "adagrad": torch.optim.Adagrad
+        }
+        
+        if optimizer_type not in optimizers:
+            raise ValueError(f"Unsupported optimizer type: {optimizer_type}")
+        
+        optimizer_class = optimizers[optimizer_type]
+        return optimizer_class(self.model.parameters(), lr = self.param['lr'])
+    
+    
+    def get_scheduler(self):
+        if self.param['scheduler'] == True:
+            self.scheduler = torch.optim.lr_scheduler.StepLR(self.optimizer, step_size= self.param['step_size'], gamma= self.param['gamma'])
+            

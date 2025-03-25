@@ -1,4 +1,4 @@
-from .models import PINN_Net, CustomPINN
+from .Net import PINN_Net, CustomPINN
 
 def callmodel(model_name):
     if model_name == '1D_PINNmodel':

@@ -21,6 +21,8 @@ def parse_args():
                       help='Learning rate')
     parser.add_argument('--AC', type = int , default = 0,
                       help='Adaptive nodes')
+    parser.add_argument('--adaptive_weights', type = int , default = 0,
+                      help='Adaptive weights')
     parser.add_argument('--update_rate', type = int , default = 0,
                       help='Update rate')
     parser.add_argument('--Dataset', type=str, default='darcy_flow_small',
@@ -48,6 +50,7 @@ def main():
         'model_name': args.model_name,
         'epochs': args.epochs if args.epochs > 0 else param.get('epochs', 1000),
         'lr': args.lr if args.lr > 0 else param.get('lr', 1e-3),
+        'TF': args.adaptive_weights,
         'wandb_logs': args.wandb_logs,
         'adaptive_nodes': args.AC,
         'update_rate' : args.update_rate
