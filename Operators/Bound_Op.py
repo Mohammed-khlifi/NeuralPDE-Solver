@@ -27,7 +27,7 @@ class BoundaryCondition:
     value: Union[float, torch.Tensor, Callable]
     weight: float = 1.0,
     trainable: bool = False,
-    weight_function: Callable = None
+    weight_function: Callable = lambda x: torch.exp(-x)
 
     def __post_init__(self):
         if not isinstance(self.type, BoundaryType):
@@ -122,18 +122,3 @@ class BoundaryLoss(BoundaryExtractor):
         
 
         
-#testin the BoundaryLoss class
-bcs = [
-        BoundaryCondition(
-            type=BoundaryType.DIRICHLET,
-            location=BoundaryLocation.X_MIN,
-            value= torch.rand(10, ),
-            weight=50
-        ),
-        BoundaryCondition(
-            type=BoundaryType.NEUMANN,
-            location=BoundaryLocation.X_MAX,
-            value=lambda x: torch.zeros_like(x),
-            weight=0.5
-        )
-    ]

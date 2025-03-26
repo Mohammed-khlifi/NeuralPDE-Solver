@@ -104,7 +104,7 @@ class OperatorConfig:
     u_exact: Optional[Callable] = None
     weight: Optional[torch.Tensor] = torch.tensor(1 , dtype=torch.float32)
     trainable: bool = False
-    weight_function: Optional[Callable] = None
+    weight_function: Optional[Callable] = lambda x : torch.exp(-x)
     pde_loss : Optional[Callable] = F.mse_loss
     adaptive_nodes : Optional[int] = 0
     update_rate : Optional[int] = 0
