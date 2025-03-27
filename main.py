@@ -32,11 +32,11 @@ def parse_args():
     
     return parser.parse_args()
 
-def train_pinn(model, x, param):
+def train_pinn(model, x):
     mse, loss = model.fit(x)
     return mse, loss
 
-def train_neural_operator(model, train_loader, test_loaders, param):
+def train_neural_operator(model, train_loader, test_loaders):
     train_losse, val_losse = model.fit(train_loader, test_loaders)
     return train_losse, val_losse
 
@@ -68,16 +68,17 @@ def main():
         if args.epochs == 0:
             param['epochs'] = args
         model = PINNmodel(param=param, operator=operator, f=f, u_exact=u_exact, load_data=load_data)
-        mse, loss = train_pinn(model, x, param)
+        mse, loss = train_pinn(model, x)
         print(f"Training completed. MSE: {mse:.4e}, Loss: {loss:.4e}")
         
-    else:  # Neural Operator
+    elif args.model_type == 'NO':
         # Load NO specific data
         train_loader, test_loaders = load_dataset(args.Dataset)
         model = callmodel(args.model_name)(param=param)
-        train_loss, val_loss = train_neural_operator(model, train_loader, test_loaders, param)
+        train_loss, val_loss = train_neural_operator(model, train_loader, test_loaders)
         print(f"Training completed. Train Loss: {train_loss:.4e}, Val Loss: {val_loss:.4e}")
-   
+    else :
+        raise ValueError("Model type not supported")
 
 if __name__ == "__main__":
     main()
