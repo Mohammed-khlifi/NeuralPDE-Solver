@@ -4,18 +4,24 @@ from Models.PINO import PINO_darcy, PINO_poisson
 from sklearn.model_selection import KFold
 from torch.utils.data import DataLoader, SubsetRandomSampler
 import numpy as np
-#from PDEs import load_PDE, load_dataset
-from neuraloperator.neuralop.data.datasets import load_darcy_flow_small
-from PDEs.Dataloader import Train_Test_loaders
+from PDEs import load_dataset
+import argparse
+import yaml
 
-def evaluate_learners(models , loader):
-    param = {
-        'epochs': 5,
-        'lr': 0.01,
-        'save_version': 0
-    }
+def parse_args():
+    parser = argparse.ArgumentParser(description='Cross validation for NO models')
+    parser.add_argument('--Dataset', type=str, choices=['Poisson', 'darcy_flow'],
+                      default='Poisson', help='Dataset to use')
+    parser.add_argument('--trials', type=int, default=1,
+                      help='Number of trials to run')
+    parser.add_argument('--config', type=str, default='Config/NO_params.yml', help='Path to config file')
+    
+    return parser.parse_args()
 
-    kfold = KFold(n_splits=5, shuffle=True)
+def evaluate_learners(models , loader , num_trials=1 , param = None):
+    param['epochs'] = 1
+
+    kfold = KFold(n_splits=num_trials, shuffle=True)
     results = {model.__name__: [] for model in models}
 
     AVG_performance = []
@@ -73,28 +79,22 @@ def evaluate_learners(models , loader):
     return train_scores , val_scores
 
 def main():
+    args = parse_args()
+    models = [FNO_model, CNN_model, UNO_model, TFNO_model]
     
-    """train_loader, test_loaders, _ = load_darcy_flow_small(
-            n_train=500, batch_size=32,
-            test_resolutions=[16, 32], n_tests=[100, 50],
-            test_batch_sizes=[32, 32],
-        )"""
-        
-    train_loaders, test_loaders = Train_Test_loaders(resolution=16, p_min=3, p_max= 100 ,n_samples=556 ,train_size = 0.9, batch_size = 32)
-    train_loader = train_loaders[16]
+    train_loader, test_loaders = load_dataset(args.Dataset)
+    if args.Dataset == 'darcy_flow':
+        models.append(PINO_darcy)
+    elif args.Dataset == 'Poisson':
+        models.append(PINO_poisson)
     
-    models = [PINO_darcy]
-    #models = [PINO_poisson]
     #train
-    train_scores , val_scores = evaluate_learners(models, train_loader)
+    with open(args.config, "r") as file:
+        param = yaml.safe_load(file)
+    train_scores , val_scores = evaluate_learners(models, train_loader, num_trials= args.trials, param = param)
     print(train_scores)
     print(val_scores)
     
     
 if __name__ == "__main__":
     main()
-# Compare this snippet from Solving-PDE-s-using-neural-network/evaluate_learners.py:
-# import pandas as pd
-# from src.Models.NO_models import FNO_model, CNN_model, UNO_model, TFNO_model, PINO_darcy
-# from sklearn.model_selection import KFold
-# from torch.utils.data import DataLoader, SubsetRandomSampler
