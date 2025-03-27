@@ -4,19 +4,13 @@ import torch.nn as nn
 from neuraloperator.neuralop import Trainer
 from neuraloperator.neuralop import LpLoss, H1Loss
 import torch.nn.functional as F
+from tqdm import tqdm
 
 class NO_basemodel(Basemodel):
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
         
-
-
-        """self.model = FNO(n_modes=(16, 16),
-            in_channels=1,
-            out_channels=1,
-            hidden_channels=32,
-            projection_channel_ratio=2)"""
         
         #self.model = quickMLP(1, 1,  self.param['N_hidden'], self.param['N_layers'])
         self.model = quickCNN(1, 1, 16, 3)
@@ -39,9 +33,9 @@ class NO_basemodel(Basemodel):
         best_loss = float('inf')
         train_losses = []
         val_losses = []
-        
+        progress_bar = tqdm(range(self.param['epochs']), desc="Training", unit="epoch")
         # Training loop
-        for epoch in range(self.param['epochs']):
+        for epoch in progress_bar:
             # Train phase
             self.model.train()
             epoch_loss = 0.0
@@ -80,13 +74,9 @@ class NO_basemodel(Basemodel):
                 if self.param.get('save_version'):
                     #self.save(f"model_epoch_{epoch}.pt")"""
             
-            # Log metrics
-            #train_losses.append(epoch_loss/len(train_loader))
-            #val_losses.append(val_loss)
-
-            if epoch % 10 == 0:
-                print(f"Epoch {epoch}: Train Loss = {epoch_loss/len(train_loader):.4e}, "
-                    f"Val Loss = {val_loss:.4e}, H1 Loss = {h1_loss:.4e}")
+            postfix = {"train_loss": epoch_loss/len(train_loader), "val_loss": val_loss}
+            progress_bar.set_postfix(postfix)
+            
         if self.param['save_version']: 
             #print(self.param['save_version'])
             self.save_version(self.model, {"train loss": epoch_loss/len(train_loader), "val loss": val_loss})
