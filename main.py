@@ -15,7 +15,7 @@ def parse_args():
                       help='Enable wandb logging')
     parser.add_argument('--PDE', type=str, default='1DPoisson',
                       help='PDE to solve')
-    parser.add_argument('--epochs', type=int, default=0,
+    parser.add_argument('--epochs', type=int, default=1,
                       help='Number of epochs to train')
     parser.add_argument('--lr', type=float, default=1e-3,
                       help='Learning rate')
@@ -25,7 +25,7 @@ def parse_args():
                       help='Adaptive weights')
     parser.add_argument('--update_rate', type = int , default = 0,
                       help='Update rate')
-    parser.add_argument('--Dataset', type=str, default='darcy_flow_small',
+    parser.add_argument('--Dataset', type=str, default='darcy_flow',
                       help='Dataset to use')
     parser.add_argument('--save_version', type= int, default=False,
                       help='Save model version')
@@ -48,8 +48,8 @@ def main():
     param.update({
         'save_version': args.save_version,
         'model_name': args.model_name,
-        'epochs': args.epochs if args.epochs > 0 else param.get('epochs', 1000),
-        'lr': args.lr if args.lr > 0 else param.get('lr', 1e-3),
+        'epochs': args.epochs if args.epochs > 1 else param['epochs'],    
+        'lr': args.lr if args.lr > 0 else param['lr'],
         'TF': args.adaptive_weights,
         'wandb_logs': args.wandb_logs,
         'adaptive_nodes': args.AC,
